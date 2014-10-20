@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="CarMedia.Music"
+      Loaded="Page_Loaded"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      Background="Black"
+      MinWidth="650" MinHeight="420">
+    
+    <UserControl.Resources>
+        <Style x:Key="MenuTextStyle">
+            <Setter Property="Control.Margin" Value="10,0"/>
+            <Setter Property="Control.FontSize" Value="20"/>
+        </Style>
+    </UserControl.Resources>
+    
+    <UserControl.CommandBindings>
+        <CommandBinding Command="MediaCommands.Play" CanExecute="Play_CanExecute" Executed="Play_Executed" />
+        <CommandBinding Command="MediaCommands.Pause" CanExecute="Pause_CanExecute" Executed="Pause_Executed" />
+        <CommandBinding Command="MediaCommands.Stop" CanExecute="Stop_CanExecute" Executed="Stop_Executed" />
+    </UserControl.CommandBindings>
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="11*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="9*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.RowSpan="3" Background="Gray" Width="100" HorizontalAlignment="Left" Margin="12">
+            <StackPanel DockPanel.Dock="Top">
+            <TextBlock Name="txtSongs" Text="Songs" Style="{StaticResource MenuTextStyle}"/>
+            <TextBlock Name="txtAlbums" Text="Albums" Style="{StaticResource MenuTextStyle}"/>
+            <TextBlock Name="txtArtists" Text="Artists" Style="{StaticResource MenuTextStyle}"/>
+            </StackPanel>
+            <Image x:Name="imgAlbumArt" VerticalAlignment="Bottom" Margin="5"/>
+        </DockPanel>
+        <TextBox x:Name="txtSearch" Grid.Column="1" Height="25" Width="150" Text="Search" HorizontalAlignment="Right" Margin="15,0" HorizontalContentAlignment="Right" FontSize="18" Padding="3,0" Background="Gray"/>
+        <Button x:Name="HomeBtn" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="Transparent" BorderBrush="Transparent" MaxHeight="40" VerticalAlignment="Top" Click="HomeBtn_Click" HorizontalAlignment="Center">
+            <Image x:Name="imgHomeIcon"></Image>
+        </Button>
+        <Button x:Name="BtnBack" Content="Back" Grid.Column="1" Padding="5" HorizontalAlignment="Left" Margin="0,0,0,0" Click="BtnBack_Click"></Button>
+        <Grid x:Name="nowPlaying" Visibility="Hidden" Grid.Row="1" Grid.Column="1" Margin="0,15,15,0">
+        <StackPanel  >
+            <TextBlock Text="Now Playing" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="CornflowerBlue" FontSize="20" FontWeight="Bold"></TextBlock>
+            <TextBlock x:Name="npSongTitle" HorizontalAlignment="Center" FontSize="45" Margin="0,50,0,0" Foreground="CornflowerBlue"></TextBlock>
+            <TextBlock x:Name="npArtistName" HorizontalAlignment="Center" FontSize="30" Margin="0,5" Foreground="CornflowerBlue"></TextBlock>
+            <TextBlock x:Name="npAlbumTitle" HorizontalAlignment="Center" FontSize="30" Margin="0,5" Foreground="CornflowerBlue"></TextBlock>
+        </StackPanel>            
+            </Grid>
+        <ListView x:Name="lvSelectionDetails" Visibility="Visible" Grid.Row="1" Grid.Column="1" Margin="0,15,15,0" Background="Gray" SelectionChanged="lvSelectionDetails_SelectionChanged" MouseDoubleClick="lvSelectionDetails_MouseDoubleClick" >
+            <!--<GridView>-->
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn x:Name="songName" DisplayMemberBinding="{Binding TrackName}" />
+                    <GridViewColumn x:Name="album" DisplayMemberBinding="{Binding AlbumName}" />
+                    <GridViewColumn x:Name="artist" DisplayMemberBinding="{Binding ArtistName}" >
+                    
+                    
+                        <!--<GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding artist}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>-->
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+            <!--<GridViewColumn x:Name="Col1" Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
+                <GridViewColumn x:Name="Col2" Header="Age" Width="100" DisplayMemberBinding="{Binding Age}"/>
+                <GridViewColumn x:Name="Col3" Header="Mail" Width="100" DisplayMemberBinding="{Binding Mail}"/>-->
+                <!--<GridViewColumn x:Name="Col4" Width="150" DisplayMemberBinding="{Binding Col5}"/>
+                <GridViewColumn x:Name="Col5" Width="150" DisplayMemberBinding="{Binding Col5}"/>-->
+            <!--</GridView>-->            
+        </ListView>
+        <StackPanel Grid.Column="1" Grid.Row="2" Margin="0,10,0,0">
+            <!--<StackPanel Orientation="Horizontal">-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="txtsongRunningTime" Margin="5,0" FontSize="15" Foreground="Yellow"/>
+                <ProgressBar x:Name="prbrSong" Grid.Column="1"/>
+                <Slider x:Name="sldrTrack" Grid.Column="1" Orientation="Horizontal" ValueChanged="sldrTrack_ValueChanged" PreviewMouseUp="sldrTrack_PreviewMouseUp" Opacity="0"/>
+                <TextBlock x:Name="txtsongTimeLeft" Grid.Column="2" Margin="5,0,20,0" FontSize="15" Foreground="Yellow"/>
+            </Grid>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="btnPlay" Margin="5,10,0,0" Height="40" Width="50" Click="btnPlay_Click"></Button>
+                <Button x:Name="btnStop" Margin="5,10,0,0" Height="40" Width="50" Click="btnStop_Click">Stop</Button>
+                <Button x:Name="btnBack" Margin="5,10,0,0" Height="40" Width="50" Click="btnBack_Click_1">Previous</Button>
+                <Button x:Name="btnForward" Margin="5,10,0,0" Height="40" Width="50" Click="btnForward_Click">Next</Button>
+                <Button x:Name="btnEqualizer" Margin="5,10,0,0" Height="40" Width="50">Equalizer</Button>
+                <Button x:Name="btnEject" Margin="5,10,0,0" Height="40" Width="50">Eject</Button>
+                <Button x:Name="btnRip" Margin="5,10,0,0" Height="40" Width="50">Rip</Button>
+                <Button x:Name="btnFavorite" Margin="5,10,0,0" Height="40" Width="50">Favorite</Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

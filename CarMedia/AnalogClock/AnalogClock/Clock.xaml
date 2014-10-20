@@ -1,0 +1,806 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+	mc:Ignorable="d"
+	x:Class="AnalogClock.Clock"
+	x:Name="UserControl"
+	d:DesignWidth="279" d:DesignHeight="278">
+
+	<UserControl.Resources>
+		<Storyboard x:Key="OnLoaded1">
+			<DoubleAnimation x:Name="secondAnimation" Storyboard.TargetName="secondHandTransform" Storyboard.TargetProperty="Angle"
+				Duration="0:1:0" RepeatBehavior="Forever" By="360" />
+		</Storyboard>
+	</UserControl.Resources>
+
+	<Grid x:Name="LayoutRoot">
+		<Grid x:Name="ClockGrid" RenderTransformOrigin="0.575,0.52">
+			<Ellipse x:Name="Circle1" Fill="Black" HorizontalAlignment="Center" Height="278" Stroke="Black" VerticalAlignment="Center" Width="279"/>
+		
+		
+		
+			<Label Content="12" Height="50" Width="70" FontFamily="Arial" FontSize="26.667" Margin="0,0,0,200" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF0051FF" Background="#00000000"/>
+			<Label Content="6" Width="70" Height="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Arial" FontSize="26.667" Margin="0,0,0,-200" Foreground="#FF0051FF">
+				<Label.Background>
+					<ImageBrush/>
+				</Label.Background>
+			</Label>
+			<Label Content="3" Height="50" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="200,0,0,0" Width="70" FontFamily="Arial" FontSize="26.667" Foreground="#FF0051FF">
+				<Label.Background>
+					<ImageBrush/>
+				</Label.Background>
+			</Label>
+			<Label Content="9" Height="50" Margin="-205,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="70" FontFamily="Arial" FontSize="26.667" Foreground="#FF0051FF">
+				<Label.Background>
+					<ImageBrush/>
+				</Label.Background>
+			</Label>
+			<Label Content="1" Height="50" Margin="100,0,0,175" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="70" FontFamily="Arial" FontSize="26.667" Foreground="#FF0051FF">
+				<Label.Background>
+					<ImageBrush/>
+				</Label.Background>
+			</Label>
+			<Label Content="11" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="50" Margin="-100,0,0,175" Width="70" FontFamily="Arial" FontSize="26.667" Foreground="#FF0051FF">
+				<Label.Background>
+					<ImageBrush/>
+				</Label.Background>
+			</Label>
+			<Label Content="2" Height="50" Margin="172,0,0,105" Width="70" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Arial" FontSize="26.667" Foreground="#FF0051FF">
+				<Label.Background>
+					<ImageBrush/>
+				</Label.Background>
+			</Label>
+			<Label Content="5" Height="50" Margin="100,0,0,-175" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25.052" FontFamily="Arial" FontSize="26.667" Foreground="#FF0051FF">
+				<Label.Background>
+					<ImageBrush/>
+				</Label.Background>
+			</Label>
+			<Label Content="7" Height="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="-100,0,0,-175" Width="70" FontFamily="Arial" FontSize="26.667" Foreground="#FF0051FF">
+				<Label.Background>
+					<ImageBrush/>
+				</Label.Background>
+			</Label>
+			<Label Content="8" Height="50" Margin="-170,0,0,-105" Width="70" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Arial" FontSize="26.667" Foreground="#FF0051FF">
+				<Label.Background>
+					<ImageBrush/>
+				</Label.Background>
+			</Label>
+			<Label Content="4" Height="50" Margin="172,0,0,-105" Width="70" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Arial" FontSize="26.667" Foreground="#FF0051FF">
+				<Label.Background>
+					<ImageBrush/>
+				</Label.Background>
+			</Label>
+			<Label Content="10" Height="50" Margin="-160,0,0,105" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="70" FontFamily="Arial" FontSize="26.667" Foreground="#FF0051FF">
+				<Label.Background>
+					<ImageBrush/>
+				</Label.Background>
+			</Label>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Margin="-255,0,0,0" Stroke="#FF0051FF" Width="7" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="90"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" HorizontalAlignment="Center" Height="26.5" Margin="250,0,0,0" Stroke="#FF0051FF" VerticalAlignment="Center" Width="7" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="90"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Margin="-215,0,0,-125" Stroke="#FF0051FF" Width="7" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="60"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Margin="215,0,0,125" Stroke="#FF0051FF" Width="7" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="60"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Margin="-125,0,0,-220" Stroke="#FF0051FF" Width="7" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="30"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Margin="125,0,0,-220" Stroke="#FF0051FF" Width="7" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="150"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Margin="125,0,0,220" Stroke="#FF0051FF" Width="7" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="30"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Margin="-125,0,0,220" Stroke="#FF0051FF" Width="7" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="150"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Margin="-215,0,0,125" Stroke="#FF0051FF" Width="7" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="120"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Margin="215,0,0,-125" Stroke="#FF0051FF" Width="7" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="120"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="20,0,0,250" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="5"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-20,0,0,-250" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="5"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-22,0,0,250" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="355"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="20,0,0,-250" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="355"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="43,0,0,247" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="10"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-45,0,0,-247" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="10"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="43,0,0,-247" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="350"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-45,0,0,247" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="350"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="63,0,0,243" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="15"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-66,0,0,-243" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="195"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="63,0,0,-243" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="165"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-65,0,0,243" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="165"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-252,0,0,23" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="275"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-229,0,0,107" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="295"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-237,0,0,87" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="290"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-244,0,0,67" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="285"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-249,0,0,46" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="280"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-252,0,0,-21" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="265"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-229,0,0,-105" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="245"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-237,0,0,-85" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="250"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-245,0,0,-64" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="255"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-249,0,0,-44" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="260"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="252,0,0,-21" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="95"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="230,0,0,-106" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="115"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="237,0,0,-85" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="110"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="244,0,0,-65" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="105"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="248,0,0,-44" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="100"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+        
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="252,0,0,24" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="85"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="248,0,0,46" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="80"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="244,0,0,67" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="75"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="237,0,0,89" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="70"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="230,0,0,109" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="65"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-145,0,0,207" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="325"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-145,0,0,-205" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="215"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="144,0,0,208" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="35"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-163,0,0,-192" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="220"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="162,0,0,196" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="40"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-179,0,0,178" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="315"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-179,0,0,-177" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="225"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="179,0,0,180" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="45"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-193,0,0,-161" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="230"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-193,0,0,162" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="310"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="193,0,0,164" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="50"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-207,0,0,145" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="305"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-208,0,0,-144" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="235"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="207,0,0,145" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="55"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="207,0,0,-145" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="125"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="193,0,0,-161" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="130"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="179,0,0,-180" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="135"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="163,0,0,-193" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="140"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-163,0,0,193" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="320"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="143,0,0,-206" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="145"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="106,0,0,-228" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="155"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-106,0,0,-229" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="205"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="106,0,0,230" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="25"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-106,0,0,230" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="335"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="86,0,0,-237" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="160"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-86,0,0,-238" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="200"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="86,0,0,237" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="20"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="-86,0,0,237" Width="3" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="340"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Fill="#FF0051FF" Height="26.5" Stroke="#FF0051FF" Margin="0,0,0,-251" Width="7"/>
+			<Rectangle Fill="#FF0051FF" HorizontalAlignment="Center" Height="26.5" Stroke="#FF0051FF" VerticalAlignment="Center" Margin="0,0,0,250" Width="7"/>
+			<Ellipse x:Name="CentreCircle" Fill="Black" HorizontalAlignment="Center" Height="12.954" Stroke="Black" VerticalAlignment="Center" Width="13"/>
+			<ed:RegularPolygon x:Name="secondHand" Fill="#FFFF4646" InnerRadius="1" PointCount="3" Stretch="Fill" Height="135" Width="5" VerticalAlignment="Center" Margin="0,0,0,135" RenderTransformOrigin="0.5,1">
+				<ed:RegularPolygon.RenderTransform>
+					<TransformGroup>
+						<RotateTransform x:Name="secondHandTransform"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</ed:RegularPolygon.RenderTransform>
+			</ed:RegularPolygon>
+			<ed:RegularPolygon x:Name="Minutehand" Fill="#FFFF4646" HorizontalAlignment="Center" Height="135" Margin="0,0,0,135" InnerRadius="1" PointCount="3" Stretch="Fill" Width="13" RenderTransformOrigin="0.5,1">
+				<ed:RegularPolygon.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<!--<RotateTransform Angle="205"/>-->
+					</TransformGroup>
+				</ed:RegularPolygon.RenderTransform>
+			</ed:RegularPolygon>
+			<ed:RegularPolygon x:Name="Hourhand" Fill="#FFFF4646" HorizontalAlignment="Center" Height="90" InnerRadius="1" PointCount="3" Stretch="Fill" VerticalAlignment="Center" Width="13" Margin="0,0,0,90" RenderTransformOrigin="0.5,1"/>
+			<Ellipse x:Name="CentreCircle_Copy" Fill="#FF811C1C" HorizontalAlignment="Center" Height="29" Stroke="Black" VerticalAlignment="Center" Width="29.104"/>
+		</Grid>
+	</Grid>
+</UserControl>

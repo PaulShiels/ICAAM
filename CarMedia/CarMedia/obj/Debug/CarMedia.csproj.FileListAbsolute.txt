@@ -1,0 +1,45 @@
+c:\users\paul\documents\visual studio 2013\Projects\CarMedia\CarMedia\bin\Debug\CarMedia.exe.config
+c:\users\paul\documents\visual studio 2013\Projects\CarMedia\CarMedia\bin\Debug\CarMedia.exe
+c:\users\paul\documents\visual studio 2013\Projects\CarMedia\CarMedia\bin\Debug\CarMedia.pdb
+c:\users\paul\documents\visual studio 2013\Projects\CarMedia\CarMedia\obj\Debug\MainWindow.baml
+c:\users\paul\documents\visual studio 2013\Projects\CarMedia\CarMedia\obj\Debug\MainWindow.g.cs
+c:\users\paul\documents\visual studio 2013\Projects\CarMedia\CarMedia\obj\Debug\App.g.cs
+c:\users\paul\documents\visual studio 2013\Projects\CarMedia\CarMedia\obj\Debug\CarMedia_MarkupCompile.cache
+c:\users\paul\documents\visual studio 2013\Projects\CarMedia\CarMedia\obj\Debug\CarMedia.g.resources
+c:\users\paul\documents\visual studio 2013\Projects\CarMedia\CarMedia\obj\Debug\CarMedia.Properties.Resources.resources
+c:\users\paul\documents\visual studio 2013\Projects\CarMedia\CarMedia\obj\Debug\CarMedia.csproj.GenerateResource.Cache
+c:\users\paul\documents\visual studio 2013\Projects\CarMedia\CarMedia\obj\Debug\CarMedia.exe
+c:\users\paul\documents\visual studio 2013\Projects\CarMedia\CarMedia\obj\Debug\CarMedia.pdb
+C:\Users\Paul\Documents\Visual Studio 2013\Projects\CarMedia\CarMedia\obj\Debug\Home.baml
+C:\Users\Paul\Documents\Visual Studio 2013\Projects\CarMedia\CarMedia\obj\Debug\Home.g.cs
+C:\Users\Paul\Documents\Visual Studio 2013\Projects\CarMedia\CarMedia\bin\Debug\Clock.dll
+C:\Users\Paul\Documents\Visual Studio 2013\Projects\CarMedia\CarMedia\bin\Debug\Clock.pdb
+C:\Users\Paul\Documents\Visual Studio 2013\Projects\CarMedia\CarMedia\obj\Debug\Music.baml
+C:\Users\Paul\Documents\Visual Studio 2013\Projects\CarMedia\CarMedia\obj\Debug\Music.g.cs
+C:\Users\Paul\Documents\Visual Studio 2013\Projects\CarMedia\CarMedia\obj\Debug\CarMedia.csprojResolveAssemblyReference.cache
+C:\Users\Paul\Documents\Visual Studio 2013\Projects\CarMedia\CarMedia\obj\Debug\CarMedia_Content.g.cs
+C:\Users\Paul\Documents\Visual Studio 2013\Projects\CarMedia\CarMedia\bin\Debug\policy.2.0.taglib-sharp.dll
+C:\Users\Paul\Documents\Visual Studio 2013\Projects\CarMedia\CarMedia\bin\Debug\taglib-sharp.dll
+C:\Users\Paul\Documents\Visual Studio 2013\Projects\CarMedia\CarMedia\bin\Debug\policy.2.0.taglib-sharp.config
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\CarMedia.exe.config
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\CarMedia.exe
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\CarMedia.pdb
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\CarMedia.csprojResolveAssemblyReference.cache
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Home.baml
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\MainWindow.baml
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Music.baml
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Home.g.cs
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\MainWindow.g.cs
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Music.g.cs
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\App.g.cs
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\CarMedia_Content.g.cs
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\CarMedia_MarkupCompile.cache
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\CarMedia.g.resources
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\CarMedia.Properties.Resources.resources
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\CarMedia.csproj.GenerateResource.Cache
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\CarMedia.exe
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\CarMedia.pdb
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\policy.2.0.taglib-sharp.dll
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\taglib-sharp.dll
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\Clock.pdb
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\policy.2.0.taglib-sharp.config
