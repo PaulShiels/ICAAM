@@ -6,7 +6,7 @@
       x:Class="CarMedia.Home"            
       mc:Ignorable="d" 
       Background="Black"
-    MinWidth="650" MinHeight="420">
+    MinWidth="650" MinHeight="420" MaxHeight="430">
 
     
     <UserControl.Resources>

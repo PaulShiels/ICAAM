@@ -6,7 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
       Background="Black"
-      MinWidth="650" MinHeight="420">
+      MinWidth="650" MaxWidth="650" MinHeight="300" MaxHeight="430">
     
     <UserControl.Resources>
         <Style x:Key="MenuTextStyle">
@@ -47,9 +47,9 @@
         <Grid x:Name="nowPlaying" Visibility="Hidden" Grid.Row="1" Grid.Column="1" Margin="0,15,15,0">
         <StackPanel  >
             <TextBlock Text="Now Playing" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="CornflowerBlue" FontSize="20" FontWeight="Bold"></TextBlock>
-            <TextBlock x:Name="npSongTitle" HorizontalAlignment="Center" FontSize="45" Margin="0,50,0,0" Foreground="CornflowerBlue"></TextBlock>
-            <TextBlock x:Name="npArtistName" HorizontalAlignment="Center" FontSize="30" Margin="0,5" Foreground="CornflowerBlue"></TextBlock>
-            <TextBlock x:Name="npAlbumTitle" HorizontalAlignment="Center" FontSize="30" Margin="0,5" Foreground="CornflowerBlue"></TextBlock>
+                <TextBlock x:Name="npSongTitle" HorizontalAlignment="Center" FontSize="25" Margin="0,50,0,0" Foreground="CornflowerBlue"></TextBlock>
+            <TextBlock x:Name="npArtistName" HorizontalAlignment="Center" FontSize="16" Margin="0,5" Foreground="CornflowerBlue" TextWrapping="Wrap"></TextBlock>
+            <TextBlock x:Name="npAlbumTitle" HorizontalAlignment="Center" FontSize="16" Margin="0,5" Foreground="CornflowerBlue"></TextBlock>
         </StackPanel>            
             </Grid>
         <ListView x:Name="lvSelectionDetails" Visibility="Visible" Grid.Row="1" Grid.Column="1" Margin="0,15,15,0" Background="Gray" SelectionChanged="lvSelectionDetails_SelectionChanged" MouseDoubleClick="lvSelectionDetails_MouseDoubleClick" >
@@ -89,7 +89,7 @@
                 <Slider x:Name="sldrTrack" Grid.Column="1" Orientation="Horizontal" ValueChanged="sldrTrack_ValueChanged" PreviewMouseUp="sldrTrack_PreviewMouseUp" Opacity="0"/>
                 <TextBlock x:Name="txtsongTimeLeft" Grid.Column="2" Margin="5,0,20,0" FontSize="15" Foreground="Yellow"/>
             </Grid>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                 <Button x:Name="btnPlay" Margin="5,10,0,0" Height="40" Width="50" Click="btnPlay_Click"></Button>
                 <Button x:Name="btnStop" Margin="5,10,0,0" Height="40" Width="50" Click="btnStop_Click">Stop</Button>
                 <Button x:Name="btnBack" Margin="5,10,0,0" Height="40" Width="50" Click="btnBack_Click_1">Previous</Button>

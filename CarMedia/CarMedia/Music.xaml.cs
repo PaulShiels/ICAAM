@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -112,9 +113,17 @@ namespace CarMedia
 
                 try
                 {
+                    //Found help with progress bar here : http://robcrocombe.com/2012/06/15/how-to-make-an-audio-progress-bar/
+                    //Track progress bar
                     double timeLeft = s.NaturalDuration.TimeSpan.TotalSeconds - s.Position.TotalSeconds;
                     txtsongRunningTime.Text = String.Format(@"{0:mm\:ss}", s.Position);
                     txtsongTimeLeft.Text = String.Format(@"{0:mm\:ss}", TimeSpan.FromSeconds(timeLeft));
+
+                    if (timeLeft <= 1)
+                    {
+                        Thread.Sleep(900);
+                        PlayNextTrack();
+                    }
                 }
                 catch
                 {
@@ -155,7 +164,7 @@ namespace CarMedia
             try
             {
                 s.Stop();
-                //Quickly reset the progress bar to 0 as soon as the song stops look good.
+                //Quickly reset the progress bar to 0 as soon as the song stops: look better.
                 prbrSong.Value = 0;
                 sldrTrack.Value = 0;
 
@@ -178,9 +187,10 @@ namespace CarMedia
 
         private void UpdateNowPlayingPage()
         {
-            npSongTitle.Text = trackPlaying.TrackName;
-            npArtistName.Text = trackPlaying.ArtistName;
-            npAlbumTitle.Text = trackPlaying.AlbumName;
+            //Format the text to display in the now playing window
+            npSongTitle.Text = trackPlaying.TrackName.Length > 37 ? trackPlaying.TrackName.Substring(0, 34) + "..." : trackPlaying.TrackName;
+            npArtistName.Text = trackPlaying.ArtistName.Length > 50 ? trackPlaying.ArtistName.Substring(0, 47) + "..." : trackPlaying.ArtistName;
+            npAlbumTitle.Text = trackPlaying.AlbumName.Length > 50 ? trackPlaying.AlbumName.Substring(0, 47) + "..." : trackPlaying.AlbumName;
         }
 
         #region unused
@@ -296,8 +306,15 @@ namespace CarMedia
 
         private void btnForward_Click(object sender, RoutedEventArgs e)
         {
+            PlayNextTrack();
+        }
+
+        private void PlayNextTrack()
+        {
+            //Check shuffle
             if (trackPlaying.TrackId + 1 < songs.Count())
             {
+                Thread.Sleep(100);
                 PlaySelectedSong(trackPlaying.TrackId + 1);
                 trackPlaying = lstTracks[trackPlaying.TrackId + 1];
                 UpdateNowPlayingPage();
@@ -315,14 +332,8 @@ namespace CarMedia
         }
 
         private void HomeBtn_Click(object sender, RoutedEventArgs e)
-        {
-            //NavigationService navService = NavigationService.GetNavigationService(this);
-            //navService.Navigate(MainWindow.homePage);
-
-            //MainWindow.homePage.Visibility = Visibility.Visible;
-            //MainWindow.musicPage.Visibility = Visibility.Hidden;  
+        { 
             Canvas.SetZIndex(MainWindow.musicPlayer, 0);
-            //MainWindow.musicPlayer.Visibility = Visibility.Hidden;
         }
 
         
