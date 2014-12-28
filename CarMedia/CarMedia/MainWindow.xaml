@@ -1,20 +1,23 @@
 ﻿<Window x:Class="CarMedia.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" WindowStyle="SingleBorderWindow"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" WindowStyle="None"
         Loaded="Window_Loaded"
-        Title="MainWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Width="650" Height="780" WindowState="Normal">
+        Title="MainWindow" ResizeMode="NoResize" WindowState="Maximized">
         
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="6*"/>
-            <RowDefinition Height="2.5*"/>
-            <RowDefinition Height="2.4*"/>
+            <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
         
         
-        <Canvas x:Name="MediaFrame" x:FieldModifier="public" ></Canvas>
+        <Canvas x:Name="MediaFrame" Background="Black" HorizontalAlignment="Left" x:FieldModifier="public" ></Canvas>
         
         <TextBlock Grid.Row="1" Background="Black"></TextBlock>
-        <TextBlock Background="Black" Grid.Row="2"></TextBlock>
+        <TextBlock Grid.Column="1" Background="Black"></TextBlock>
     </Grid>
 </Window>

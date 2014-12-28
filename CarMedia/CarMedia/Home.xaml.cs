@@ -57,6 +57,19 @@ namespace CarMedia
                 }
             }
         }
+
+        private void btnCamera_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.camera.Visibility = System.Windows.Visibility.Visible;
+            Canvas.SetZIndex(MainWindow.camera, 1);
+
+            if (MainWindow.camera.Arduino.IsOpen)
+            {
+                MainWindow.camera.timer.Start();
+                MainWindow.camera.Arduino.DiscardInBuffer();
+            }
+
+        }
           
     }
 }

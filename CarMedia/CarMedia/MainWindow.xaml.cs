@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,8 @@ namespace CarMedia
 
         public static Home HomeScreen = new Home();
         public static Music musicPlayer = new Music();
+        public static Camera camera = new Camera();
+        public static SerialPort ArduinoPort = new SerialPort();
 
         public MainWindow()
         {
@@ -34,23 +37,42 @@ namespace CarMedia
             //PublishFrameworkElement(HomeScreen, );
             MediaFrame.Children.Add(HomeScreen);
             MediaFrame.Children.Add(musicPlayer);
+            MediaFrame.Children.Add(camera);
             Canvas.SetZIndex(MainWindow.musicPlayer, 0);
-            Canvas.SetZIndex(MainWindow.HomeScreen, 1);
-            //musicPlayer.Visibility = Visibility.Hidden;
-            //MediaFrame.Source = new Uri("Home.xaml", UriKind.Relative);
-            
-            //Home homeScreen = new Home();
-            //MediaFrame.Children.Add(homeScreen);
-
-            //MediaFrame.Source = new Uri("Home.xaml", UriKind.Relative);
+            Canvas.SetZIndex(MainWindow.camera, 0);
+            Canvas.SetZIndex(MainWindow.HomeScreen, 1);            
         }
-
-
         
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             
+            //MediaFrame.Width = this.Width - (this.Width * 0.2);
+            camera.Visibility = System.Windows.Visibility.Hidden;
+            ConnectSerialPort();
+        }
+
+        private void ConnectSerialPort()
+        {
+            ArduinoPort.PortName = "COM7";               
+            ArduinoPort.BaudRate = 115200;
+            ArduinoPort.Handshake = System.IO.Ports.Handshake.None;
+            ArduinoPort.Parity = Parity.None;
+            ArduinoPort.DataBits = 8;
+            ArduinoPort.StopBits = StopBits.One;
+            ArduinoPort.ReadTimeout = 200;
+            ArduinoPort.WriteTimeout = 50;
+            try
+            {
+                ArduinoPort.Open();
+                Console.WriteLine("Connection Successfull!");
+            }
+            catch
+            {
+                Console.WriteLine("Unable to connect to Serial Port, Try again?");
+                if (Console.ReadLine() == "y")
+                    ConnectSerialPort();
+            }
         }
     }
 }

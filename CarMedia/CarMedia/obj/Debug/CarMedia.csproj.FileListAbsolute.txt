@@ -41,5 +41,7 @@ C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\
 C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\CarMedia.pdb
 C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\policy.2.0.taglib-sharp.dll
 C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\taglib-sharp.dll
-C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\Clock.pdb
 C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\policy.2.0.taglib-sharp.config
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Camera.baml
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Camera.g.cs
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\WebCam_Capture.dll

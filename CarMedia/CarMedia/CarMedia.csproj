@@ -42,6 +42,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -53,9 +55,13 @@
     <Reference Include="taglib-sharp">
       <HintPath>..\packages\taglib.2.1.0.0\lib\taglib-sharp.dll</HintPath>
     </Reference>
+    <Reference Include="WebCam_Capture">
+      <HintPath>..\..\..\..\..\..\..\Downloads\EasyWebCam\EasyWebCam\DLL for Add Reference\WebCam_Capture.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -65,7 +71,16 @@
     <Compile Include="Album.cs" />
     <Compile Include="Artist.cs" />
     <Compile Include="Base.cs" />
+    <Compile Include="Camera.xaml.cs">
+      <DependentUpon>Camera.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helper.cs" />
     <Compile Include="Track.cs" />
+    <Compile Include="WebCam.cs" />
+    <Page Include="Camera.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -123,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Home_Icon.png" />
+    <Resource Include="Images\back_Arrow.png" />
     <Content Include="Music\1. Robert Miles - Children.mp3" />
     <Content Include="Music\13. Paul van Dyk - Home %28Paul van Dyk Remix%29.mp3" />
     <Content Include="Music\8. Motorcycle - As The Rush Comes.mp3" />

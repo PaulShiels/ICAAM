@@ -6,7 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
       Background="Black"
-      MinWidth="650" MaxWidth="650" MinHeight="300" MaxHeight="430">
+      MinWidth="935" MinHeight="465" MaxHeight="465">
     
     <UserControl.Resources>
         <Style x:Key="MenuTextStyle">
@@ -43,7 +43,9 @@
         <Button x:Name="HomeBtn" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="Transparent" BorderBrush="Transparent" MaxHeight="40" VerticalAlignment="Top" Click="HomeBtn_Click" HorizontalAlignment="Center">
             <Image x:Name="imgHomeIcon"></Image>
         </Button>
-        <Button x:Name="BtnBack" Content="Back" Grid.Column="1" Padding="5" HorizontalAlignment="Left" Margin="0,0,0,0" Click="BtnBack_Click"></Button>
+        <Button x:Name="BtnBack" Grid.Column="1" Padding="5" Background="Transparent" BorderBrush="Transparent" MaxHeight="40" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,0,0,0" Click="BtnBack_Click">
+            <Image Source="Images\back_Arrow.png"></Image>
+        </Button>
         <Grid x:Name="nowPlaying" Visibility="Hidden" Grid.Row="1" Grid.Column="1" Margin="0,15,15,0">
         <StackPanel  >
             <TextBlock Text="Now Playing" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="CornflowerBlue" FontSize="20" FontWeight="Bold"></TextBlock>
@@ -90,14 +92,14 @@
                 <TextBlock x:Name="txtsongTimeLeft" Grid.Column="2" Margin="5,0,20,0" FontSize="15" Foreground="Yellow"/>
             </Grid>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                <Button x:Name="btnPlay" Margin="5,10,0,0" Height="40" Width="50" Click="btnPlay_Click"></Button>
-                <Button x:Name="btnStop" Margin="5,10,0,0" Height="40" Width="50" Click="btnStop_Click">Stop</Button>
-                <Button x:Name="btnBack" Margin="5,10,0,0" Height="40" Width="50" Click="btnBack_Click_1">Previous</Button>
-                <Button x:Name="btnForward" Margin="5,10,0,0" Height="40" Width="50" Click="btnForward_Click">Next</Button>
-                <Button x:Name="btnEqualizer" Margin="5,10,0,0" Height="40" Width="50">Equalizer</Button>
-                <Button x:Name="btnEject" Margin="5,10,0,0" Height="40" Width="50">Eject</Button>
-                <Button x:Name="btnRip" Margin="5,10,0,0" Height="40" Width="50">Rip</Button>
-                <Button x:Name="btnFavorite" Margin="5,10,0,0" Height="40" Width="50">Favorite</Button>
+                <Button x:Name="btnPlay" Margin="25,10,0,0" Height="40" Width="60" Click="btnPlay_Click">Play</Button>
+                <Button x:Name="btnStop" Margin="25,10,0,0" Height="40" Width="60" Click="btnStop_Click">Stop</Button>
+                <Button x:Name="btnBack" Margin="25,10,0,0" Height="40" Width="60" Click="btnBack_Click_1">Previous</Button>
+                <Button x:Name="btnForward" Margin="25,10,0,0" Height="40" Width="60" Click="btnForward_Click">Next</Button>
+                <Button x:Name="btnEqualizer" Margin="25,10,0,0" Height="40" Width="60">Equalizer</Button>
+                <Button x:Name="btnEject" Margin="25,10,0,0" Height="40" Width="60">Eject</Button>
+                <Button x:Name="btnRip" Margin="25,10,0,0" Height="40" Width="60">Rip</Button>
+                <Button x:Name="btnFavorite" Margin="25,10,0,0" Height="40" Width="60">Favorite</Button>
             </StackPanel>
         </StackPanel>
     </Grid>
