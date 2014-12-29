@@ -139,6 +139,9 @@
   <ItemGroup>
     <Resource Include="Images\Home_Icon.png" />
     <Resource Include="Images\back_Arrow.png" />
+    <Resource Include="Images\clockFace.jpg" />
+    <Resource Include="Images\radio_Icon.png" />
+    <Resource Include="Images\MainBackground.jpg" />
     <Content Include="Music\1. Robert Miles - Children.mp3" />
     <Content Include="Music\13. Paul van Dyk - Home %28Paul van Dyk Remix%29.mp3" />
     <Content Include="Music\8. Motorcycle - As The Rush Comes.mp3" />

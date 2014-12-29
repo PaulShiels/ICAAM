@@ -5,6 +5,9 @@
         Title="MainWindow" ResizeMode="NoResize" WindowState="Maximized">
         
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Images/MainBackground.jpg"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="6*"/>
             <RowDefinition Height="4*"/>
@@ -17,7 +20,7 @@
         
         <Canvas x:Name="MediaFrame" Background="Black" HorizontalAlignment="Left" x:FieldModifier="public" ></Canvas>
         
-        <TextBlock Grid.Row="1" Background="Black"></TextBlock>
-        <TextBlock Grid.Column="1" Background="Black"></TextBlock>
+        <TextBlock Grid.Row="1" Background="Transparent"></TextBlock>
+        <TextBlock Grid.Column="1" Background="Transparent"></TextBlock>
     </Grid>
 </Window>

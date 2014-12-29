@@ -21,9 +21,31 @@ namespace CarMedia
     /// </summary>
     public partial class Home
     {
+        System.Timers.Timer timer = new System.Timers.Timer(1000);
+
         public Home()
         {
             InitializeComponent();
+
+            //////////////////////////////////////////////////////////////////////////////////////
+            //Analog Clock found at: http://www.codeproject.com/Articles/29438/Analog-Clock-in-WPF
+            DateTime date = DateTime.Now;
+            TimeZone time = TimeZone.CurrentTimeZone;
+            TimeSpan difference = time.GetUtcOffset(date);
+            timer.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed);
+            timer.Enabled = true;
+            ///////////////////////////////////////////////////////////////////////////////////////
+        }
+
+        void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            //http://thispointer.spaces.live.com/blog/cns!74930F9313F0A720!252.entry?_c11_blogpart_blogpart=blogview&_c=blogpart#permalink
+            this.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+            {
+                secondHand.Angle = DateTime.Now.Second * 6;
+                minuteHand.Angle = DateTime.Now.Minute * 6;
+                hourHand.Angle = (DateTime.Now.Hour * 30) + (DateTime.Now.Minute * 0.5);
+            }));
         }
 
         private void btnRadio_Click(object sender, RoutedEventArgs e)
