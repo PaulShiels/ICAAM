@@ -332,7 +332,9 @@ namespace CarMedia
         }
 
         private void HomeBtn_Click(object sender, RoutedEventArgs e)
-        { 
+        {
+            MainWindow.HomeScreen.Visibility = Visibility.Visible;
+            MainWindow.musicPlayer.Visibility = Visibility.Hidden;
             Canvas.SetZIndex(MainWindow.musicPlayer, 0);
         }
 

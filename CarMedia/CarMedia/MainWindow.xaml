@@ -6,7 +6,7 @@
         
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="Images/MainBackground.jpg"/>
+            <ImageBrush ImageSource="Images/MainBackground1.jpg"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="6*"/>

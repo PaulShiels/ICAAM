@@ -34,7 +34,7 @@ namespace CarMedia
             TimeSpan difference = time.GetUtcOffset(date);
             timer.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed);
             timer.Enabled = true;
-            ///////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////////////            
         }
 
         void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -55,6 +55,9 @@ namespace CarMedia
 
         private void btnMusic_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow.musicPlayer.Visibility = Visibility.Visible;
+            MainWindow.HomeScreen.Visibility = Visibility.Hidden;
+
             if (!Music.mediaPlayerIsPlaying && !Music.mediaPaused && !Music.mediaStopped)
             {
                 //Music musicPlayer = new Music();

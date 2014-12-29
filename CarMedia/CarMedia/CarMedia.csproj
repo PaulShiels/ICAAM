@@ -142,6 +142,15 @@
     <Resource Include="Images\clockFace.jpg" />
     <Resource Include="Images\radio_Icon.png" />
     <Resource Include="Images\MainBackground.jpg" />
+    <Resource Include="Images\MainBackground1.jpg" />
+    <Resource Include="Images\music_Icon.png" />
+    <Resource Include="Images\video_Icon.png" />
+    <Resource Include="Images\internet_Icon.png" />
+    <Resource Include="Images\phone_Icon.png" />
+    <Resource Include="Images\gps_Icon.png" />
+    <Resource Include="Images\camera_Icon.png" />
+    <Resource Include="Images\settings_Icon.png" />
+    <Resource Include="Images\clockFace.png" />
     <Content Include="Music\1. Robert Miles - Children.mp3" />
     <Content Include="Music\13. Paul van Dyk - Home %28Paul van Dyk Remix%29.mp3" />
     <Content Include="Music\8. Motorcycle - As The Rush Comes.mp3" />

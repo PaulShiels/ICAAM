@@ -40,7 +40,8 @@ namespace CarMedia
             MediaFrame.Children.Add(camera);
             Canvas.SetZIndex(MainWindow.musicPlayer, 0);
             Canvas.SetZIndex(MainWindow.camera, 0);
-            Canvas.SetZIndex(MainWindow.HomeScreen, 1);            
+            Canvas.SetZIndex(MainWindow.HomeScreen, 1);
+            musicPlayer.Visibility = Visibility.Hidden;
         }
         
 
