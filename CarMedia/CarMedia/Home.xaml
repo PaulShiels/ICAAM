@@ -56,7 +56,7 @@
         <Grid Width="300" Height="300" Grid.RowSpan="4" Grid.ColumnSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center">
             
             <!--Clock face image found at: http://modculture.typepad.com/photos/uncategorized/2008/10/29/800496_m.jpg-->
-            <Image Source="Images/clockFace.png"></Image>
+            <Image Source="Images/clockFace.png" Margin="-10,0,10,0"></Image>
 
             <!-- Second  -->
             <Rectangle Margin="150,0,149,150" Name="rectangleSecond" Stroke="White" Height="120" VerticalAlignment="Bottom">
@@ -95,7 +95,7 @@
                 </Border.Background>
         </Border>
         
-        <Border BorderBrush="Black" Grid.Row="1" Grid.ColumnSpan="2" BorderThickness="3" CornerRadius="3" Margin="10" >
+        <Border BorderBrush="Black" Grid.Row="1" Grid.ColumnSpan="2" BorderThickness="3" CornerRadius="3" Margin="10" MouseDown="btnMusic_Click">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" Color="#FFABBBD3" Opacity="0.8" Direction="160" ShadowDepth="10" />
             </Border.Effect>
@@ -187,13 +187,13 @@
         </StackPanel>
         <Button x:Name="btnRadio" Grid.Column="1" Content="Radio" Style="{StaticResource buttonStyle}" Click="btnRadio_Click"></Button>
         
-        <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="1">
+        <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="1" MouseDown="btnMusic_Click">
             <StackPanel.Effect>
                 <DropShadowEffect ShadowDepth="3" Direction="180" Color="White" BlurRadius="10" />
             </StackPanel.Effect>
-            <Image Source="Images/music_Icon.png" MaxHeight="80" MouseDown="btnRadio_Click"></Image>            
+            <Image Source="Images/music_Icon.png" MaxHeight="80"></Image>            
         </StackPanel>
-        <Button x:Name="btnMusic" Content="Music" Grid.Column="1" Grid.Row="1" Style="{StaticResource buttonStyle}" Click="btnMusic_Click"></Button>
+        <Button x:Name="btnMusic" Content="Music" Grid.Column="1" Grid.Row="1" Click="btnMusic_Click" Style="{StaticResource buttonStyle}"></Button>
         
         <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="2">
             <StackPanel.Effect>
@@ -227,7 +227,7 @@
         <Image Source="Images/camera_Icon.png" MaxHeight="80" Grid.Column="4" Grid.Row="2" MouseDown="btnRadio_Click"></Image>
         
         <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="3" Grid.Column="3">            
-            <Button x:Name="btnSettings" Content="Settings" Margin="0,0,0,45" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="3" Style="{StaticResource buttonStyle}"></Button>
+            <Button x:Name="btnSettings" Content="Settings" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="3" Style="{StaticResource buttonStyle}"></Button>
         </StackPanel>
         <Image Source="Images/settings_Icon.png" MaxHeight="80" Grid.Column="4" Grid.Row="3" MouseDown="btnRadio_Click"></Image>
     </Grid>

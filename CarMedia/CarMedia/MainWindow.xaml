@@ -22,5 +22,28 @@
         
         <TextBlock Grid.Row="1" Background="Transparent"></TextBlock>
         <TextBlock Grid.Column="1" Background="Transparent"></TextBlock>
+        
+        <Grid Grid.Column="1" Height="750" Grid.RowSpan="2" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Image Source="Images/voltmeter.png"></Image>            
+            <Rectangle Margin="101,50,100,115" Name="rectangleMinute" StrokeThickness="4" Width="4" Height="50" Stroke="Red">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="White" />
+                </Rectangle.Fill>
+                <Rectangle.RenderTransform>
+                    <RotateTransform x:Name="voltHand" CenterX="0" CenterY="70" Angle="50" />
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            
+            
+            <Image Source="Images/voltmeter.png" Grid.Row="1"></Image>
+            <Image Source="Images/voltmeter.png" Grid.Row="2"></Image>
+        </Grid>
+
     </Grid>
 </Window>
