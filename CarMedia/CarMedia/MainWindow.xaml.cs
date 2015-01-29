@@ -28,6 +28,7 @@ namespace CarMedia
         public static Music musicPlayer = new Music();
         public static Camera camera = new Camera();
         public static SerialPort ArduinoPort = new SerialPort();
+        public static Grid gauges = new Grid();
 
         public MainWindow()
         {
@@ -42,6 +43,7 @@ namespace CarMedia
             Canvas.SetZIndex(MainWindow.camera, 0);
             Canvas.SetZIndex(MainWindow.HomeScreen, 1);
             musicPlayer.Visibility = Visibility.Hidden;
+            gauges = grdGauges;
         }
         
 
@@ -55,7 +57,7 @@ namespace CarMedia
 
         private void ConnectSerialPort()
         {
-            ArduinoPort.PortName = "COM7";               
+            ArduinoPort.PortName = "COM4";               
             ArduinoPort.BaudRate = 115200;
             ArduinoPort.Handshake = System.IO.Ports.Handshake.None;
             ArduinoPort.Parity = Parity.None;

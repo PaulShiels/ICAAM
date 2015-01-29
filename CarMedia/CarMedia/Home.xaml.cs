@@ -86,6 +86,7 @@ namespace CarMedia
         private void btnCamera_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.camera.Visibility = System.Windows.Visibility.Visible;
+            MainWindow.gauges.Visibility = System.Windows.Visibility.Hidden;
             Canvas.SetZIndex(MainWindow.camera, 1);
 
             if (MainWindow.camera.Arduino.IsOpen)

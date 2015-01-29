@@ -155,7 +155,7 @@
                 </Border.Background>
         </Border>
         
-        <Border BorderBrush="Black" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" BorderThickness="3" CornerRadius="3" Margin="10" >
+        <Border BorderBrush="Black" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" BorderThickness="3" CornerRadius="3" Margin="10" MouseDown="btnCamera_Click">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" Color="#FFABBBD3" Opacity="0.8" Direction="325" ShadowDepth="10" />
             </Border.Effect>
@@ -224,7 +224,7 @@
         <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="2" Grid.Column="3">            
             <Button x:Name="btnCamera" Content="Camera" Style="{StaticResource buttonStyle}" Click="btnCamera_Click"></Button>
         </StackPanel>
-        <Image Source="Images/camera_Icon.png" MaxHeight="80" Grid.Column="4" Grid.Row="2" MouseDown="btnRadio_Click"></Image>
+        <Image Source="Images/camera_Icon.png" MaxHeight="80" Grid.Column="4" Grid.Row="2" MouseDown="btnCamera_Click"></Image>
         
         <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="3" Grid.Column="3">            
             <Button x:Name="btnSettings" Content="Settings" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="3" Style="{StaticResource buttonStyle}"></Button>

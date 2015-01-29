@@ -23,7 +23,7 @@
         <TextBlock Grid.Row="1" Background="Transparent"></TextBlock>
         <TextBlock Grid.Column="1" Background="Transparent"></TextBlock>
         
-        <Grid Grid.Column="1" Height="750" Grid.RowSpan="2" VerticalAlignment="Top">
+        <Grid Name="grdGauges" Grid.Column="1" Height="750" Grid.RowSpan="2" VerticalAlignment="Top">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>

@@ -44,7 +44,7 @@ namespace CarMedia
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            imgHomeIcon.Source = new BitmapImage(new Uri("C:\\Users\\Paul\\Documents\\Visual Studio 2013\\Projects\\CarMedia\\CarMedia\\Images\\Home_Icon.png"));
+            imgHomeIcon.Source = new BitmapImage(new Uri(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString() + "\\Images\\Home_Icon.png"));
             songName.Header = "Name";
             artist.Header = "Artist";
             album.Header = "Album";

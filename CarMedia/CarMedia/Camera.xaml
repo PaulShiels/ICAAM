@@ -6,8 +6,11 @@
              xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
              mc:Ignorable="d" 
              Loaded="UserControl_Loaded"
-             Width="640" Height="400" Background="Azure">
+             MinWidth="935" MinHeight="465" Background="Azure">
     <Grid>
+        <Button Panel.ZIndex="2" x:Name="HomeBtn" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="Transparent" BorderBrush="Transparent" MaxHeight="40" VerticalAlignment="Top" Click="HomeBtn_Click" HorizontalAlignment="Center">
+            <Image x:Name="imgHomeIcon"></Image>
+        </Button>
         <Image x:Name="imgVideo" Stretch="Fill"/>
         <Label x:Name="txtDistance" FontSize="40" VerticalAlignment="Bottom" Margin="5" Background="CornflowerBlue"></Label>
         <Label Margin="70,0" VerticalAlignment="Bottom" FontSize="40" Content="cm"></Label>

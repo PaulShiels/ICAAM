@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -36,6 +37,9 @@ namespace CarMedia
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            this.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
+            this.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
+            imgHomeIcon.Source = new BitmapImage(new Uri(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString() + "\\Images\\Home_Icon.png"));
             timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             timer.Tick+= new EventHandler(timer_Tick);
             Arduino = MainWindow.ArduinoPort;
@@ -57,6 +61,14 @@ namespace CarMedia
                     txtDistance.Content = Arduino.ReadExisting();                    
                 }
             }
+        }
+
+        private void HomeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.HomeScreen.Visibility = Visibility.Visible;
+            MainWindow.camera.Visibility = Visibility.Hidden;
+            MainWindow.gauges.Visibility = System.Windows.Visibility.Visible;
+            Canvas.SetZIndex(MainWindow.camera, 0);
         }
 
     }
