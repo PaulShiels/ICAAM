@@ -33,8 +33,8 @@
         </Grid.ColumnDefinitions>
         <DockPanel Grid.RowSpan="3" Background="Gray" Width="100" HorizontalAlignment="Left" Margin="12">
             <StackPanel DockPanel.Dock="Top">
-            <TextBlock Name="txtSongs" Text="Songs" Style="{StaticResource MenuTextStyle}"/>
-            <TextBlock Name="txtAlbums" Text="Albums" Style="{StaticResource MenuTextStyle}"/>
+            <TextBlock Name="txtSongs" Text="Songs" MouseDown="txtSongs_MouseDown" Style="{StaticResource MenuTextStyle}"/>
+            <TextBlock Name="txtAlbums" Text="Albums" MouseDown="txtAlbums_MouseDown" Style="{StaticResource MenuTextStyle}"/>
             <TextBlock Name="txtArtists" Text="Artists" Style="{StaticResource MenuTextStyle}"/>
             </StackPanel>
             <Image x:Name="imgAlbumArt" VerticalAlignment="Bottom" Margin="5"/>
@@ -78,6 +78,25 @@
                 <GridViewColumn x:Name="Col5" Width="150" DisplayMemberBinding="{Binding Col5}"/>-->
             <!--</GridView>-->            
         </ListView>
+        <ListBox Name="lbxAlbums" Grid.Column="1" Grid.Row="1" Width="700" Height="330">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                
+                <Image Grid.Column="2" Source="C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\Images\radio_Icon.png"></Image>
+                <Image Grid.Row="1" Grid.Column="3" Source="C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\Images\radio_Icon.png"></Image>
+            </Grid>
+        </ListBox>
         <StackPanel Grid.Column="1" Grid.Row="2" Margin="0,10,0,0">
             <!--<StackPanel Orientation="Horizontal">-->
             <Grid>

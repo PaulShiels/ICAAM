@@ -8,7 +8,13 @@ namespace CarMedia
 {
     public class Artist
     {
-        public int ArtistId { get; set; }
+        //public int ArtistId { get; set; }
         public string ArtistName { get; set; }
+
+        public Artist(string artistName)
+        {
+            //this.ArtistId = artistId;
+            this.ArtistName = artistName;
+        }
     }
 }

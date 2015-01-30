@@ -29,6 +29,7 @@ namespace CarMedia
         private TimeSpan pausedPosition;
         private bool sliderBeingDragged = false;
         private List<Track> lstTracks = new List<Track>();
+        private List<Album> lstAlbums = new List<Album>();
         private MediaElement mePlayer = new MediaElement();
         private DispatcherTimer timer = new DispatcherTimer(), sliderChanging = new DispatcherTimer();
         private Track trackPlaying;
@@ -70,15 +71,44 @@ namespace CarMedia
             timer.Start();
                         
             int id = 0;
+            string previousTracksAlbum = "";
             foreach (var file in Directory.GetFiles("C:\\Music\\"))
             {
                 s = new MediaPlayer();
                 s.Open(new Uri(file, UriKind.Relative));
                 //s.ScrubbingEnabled = true;
                 songs.Add(s);
+
+                TagLib.File tagFile = TagLib.File.Create(file);
+
+                System.Drawing.Image AlbumArt = null;
+                if (tagFile.Tag.Pictures.Length >= 1)
+                {
+                    var bin = (byte[])(tagFile.Tag.Pictures[0].Data.Data);
+                    AlbumArt = System.Drawing.Image.FromStream(new MemoryStream(bin)).GetThumbnailImage(100, 100, null, IntPtr.Zero);
+                }
+
+                Track track = new Track(
+                    tagFile.Tag.JoinedPerformers,
+                    tagFile.Tag.Album,
+                    AlbumArt,
+                    tagFile.Tag.Title,
+                    id
+                    );
                 
+                //this.TrackName = tagFile.Tag.Title;
+                //this.ArtistName = tagFile.Tag.JoinedPerformers;
+                //this.AlbumName = tagFile.Tag.Album;
+
+                //if (tagFile.Tag.Pictures.Length >= 1)
+                //{
+                //    var bin = (byte[])(tagFile.Tag.Pictures[0].Data.Data);
+                //    this.AlbumArt = Image.FromStream(new MemoryStream(bin)).GetThumbnailImage(100, 100, null, IntPtr.Zero);
+                //}
+                
+
                 //TagLib.File tagFile = TagLib.File.Create(file);
-                Track track = new Track(file, id);
+                //Track track = new Track(file, id);
                 //track.TrackId = id;
                 id++;
                 //track.TrackName = tagFile.Tag.Title;
@@ -91,12 +121,20 @@ namespace CarMedia
                 //sng.album = 0;
                 //sng.artist = s.NaturalDuration.ToString();
                 lstTracks.Add(track);
-
+                
+                //Check if this tracks album has the same name as the previous tracks album
+                if (track.AlbumName != previousTracksAlbum)
+                {
+                    //Let this be the previous track now
+                    previousTracksAlbum = track.AlbumName;
+                    //Add the Album details to the album view
+                    //populateAlbumView(track.AlbumName, track.AlbumArt);
+                }
             }
-
+            populateAlbumView();
             lvSelectionDetails.ItemsSource = lstTracks;
         }
-               
+                      
 
         private void timer_Tick(object sender, EventArgs e)
         {
@@ -338,7 +376,63 @@ namespace CarMedia
             Canvas.SetZIndex(MainWindow.musicPlayer, 0);
         }
 
-        
+        private void populateAlbumView()//string AlbumName, System.Drawing.Image AlbumArt)
+        {
+            //var albumNames = (from a in lstTracks
+            //             select a.AlbumName).Distinct();
+            //var albumArts = (from a in lstTracks
+            //                  select a.AlbumArt).Distinct();
+            //foreach (var album in albumNames)
+            //{
+            //    StackPanel sp = new StackPanel();
+            //    if (album.AlbumArt != null)
+            //    {
+            //        Image i = ConvertDrawingImageToWPFImage(album.AlbumArt);
+            //        i.Height = 50;
+            //        i.Width = 50;
+            //        sp.Children.Add(i);
+            //    }
+            //}
+
+            //foreach (var art in )
+            //{
+            //    if (album.AlbumName != null)
+            //    {
+            //        Label l = new Label();
+            //        l.Content = album.AlbumName;
+            //        sp.Children.Add(l);
+            //    }
+            //    lbxAlbums.Items.Add(sp);
+            //}
+
+        }
+
+        private Image ConvertDrawingImageToWPFImage(System.Drawing.Image gdiImg)
+        {
+            //I copied this convert method directly from:  http://rohitagarwal24.blogspot.ie/2011/04/convert-from-systemdrawingimage-to.html
+            System.Windows.Controls.Image img = new System.Windows.Controls.Image();
+
+            //convert System.Drawing.Image to WPF image
+            System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(gdiImg);
+            IntPtr hBitmap = bmp.GetHbitmap();
+            System.Windows.Media.ImageSource WpfBitmap = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+
+            img.Source = WpfBitmap;
+            img.Width = 500;
+            img.Height = 600;
+            img.Stretch = System.Windows.Media.Stretch.Fill;
+            return img;
+        }
+
+        private void txtSongs_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            lvSelectionDetails.Visibility = Visibility.Hidden;
+        }
+
+        private void txtAlbums_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            lvSelectionDetails.Visibility = Visibility.Visible;
+        }
     }
 
     
