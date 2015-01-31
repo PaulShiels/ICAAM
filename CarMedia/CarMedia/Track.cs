@@ -9,16 +9,19 @@ using TagLib;
 
 namespace CarMedia
 {
-    public class Track : Album
+    public class Track
     {
         public int TrackId { get; set; }
         public string TrackName { get; set; }
+        public Album Album { get; set; }
+        public Artist Artist { get; set; }
 
-        public Track(string artistName, string AlbumName, Image AlbumArt, string TrackName, int id)
-            :base(artistName, AlbumName, AlbumArt)
+        public Track(Artist artist, Album album, string TrackName, int id)
         {
             this.TrackName = TrackName;
             this.TrackId = id;
+            Album = album;
+            Artist = artist;
         }
     }
 }

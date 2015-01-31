@@ -88,24 +88,8 @@ namespace CarMedia
                     AlbumArt = System.Drawing.Image.FromStream(new MemoryStream(bin)).GetThumbnailImage(100, 100, null, IntPtr.Zero);
                 }
 
-                Track track = new Track(
-                    tagFile.Tag.JoinedPerformers,
-                    tagFile.Tag.Album,
-                    AlbumArt,
-                    tagFile.Tag.Title,
-                    id
-                    );
-                
-                //this.TrackName = tagFile.Tag.Title;
-                //this.ArtistName = tagFile.Tag.JoinedPerformers;
-                //this.AlbumName = tagFile.Tag.Album;
-
-                //if (tagFile.Tag.Pictures.Length >= 1)
-                //{
-                //    var bin = (byte[])(tagFile.Tag.Pictures[0].Data.Data);
-                //    this.AlbumArt = Image.FromStream(new MemoryStream(bin)).GetThumbnailImage(100, 100, null, IntPtr.Zero);
-                //}
-                
+                Track track = new Track(new Artist(tagFile.Tag.JoinedPerformers), new Album(tagFile.Tag.JoinedPerformers, tagFile.Tag.Album, AlbumArt), tagFile.Tag.Title, id);
+                                
 
                 //TagLib.File tagFile = TagLib.File.Create(file);
                 //Track track = new Track(file, id);
@@ -123,15 +107,15 @@ namespace CarMedia
                 lstTracks.Add(track);
                 
                 //Check if this tracks album has the same name as the previous tracks album
-                if (track.AlbumName != previousTracksAlbum)
+                //if (track.AlbumName != previousTracksAlbum)
                 {
                     //Let this be the previous track now
-                    previousTracksAlbum = track.AlbumName;
+                   // previousTracksAlbum = track.AlbumName;
                     //Add the Album details to the album view
                     //populateAlbumView(track.AlbumName, track.AlbumArt);
                 }
             }
-            populateAlbumView();
+            buildAndPopulateAlbumView();
             lvSelectionDetails.ItemsSource = lstTracks;
         }
                       
@@ -226,9 +210,9 @@ namespace CarMedia
         private void UpdateNowPlayingPage()
         {
             //Format the text to display in the now playing window
-            npSongTitle.Text = trackPlaying.TrackName.Length > 37 ? trackPlaying.TrackName.Substring(0, 34) + "..." : trackPlaying.TrackName;
-            npArtistName.Text = trackPlaying.ArtistName.Length > 50 ? trackPlaying.ArtistName.Substring(0, 47) + "..." : trackPlaying.ArtistName;
-            npAlbumTitle.Text = trackPlaying.AlbumName.Length > 50 ? trackPlaying.AlbumName.Substring(0, 47) + "..." : trackPlaying.AlbumName;
+            //npSongTitle.Text = trackPlaying.TrackName.Length > 37 ? trackPlaying.TrackName.Substring(0, 34) + "..." : trackPlaying.TrackName;
+            //npArtistName.Text = trackPlaying.ArtistName.Length > 50 ? trackPlaying.ArtistName.Substring(0, 47) + "..." : trackPlaying.ArtistName;
+            //npAlbumTitle.Text = trackPlaying.AlbumName.Length > 50 ? trackPlaying.AlbumName.Substring(0, 47) + "..." : trackPlaying.AlbumName;
         }
 
         #region unused
@@ -376,35 +360,79 @@ namespace CarMedia
             Canvas.SetZIndex(MainWindow.musicPlayer, 0);
         }
 
-        private void populateAlbumView()//string AlbumName, System.Drawing.Image AlbumArt)
+        private void buildAndPopulateAlbumView()//string AlbumName, System.Drawing.Image AlbumArt)
         {
-            //var albumNames = (from a in lstTracks
-            //             select a.AlbumName).Distinct();
-            //var albumArts = (from a in lstTracks
-            //                  select a.AlbumArt).Distinct();
-            //foreach (var album in albumNames)
-            //{
-            //    StackPanel sp = new StackPanel();
-            //    if (album.AlbumArt != null)
-            //    {
-            //        Image i = ConvertDrawingImageToWPFImage(album.AlbumArt);
-            //        i.Height = 50;
-            //        i.Width = 50;
-            //        sp.Children.Add(i);
-            //    }
+            List<Album> albums = ((from a in lstTracks
+                         select a.Album).ToList()).GroupBy(i => i.AlbumName).Select(group => group.First()).ToList();
+
+            
+            //Count the albums
+            //If theres more than 0
+            //start first row
+            //Create grid row with 4 columns
+            //Give each an id
+            //If theres more than 4
+            //Create another row with 4 colums
+            //Give each column an id
+
+            Grid grdAlbums = new Grid();
+            
+            for (int i = 0; i < 4; i++)
+            {
+                int colId = 0;
+                ColumnDefinition column = new ColumnDefinition();
+                //column.Name = colId.ToString(); ;
+                colId++;
+                grdAlbums.ColumnDefinitions.Add(column);
+            }
+            
+            for (int i = 0; i < Math.Round(Convert.ToDouble(albums.Count / 4))+1; i++)
+            {
+                int rowId = 0;
+                RowDefinition row = new RowDefinition();
+                //row.Name = row.ToString();
+                row.Height = new GridLength(300);
+                rowId++;
+                grdAlbums.RowDefinitions.Add(row);
+            }
+            //if(albums.Count % 4 > 0)
+            //{                
             //}
 
-            //foreach (var art in )
-            //{
-            //    if (album.AlbumName != null)
-            //    {
-            //        Label l = new Label();
-            //        l.Content = album.AlbumName;
-            //        sp.Children.Add(l);
-            //    }
-            //    lbxAlbums.Items.Add(sp);
-            //}
+            //populate the grid with the albums
+            int xLocation = 0, yLocation = 0;
+            foreach (var a in albums)
+            {
+                StackPanel sp = new StackPanel();
+                if (a.AlbumArt != null)
+                {
+                    Image i = ConvertDrawingImageToWPFImage(a.AlbumArt);
+                    i.Height = 150;
+                    i.Width = 150;
+                    sp.Children.Add(i);
+                }
+                if (a.AlbumName != null)
+                {
+                    Label l = new Label();
+                    l.Content = a.AlbumName;
+                    sp.Children.Add(l);
+                }
+                //lbxAlbums.Items.Add(sp);
+                grdAlbums.Children.Add(sp);
+                Grid.SetColumn(sp, xLocation);
+                Grid.SetRow(sp, yLocation);
+                xLocation++;
 
+                //check if row has been filled
+                if (xLocation==4)
+                {
+                    xLocation = 0;
+                    yLocation++;                    
+                }
+            }
+
+            //Add the grid to the UI
+            lbxAlbums.Children.Add(grdAlbums);
         }
 
         private Image ConvertDrawingImageToWPFImage(System.Drawing.Image gdiImg)

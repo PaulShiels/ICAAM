@@ -78,8 +78,8 @@
                 <GridViewColumn x:Name="Col5" Width="150" DisplayMemberBinding="{Binding Col5}"/>-->
             <!--</GridView>-->            
         </ListView>
-        <ListBox Name="lbxAlbums" Grid.Column="1" Grid.Row="1" Width="700" Height="330">
-            <Grid>
+        <Grid Name="lbxAlbums" Grid.Column="1" Grid.Row="1" Width="700" Height="330">
+            <!--<Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -95,8 +95,8 @@
                 
                 <Image Grid.Column="2" Source="C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\Images\radio_Icon.png"></Image>
                 <Image Grid.Row="1" Grid.Column="3" Source="C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\Images\radio_Icon.png"></Image>
-            </Grid>
-        </ListBox>
+            </Grid>-->
+        </Grid>
         <StackPanel Grid.Column="1" Grid.Row="2" Margin="0,10,0,0">
             <!--<StackPanel Orientation="Horizontal">-->
             <Grid>

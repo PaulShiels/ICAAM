@@ -10,6 +10,8 @@ namespace CarMedia
     {
         //public int ArtistId { get; set; }
         public string ArtistName { get; set; }
+        public ICollection<Album> Album { get; set; }
+        public ICollection<Track> Tracks { get; set; }
 
         public Artist(string artistName)
         {
