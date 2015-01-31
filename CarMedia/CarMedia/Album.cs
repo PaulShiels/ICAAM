@@ -20,6 +20,7 @@ namespace CarMedia
         {
             this.AlbumName = AlbumName;
             this.AlbumArt = AlbumArt;
+            Artist = new Artist(artistName);
         }        
     }
 }

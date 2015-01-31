@@ -54,7 +54,7 @@
             <TextBlock x:Name="npAlbumTitle" HorizontalAlignment="Center" FontSize="16" Margin="0,5" Foreground="CornflowerBlue"></TextBlock>
         </StackPanel>            
             </Grid>
-        <ListView x:Name="lvSelectionDetails" Visibility="Visible" Grid.Row="1" Grid.Column="1" Margin="0,15,15,0" Background="Gray" SelectionChanged="lvSelectionDetails_SelectionChanged" MouseDoubleClick="lvSelectionDetails_MouseDoubleClick" >
+        <ListView x:Name="lvSongs" Visibility="Visible" Grid.Row="1" Grid.Column="1" Margin="0,15,15,0" Background="Gray" SelectionChanged="lvSongs_SelectionChanged" MouseDoubleClick="lvSongs_MouseDoubleClick" >
             <!--<GridView>-->
             <ListView.View>
                 <GridView>
@@ -78,7 +78,7 @@
                 <GridViewColumn x:Name="Col5" Width="150" DisplayMemberBinding="{Binding Col5}"/>-->
             <!--</GridView>-->            
         </ListView>
-        <Grid Name="lbxAlbums" Grid.Column="1" Grid.Row="1" Width="700" Height="330">
+        <ScrollViewer Name="scvAlbums" Visibility="Hidden" Grid.RowSpan="2" Grid.Column="1" Grid.Row="1" Width="700" Height="380" VerticalScrollBarVisibility="Hidden">
             <!--<Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -96,8 +96,8 @@
                 <Image Grid.Column="2" Source="C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\Images\radio_Icon.png"></Image>
                 <Image Grid.Row="1" Grid.Column="3" Source="C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\Images\radio_Icon.png"></Image>
             </Grid>-->
-        </Grid>
-        <StackPanel Grid.Column="1" Grid.Row="2" Margin="0,10,0,0">
+        </ScrollViewer>
+        <StackPanel Name="spPlayControls" Grid.Column="1" Grid.Row="2" Margin="0,10,0,0">
             <!--<StackPanel Orientation="Horizontal">-->
             <Grid>
                 <Grid.ColumnDefinitions>
