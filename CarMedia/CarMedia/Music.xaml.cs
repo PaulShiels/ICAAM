@@ -33,6 +33,36 @@ namespace CarMedia
         private MediaElement mePlayer = new MediaElement();
         private DispatcherTimer timer = new DispatcherTimer(), sliderChanging = new DispatcherTimer();
         private Track trackPlaying;
+        private enum MakeVisible { None, AllSongs, AlbumsGrid, AlbumTracks, Artists, ArtistsTracks, NowPlaying, PlayControls };
+        //private MakeVisible viewToMakeVisible = MakeVisible.AllSongs;
+        //private enum MusicPlayerReturnToWindow { AllSongs, AlbumsGrid, AlbumTracks, Artists, ArtistsTracks, NowPlaying };
+        //private List<MakeVisible> returnToWindow = new List<MakeVisible>();//List is used to keep the history of the last 2 views
+        private List<MakeVisible> _returnToWindow = new List<MakeVisible>();
+        private bool removeRtwIndexOne = true;
+        private List<MakeVisible> returnToWindow {
+            get
+            {
+                if (_returnToWindow.Count > 1 && removeRtwIndexOne && _returnToWindow[0].ToString() == _returnToWindow[1].ToString())
+                {
+                    {
+                        _returnToWindow.RemoveAt(1);
+                    }
+                }
+                
+                if (_returnToWindow.Count>3)
+                {
+                    _returnToWindow.RemoveRange(2, _returnToWindow.Count - 2);
+                    
+                }
+
+                removeRtwIndexOne = true; ;
+                return _returnToWindow;
+            }
+            set
+            {
+                
+            }
+        }        
         //<MediaElement Name="mePlayer" Grid.Row="1" LoadedBehavior="Manual" Stretch="None" />
 
         public Music()
@@ -61,7 +91,6 @@ namespace CarMedia
             btnPlay.IsEnabled = false;
             btnStop.IsEnabled = false;
             btnPlay.Content = "Play";
-            BtnBack.Visibility = Visibility.Hidden;
 
             sldrTrack.IsMoveToPointEnabled = true;
 
@@ -93,7 +122,7 @@ namespace CarMedia
                 id++;
                 lstTracks.Add(track);
             }
-                        
+
             lvSongs.ItemsSource = lstTracks;
             buildAndPopulateAlbumView();
         }
@@ -137,30 +166,33 @@ namespace CarMedia
             }
         }
 
-        private void lvSongs_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            trackPlaying = (Track)lvSongs.SelectedValue;
-            btnStop.IsEnabled = true;
-            PlaySelectedSong(trackPlaying.TrackId);
-            spPlayControls.Visibility = Visibility.Visible;
-            lblNowShowing.Visibility = Visibility.Hidden;
-            spPlayControls.Visibility = Visibility.Visible;
-        }
-
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            spPlayControls.Visibility = Visibility.Hidden;
-            if (nowPlaying.Visibility == Visibility.Visible && lvSongs.Visibility == Visibility.Hidden)
+            if (returnToWindow.Count != 0)
             {
-                nowPlaying.Visibility = Visibility.Hidden;
-                lvSongs.Visibility = Visibility.Visible;
+                if (returnToWindow.Count == 1)
+                {
+                    SetViewsVisibility(returnToWindow[0]);
+                }
+                else
+                {
+                    SetViewsVisibility(returnToWindow[1]);
+                }
             }
-            else if(mediaPlayerIsPlaying || mediaPaused)
-            {
-                nowPlaying.Visibility = Visibility.Visible;
-                spPlayControls.Visibility = Visibility.Visible;
-                lvSongs.Visibility = Visibility.Hidden;
-            }
+            //spPlayControls.Visibility = Visibility.Hidden;
+            //if (nowPlaying.Visibility == Visibility.Visible && lvSongs.Visibility == Visibility.Hidden)
+            //{
+            //    nowPlaying.Visibility = Visibility.Hidden;
+            //    lvSongs.Visibility = Visibility.Visible;
+            //}
+            //else if (mediaPlayerIsPlaying || mediaPaused)
+            //{
+            //    nowPlaying.Visibility = Visibility.Visible;
+            //    spPlayControls.Visibility = Visibility.Visible;
+            //    lvSongs.Visibility = Visibility.Hidden;
+            //}
+
+
             //else if (nowPlaying.Visibility == Visibility.Visible && scvAlbums.Visibility == Visibility.Hidden)
             //{
             //    nowPlaying.Visibility = Visibility.Hidden;
@@ -183,12 +215,12 @@ namespace CarMedia
                     s.Play();
                     mediaPlayerIsPlaying = true;
                     prbrSong.Maximum = s.NaturalDuration.TimeSpan.TotalSeconds;
-                    sldrTrack.Maximum = prbrSong.Maximum;
-
-                    lvSongs.Visibility = Visibility.Hidden;
-                    nowPlaying.Visibility = Visibility.Visible;
-                    UpdateNowPlayingPage();
-                }
+                    sldrTrack.Maximum = prbrSong.Maximum;                    
+                    //lvSongs.Visibility = Visibility.Hidden;
+                    //nowPlaying.Visibility = Visibility.Visible;
+                    //returnToWindow.Insert(0, MakeVisible.NowPlaying);
+                    UpdateNowPlayingPage();                    
+                }                
             }
             catch
             { }
@@ -239,6 +271,75 @@ namespace CarMedia
         private void lvSongs_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             btnPlay.IsEnabled = true;
+            trackPlaying = (Track)lvSongs.SelectedValue;
+            btnStop.IsEnabled = true;
+            PlaySelectedSong(trackPlaying.TrackId);
+            //spPlayControls.Visibility = Visibility.Visible;
+            //lblNowShowing.Visibility = Visibility.Hidden;
+            //spPlayControls.Visibility = Visibility.Visible;
+            returnToWindow.Insert(0, MakeVisible.AllSongs);
+            SetViewsVisibility(MakeVisible.NowPlaying);
+        }
+
+        private void SetViewsVisibility(MakeVisible view)
+        {
+            switch (view)
+            {
+                case MakeVisible.None:
+                    {
+                        lvSongs.Visibility = Visibility.Hidden;
+                        scvAlbums.Visibility = Visibility.Hidden;
+                        lbxAlbumsTracks.Visibility = Visibility.Hidden;
+                        nowPlaying.Visibility = Visibility.Hidden;
+                        spPlayControls.Visibility = Visibility.Hidden;
+                        break;
+                    }
+                case MakeVisible.AllSongs:
+                    {
+                        lvSongs.Visibility = Visibility.Visible;
+                        scvAlbums.Visibility = Visibility.Hidden;
+                        lbxAlbumsTracks.Visibility = Visibility.Hidden;
+                        nowPlaying.Visibility = Visibility.Hidden;
+                        spPlayControls.Visibility = Visibility.Hidden;
+                        break;
+                    }
+                case MakeVisible.AlbumsGrid:
+                    {
+                        lvSongs.Visibility = Visibility.Hidden;
+                        scvAlbums.Visibility = Visibility.Visible;
+                        lbxAlbumsTracks.Visibility = Visibility.Hidden;
+                        nowPlaying.Visibility = Visibility.Hidden;
+                        spPlayControls.Visibility = Visibility.Hidden;
+                        break;
+                    }
+                case MakeVisible.AlbumTracks:
+                    {
+                        lvSongs.Visibility = Visibility.Hidden;
+                        scvAlbums.Visibility = Visibility.Hidden;
+                        lbxAlbumsTracks.Visibility = Visibility.Visible;
+                        nowPlaying.Visibility = Visibility.Hidden;
+                        spPlayControls.Visibility = Visibility.Hidden;
+                        break;
+                    }
+                case MakeVisible.Artists:
+                    {
+
+                        break;
+                    }
+                case MakeVisible.ArtistsTracks:
+                    {
+                        break;
+                    }
+                case MakeVisible.NowPlaying:
+                    {
+                        lvSongs.Visibility = Visibility.Hidden;
+                        scvAlbums.Visibility = Visibility.Hidden;
+                        lbxAlbumsTracks.Visibility = Visibility.Hidden;
+                        nowPlaying.Visibility = Visibility.Visible;
+                        spPlayControls.Visibility = Visibility.Visible;
+                        break;
+                    }                
+            }
         }
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)
@@ -344,6 +445,7 @@ namespace CarMedia
         {
             MainWindow.HomeScreen.Visibility = Visibility.Visible;
             MainWindow.musicPlayer.Visibility = Visibility.Hidden;
+            //SetViewsVisibility(MakeVisible.None);
             Canvas.SetZIndex(MainWindow.musicPlayer, 0);
         }
 
@@ -351,8 +453,7 @@ namespace CarMedia
         {
             List<Album> albums = ((from a in lstTracks
                          select a.Album).ToList()).GroupBy(i => i.AlbumName).Select(group => group.First()).ToList();
-
-            
+                        
             //Count the albums
             //If theres more than 0
             //start first row
@@ -471,6 +572,7 @@ namespace CarMedia
             //Get the clicked stackpanel
             //Get the album name
             StackPanel clickedAlbum = (StackPanel)sender;
+
             string albumName = ((Label)clickedAlbum.Children[1]).Content.ToString();
             lstTracks = (from t in lstTracks
                          where t.Album.AlbumName == albumName
@@ -479,36 +581,49 @@ namespace CarMedia
             //Add the album art, album name and artist
             StackPanel spHeader = new StackPanel();
             spHeader.Orientation = Orientation.Horizontal;
-            Image i = new Image();
-            i = ConvertDrawingImageToWPFImage(lstTracks[0].Album.AlbumArt);
-            i.Height = 150;
-            i.Width = 150;
-            i.Margin = new Thickness(20, 10, 10, 20);
-            spHeader.Children.Add(i);
+            if (lstTracks[0].Album.AlbumArt != null)
+            {
+                Image i = new Image();
+                i = ConvertDrawingImageToWPFImage(lstTracks[0].Album.AlbumArt);
+                i.Height = 150;
+                i.Width = 150;
+                i.Margin = new Thickness(20, 10, 10, 20);
+                spHeader.Children.Add(i);
+            }
             StackPanel spAlbumTitleAndArtist = new StackPanel();
-            Label lblAlbumName = new Label() { Content = albumName, FontSize=24, Foreground = new SolidColorBrush(Colors.White) };
-            Label lblAlbumArtist = new Label() { Content = ((Label)clickedAlbum.Children[2]).Content.ToString(), FontSize=18, Foreground = new SolidColorBrush(Colors.White) };
+            Label lblAlbumName = new Label() { Content = albumName, FontSize = 24, Foreground = new SolidColorBrush(Colors.White) };
+            Label lblAlbumArtist = new Label() { Content = ((Label)clickedAlbum.Children[2]).Content.ToString(), FontSize = 18, Foreground = new SolidColorBrush(Colors.White) };
             spAlbumTitleAndArtist.VerticalAlignment = VerticalAlignment.Center;
             spAlbumTitleAndArtist.Children.Add(lblAlbumName);
             spAlbumTitleAndArtist.Children.Add(lblAlbumArtist);
             spHeader.Children.Add(spAlbumTitleAndArtist);
-            lbxAlbumsTracks.Items.Add(spHeader);
 
-            foreach (var track in lstTracks)
+            StackPanel spAlbumTrack = new StackPanel();
+            if (lbxAlbumsTracks.Items.Count ==0)
             {
-                StackPanel spAlbumTrack = new StackPanel();
-                spAlbumTrack.Margin = new Thickness(0, 0, 0, 15);
-                //Create the Track name label
-                Label lblTrackName = new Label() { Content = track.TrackName, FontSize = 28, Foreground = new SolidColorBrush(Colors.White) };
-                spAlbumTrack.Children.Add(lblTrackName);
-                //Create the Artist name label
-                Label lblArtist = new Label() { Content = track.Artist.ArtistName, FontSize = 18, Foreground = new SolidColorBrush(Colors.Gray), Margin = new Thickness(0, -10, 0, 0) };
-                spAlbumTrack.Children.Add(lblArtist);
-                //Add the stackpanel to the listbox of Tracks
-                lbxAlbumsTracks.Items.Add(spAlbumTrack);
-                lbxAlbumsTracks.Visibility = Visibility.Visible;
-                scvAlbums.Visibility = Visibility.Hidden;
+                //StackPanel l = (StackPanel)lbxAlbumsTracks.Items.GetItemAt(0);
+                lbxAlbumsTracks.Items.Add(spHeader);
+
+                foreach (var track in lstTracks)
+                {
+                    spAlbumTrack = new StackPanel();
+                    spAlbumTitleAndArtist.Name = "spAlbumTracks";
+                    spAlbumTrack.Margin = new Thickness(0, 0, 0, 15);
+                    //Create the Track name label
+                    Label lblTrackName = new Label() { Content = track.TrackName, FontSize = 28, Foreground = new SolidColorBrush(Colors.White) };
+                    spAlbumTrack.Children.Add(lblTrackName);
+                    //Create the Artist name label
+                    Label lblArtist = new Label() { Content = track.Artist.ArtistName, FontSize = 18, Foreground = new SolidColorBrush(Colors.Gray), Margin = new Thickness(0, -10, 0, 0) };
+                    spAlbumTrack.Children.Add(lblArtist);
+                    //Add the stackpanel to the listbox of Tracks
+                    lbxAlbumsTracks.Items.Add(spAlbumTrack);
+                    //lbxAlbumsTracks.Visibility = Visibility.Visible;
+                    //scvAlbums.Visibility = Visibility.Hidden;
+                }
             }
+            removeRtwIndexOne = false;
+            returnToWindow.Insert(0, MakeVisible.AlbumsGrid);
+            SetViewsVisibility(MakeVisible.AlbumTracks);
         }
 
         private Image ConvertDrawingImageToWPFImage(System.Drawing.Image gdiImg)
@@ -530,18 +645,44 @@ namespace CarMedia
 
         private void txtSongs_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            lvSongs.Visibility = Visibility.Visible;
-            scvAlbums.Visibility = Visibility.Hidden;
-            spPlayControls.Visibility = Visibility.Visible;
+            //lvSongs.Visibility = Visibility.Visible;
+            //scvAlbums.Visibility = Visibility.Hidden;
+            returnToWindow.Insert(0, MakeVisible.AllSongs);
+            SetViewsVisibility(MakeVisible.AllSongs);
+            //spPlayControls.Visibility = Visibility.Visible;
         }
 
         private void txtAlbums_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            spPlayControls.Visibility = Visibility.Hidden;
-            scvAlbums.Visibility = Visibility.Visible;
-            lvSongs.Visibility = Visibility.Hidden;
-            nowPlaying.Visibility = Visibility.Hidden;
+            //spPlayControls.Visibility = Visibility.Hidden;
+            //scvAlbums.Visibility = Visibility.Visible;
+            //lvSongs.Visibility = Visibility.Hidden;
+            //nowPlaying.Visibility = Visibility.Hidden;            
+            returnToWindow.Insert(0, MakeVisible.AlbumsGrid);
+            SetViewsVisibility(MakeVisible.AlbumsGrid);
         }
+
+        private void lbxAlbumsTracks_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StackPanel selectedStackpanel = (StackPanel)((ListBox)sender).SelectedItem;
+            try
+            {
+                var IdOfTrackToPlay = (from t in lstTracks
+                                       where t.TrackName == ((Label)selectedStackpanel.Children[0]).Content.ToString() && t.Artist.ArtistName == ((Label)selectedStackpanel.Children[1]).Content.ToString()
+                                       select t.TrackId).FirstOrDefault();
+                trackPlaying = lstTracks[IdOfTrackToPlay];
+                PlaySelectedSong(IdOfTrackToPlay);
+                returnToWindow.Insert(0, MakeVisible.AlbumTracks);
+                returnToWindow.Insert(0, MakeVisible.AlbumTracks);
+                SetViewsVisibility(MakeVisible.NowPlaying);
+            }
+            catch { }
+        }
+
+        private void lvSongs_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }        
     }
 
     
