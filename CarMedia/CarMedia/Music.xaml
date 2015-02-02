@@ -46,7 +46,7 @@
         <Button x:Name="BtnBack" Grid.Column="1"  Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Left" MaxHeight="50" Click="BtnBack_Click">
             <Image Source="Images\back_Arrow.png"></Image>
         </Button>
-        <Label x:Name="lblNowShowing" FontSize="28" Foreground="White" MaxWidth="200" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="50,0,0,0" ></Label>
+        <!--<Label x:Name="lblNowShowing" FontSize="28" Foreground="White" MaxWidth="200" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="50,0,0,0" ></Label>-->
         <Grid x:Name="nowPlaying" Visibility="Hidden" Grid.Row="1" Grid.Column="1" Margin="0,15,15,0" Opacity="0.7" Background="#D8000000">
         <StackPanel  >
             <TextBlock Text="Now Playing" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="CornflowerBlue" FontSize="20" FontWeight="Bold"></TextBlock>
@@ -55,7 +55,8 @@
             <TextBlock x:Name="npAlbumTitle" HorizontalAlignment="Center" FontSize="16" Margin="0,5" Foreground="CornflowerBlue"></TextBlock>
         </StackPanel>            
             </Grid>
-        <ListView x:Name="lvSongs" Grid.RowSpan="2" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="1" Grid.Column="1" Margin="0,10,15,10" SelectionChanged="lvSongs_SelectionChanged" Opacity="0.7" Background="#D8000000" >
+        <ListBox x:Name="lbxAllTracks" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Width="700" Height="380" ScrollViewer.VerticalScrollBarVisibility="Hidden" Opacity="0.7" Background="#D8000000" SelectionChanged="lbxAllTracks_SelectionChanged"></ListBox>
+        <ListView x:Name="lvSongs" Grid.RowSpan="2" Visibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="1" Grid.Column="1" Margin="0,10,15,10" SelectionChanged="lvSongs_SelectionChanged" Opacity="0.7" Background="#D8000000" >
             <!--<GridView>-->
             <ListView.View>
                 <GridView>
