@@ -10,6 +10,7 @@ namespace CarMedia
     {
         //public int ArtistId { get; set; }
         public string ArtistName { get; set; }
+        public string ArtistShortName { get; set; }
         public ICollection<Album> Album { get; set; }
         public ICollection<Track> Tracks { get; set; }
 
@@ -17,6 +18,7 @@ namespace CarMedia
         {
             //this.ArtistId = artistId;
             this.ArtistName = artistName;
+            this.ArtistShortName = this.ArtistName.Length > 23 ? this.ArtistName.Substring(0, 20) + "..." : this.ArtistName;
         }
     }
 }

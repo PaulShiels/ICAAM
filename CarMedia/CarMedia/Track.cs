@@ -15,10 +15,12 @@ namespace CarMedia
         public string TrackName { get; set; }
         public Album Album { get; set; }
         public Artist Artist { get; set; }
+        public string JoinedArtists { get; set; }
 
-        public Track(Artist artist, Album album, string TrackName, int id)
+        public Track(Artist artist, string joinedArtists, Album album, string TrackName, int id)
         {
             this.TrackName = TrackName;
+            this.JoinedArtists = joinedArtists;
             this.TrackId = id;
             Album = album;
             Artist = artist;

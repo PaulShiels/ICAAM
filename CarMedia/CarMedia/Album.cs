@@ -12,6 +12,7 @@ namespace CarMedia
     {
         public int AlbumId { get; set; }
         public string AlbumName { get; set; }
+        public string AlbumShortName { get; set; }
         public Image AlbumArt { get; set;}
         public Artist Artist { get; set; }
         public ICollection<Track> Tracks { get; set; }
@@ -19,6 +20,7 @@ namespace CarMedia
         public Album(string artistName, string AlbumName, Image AlbumArt)
         {
             this.AlbumName = AlbumName;
+            this.AlbumShortName = this.AlbumName.Length > 22 ? this.AlbumName.Substring(0, 19) + "..." : this.AlbumName;
             this.AlbumArt = AlbumArt;
             Artist = new Artist(artistName);
         }        

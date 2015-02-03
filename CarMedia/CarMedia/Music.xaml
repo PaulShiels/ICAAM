@@ -56,8 +56,8 @@
         </StackPanel>            
             </Grid>
         <ListBox x:Name="lbxAllTracks" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Width="700" Height="380" ScrollViewer.VerticalScrollBarVisibility="Hidden" Opacity="0.7" Background="#D8000000" SelectionChanged="lbxAllTracks_SelectionChanged"></ListBox>
-        <ListView x:Name="lvSongs" Grid.RowSpan="2" Visibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="1" Grid.Column="1" Margin="0,10,15,10" SelectionChanged="lvSongs_SelectionChanged" Opacity="0.7" Background="#D8000000" >
-            <!--<GridView>-->
+        <!--<ListView x:Name="lvSongs" Grid.RowSpan="2" Visibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="1" Grid.Column="1" Margin="0,10,15,10" SelectionChanged="lvSongs_SelectionChanged" Opacity="0.7" Background="#D8000000" >
+            --><!--<GridView>--><!--
             <ListView.View>
                 <GridView>
                     
@@ -70,7 +70,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     
-                    <!--<GridViewColumn x:Name="album" DisplayMemberBinding="{Binding Artist.AlbumName}" />-->                    
+                    --><!--<GridViewColumn x:Name="album" DisplayMemberBinding="{Binding Artist.AlbumName}" />--><!--                    
                     <GridViewColumn x:Name="artist">
                         <GridViewColumnHeader Visibility="Hidden"></GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
@@ -78,21 +78,21 @@
                                 <TextBlock x:Name="Txt" FontSize="18" Text="{Binding Artist.ArtistName}" Margin="0,10" VerticalAlignment="Bottom" Foreground="CornflowerBlue" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                            <!--<DataTemplate>
+                            --><!--<DataTemplate>
                                 <TextBlock Text="{Binding artist}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>-->
+                        </GridViewColumn.CellTemplate>--><!--
                     </GridViewColumn>
                     
                 </GridView>
-            </ListView.View>
+            </ListView.View>-->
             <!--<GridViewColumn x:Name="Col1" Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
                 <GridViewColumn x:Name="Col2" Header="Age" Width="100" DisplayMemberBinding="{Binding Age}"/>
                 <GridViewColumn x:Name="Col3" Header="Mail" Width="100" DisplayMemberBinding="{Binding Mail}"/>-->
                 <!--<GridViewColumn x:Name="Col4" Width="150" DisplayMemberBinding="{Binding Col5}"/>
                 <GridViewColumn x:Name="Col5" Width="150" DisplayMemberBinding="{Binding Col5}"/>-->
             <!--</GridView>-->            
-        </ListView>
+        <!--</ListView>-->
         <ScrollViewer Name="scvAlbums" Visibility="Hidden" Grid.RowSpan="2" Grid.Column="1" Grid.Row="1" Width="700" Height="380" VerticalScrollBarVisibility="Hidden">
             <!--<Grid>
                 <Grid.ColumnDefinitions>
