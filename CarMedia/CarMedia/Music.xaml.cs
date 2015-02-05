@@ -32,8 +32,7 @@ namespace CarMedia
         private List<Track> lstTracks = new List<Track>();
         private List<Track> lstSelectedTracks = new List<Track>();
         private List<Track> lstOrderedTracks = new List<Track>();
-        private Album selectedAlbum;
-        private List<Album> lstAlbums = new List<Album>();
+        private string selectedArtistName; //This is needed to ensure the correct track is select from the list of artists tracks
         private MediaElement mePlayer = new MediaElement();
         private DispatcherTimer timer = new DispatcherTimer(), sliderChanging = new DispatcherTimer();
         private Track trackPlaying;
@@ -186,8 +185,10 @@ namespace CarMedia
                 }
             }
 
-            //lvSongs.ItemsSource = lstTracks;
-            buildAndPopulateAlbumView();
+            //Populate these views now while the user is deciding what to do
+            //This saves the delay if we were to build the views when the button is clicked
+            BuildAndPopulateAlbumView();
+            BuildAndPopulateArtistsView();
         }
 
         private void retriveTracksFromThisFolder(string file)
@@ -224,6 +225,18 @@ namespace CarMedia
             if (mediaPlayerIsPlaying)
             {
                 btnPlay.Content = "Pause";
+                
+                //If the now playing window is visible hide the now playing button
+                //otherwise show the now playing button
+                if (nowPlaying.Visibility == Visibility.Visible)
+                {
+                    btnNowPlaying.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    btnNowPlaying.Visibility = Visibility.Visible;
+                }
+
                 BtnBack.Visibility = Visibility.Visible;
 
                 if (!sliderBeingDragged)
@@ -249,9 +262,10 @@ namespace CarMedia
                 catch { }
 
             }
-            else if (!mediaPaused)
+            else //if (!mediaPaused)
             {
                 //btnStop.IsEnabled = false;
+                btnNowPlaying.Visibility = Visibility.Hidden;
             }
         }
 
@@ -271,8 +285,8 @@ namespace CarMedia
                 //Clear selected items from all views
                 lbxAllTracks.SelectedIndex = -1;
                 lbxAlbumsTracks.SelectedIndex = -1;
-                //Needed For Artisits too
-
+                lbxArtistsTracks.SelectedIndex = -1;
+                lbxArtists.SelectedIndex = -1;
             }
             //spPlayControls.Visibility = Visibility.Hidden;
             //if (nowPlaying.Visibility == Visibility.Visible && lvSongs.Visibility == Visibility.Hidden)
@@ -388,6 +402,8 @@ namespace CarMedia
                         lbxAllTracks.Visibility = Visibility.Hidden;
                         scvAlbums.Visibility = Visibility.Hidden;
                         lbxAlbumsTracks.Visibility = Visibility.Hidden;
+                        lbxArtists.Visibility = Visibility.Hidden;
+                        lbxArtistsTracks.Visibility = Visibility.Hidden;
                         nowPlaying.Visibility = Visibility.Hidden;
                         spPlayControls.Visibility = Visibility.Hidden;
                         break;
@@ -398,6 +414,8 @@ namespace CarMedia
                         lbxAllTracks.Visibility = Visibility.Visible;
                         scvAlbums.Visibility = Visibility.Hidden;
                         lbxAlbumsTracks.Visibility = Visibility.Hidden;
+                        lbxArtists.Visibility = Visibility.Hidden;
+                        lbxArtistsTracks.Visibility = Visibility.Hidden;
                         nowPlaying.Visibility = Visibility.Hidden;
                         spPlayControls.Visibility = Visibility.Hidden;
                         break;
@@ -408,6 +426,8 @@ namespace CarMedia
                         lbxAllTracks.Visibility = Visibility.Hidden;
                         scvAlbums.Visibility = Visibility.Visible;
                         lbxAlbumsTracks.Visibility = Visibility.Hidden;
+                        lbxArtists.Visibility = Visibility.Hidden;
+                        lbxArtistsTracks.Visibility = Visibility.Hidden;
                         nowPlaying.Visibility = Visibility.Hidden;
                         spPlayControls.Visibility = Visibility.Hidden;
                         break;
@@ -418,17 +438,32 @@ namespace CarMedia
                         lbxAllTracks.Visibility = Visibility.Hidden;
                         scvAlbums.Visibility = Visibility.Hidden;
                         lbxAlbumsTracks.Visibility = Visibility.Visible;
+                        lbxArtists.Visibility = Visibility.Hidden;
+                        lbxArtistsTracks.Visibility = Visibility.Hidden;
                         nowPlaying.Visibility = Visibility.Hidden;
                         spPlayControls.Visibility = Visibility.Hidden;
                         break;
                     }
                 case MakeVisible.Artists:
                     {
-
+                        lbxAllTracks.Visibility = Visibility.Hidden;
+                        scvAlbums.Visibility = Visibility.Hidden;
+                        lbxAlbumsTracks.Visibility = Visibility.Hidden;
+                        lbxArtists.Visibility = Visibility.Visible;
+                        lbxArtistsTracks.Visibility = Visibility.Hidden;
+                        nowPlaying.Visibility = Visibility.Hidden;
+                        spPlayControls.Visibility = Visibility.Hidden;
                         break;
                     }
                 case MakeVisible.ArtistsTracks:
                     {
+                        lbxAllTracks.Visibility = Visibility.Hidden;
+                        scvAlbums.Visibility = Visibility.Hidden;
+                        lbxAlbumsTracks.Visibility = Visibility.Hidden;
+                        lbxArtists.Visibility = Visibility.Hidden;
+                        lbxArtistsTracks.Visibility = Visibility.Visible;
+                        nowPlaying.Visibility = Visibility.Hidden;
+                        spPlayControls.Visibility = Visibility.Hidden;
                         break;
                     }
                 case MakeVisible.NowPlaying:
@@ -437,6 +472,8 @@ namespace CarMedia
                         lbxAllTracks.Visibility = Visibility.Hidden;
                         scvAlbums.Visibility = Visibility.Hidden;
                         lbxAlbumsTracks.Visibility = Visibility.Hidden;
+                        lbxArtists.Visibility = Visibility.Hidden;
+                        lbxArtistsTracks.Visibility = Visibility.Hidden;
                         nowPlaying.Visibility = Visibility.Visible;
                         spPlayControls.Visibility = Visibility.Visible;
                         break;
@@ -549,118 +586,7 @@ namespace CarMedia
             MainWindow.musicPlayer.Visibility = Visibility.Hidden;
             //SetViewsVisibility(MakeVisible.None);
             Canvas.SetZIndex(MainWindow.musicPlayer, 0);
-        }
-
-        private void buildAndPopulateAlbumView()//string AlbumName, System.Drawing.Image AlbumArt)
-        {
-            List<Album> albums = ((from a in lstTracks
-                         select a.Album).ToList()).GroupBy(i => i.AlbumName).Select(group => group.First()).OrderBy(x=>x.AlbumName).ToList();
-                        
-            //Count the albums
-            //If theres more than 0
-            //start first row
-            //Create grid row with 4 columns
-
-            Grid grdAlbums = new Grid();
-            
-            for (int i = 0; i < 4; i++)
-            {
-                ColumnDefinition column = new ColumnDefinition();
-                grdAlbums.ColumnDefinitions.Add(column);
-            }
-            
-            for (int i = 0; i < Math.Round(Convert.ToDouble(albums.Count / 4))+1; i++)
-            {
-                RowDefinition row = new RowDefinition();
-                row.Height = new GridLength(220);
-                grdAlbums.RowDefinitions.Add(row);
-            }
-
-            //populate the grid with the albums
-            int xLocation = 0, yLocation = 0;
-            foreach (var a in albums)
-            {
-                StackPanel sp = new StackPanel();
-                sp.MouseDown += AlbumClicked;
-                Image i = new Image();
-                if (a.AlbumArt != null)
-                {
-                    i = ConvertDrawingImageToWPFImage(a.AlbumArt);
-                }
-                else
-                {                    
-                    i.Source = new BitmapImage(new Uri(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString() + "\\Images\\NoAlbumArt.png"));                    
-                }
-                i.Height = 150;
-                i.Width = 150;
-                sp.Children.Add(i);
-
-                //Create a new lable to hold the Album Name
-                Label lblAlbumName = new Label();
-                lblAlbumName.Margin = new Thickness(4, 0, 0, 4);
-                lblAlbumName.FontSize = 14;
-                lblAlbumName.FontWeight = FontWeights.Bold;
-                lblAlbumName.HorizontalAlignment = HorizontalAlignment.Center;
-
-                if (a.AlbumName != null)
-                {
-                    //If the album name is longer than 22 characters take the first 19 then add ...
-                    //This help it look nicer.
-                    //if (a.AlbumName.Length > 22)
-                    //{
-                    //    a.AlbumName = a.AlbumName.Substring(0, 19) + "...";
-                    //}
-                    lblAlbumName.Content = a.AlbumShortName;
-                    sp.Children.Add(lblAlbumName);
-                }
-                else
-                {
-                    //Put in a blank label to fill the space
-                    lblAlbumName.Content = "    ";
-                    sp.Children.Add(lblAlbumName);
-                }
-
-                //Create a new label to hold the ArtistName
-                Label lblArtistName = new Label();
-                lblArtistName.Margin = new Thickness(4, -15, 0, 0);
-                lblArtistName.FontSize = 10;
-                lblArtistName.HorizontalAlignment = HorizontalAlignment.Center;
-                if (a.Artist.ArtistName != null)
-                {
-                    //If the artist name is longer than 23 characters take the first 20 then add ...
-                    //This help it look nicer.
-                    //if (a.Artist.ArtistName.Length > 23)
-                    //{
-                    //    a.Artist.ArtistName = a.Artist.ArtistName.Substring(0, 20) + "...";
-                    //}
-                    lblArtistName.Content = a.Artist.ArtistShortName;
-                    sp.Children.Add(lblArtistName);
-                }
-                else
-                {
-                    //Put in a blank label to fill the space
-                    lblArtistName.Content = "    ";
-                    sp.Children.Add(lblArtistName);
-                }
-
-                //Add the stackpanel to the grid
-                //Set the stackpanel to the correct row and column position
-                grdAlbums.Children.Add(sp);
-                Grid.SetColumn(sp, xLocation);
-                Grid.SetRow(sp, yLocation);
-                xLocation++;
-
-                //check if row has been filled
-                if (xLocation==4)
-                {
-                    xLocation = 0;
-                    yLocation++;                    
-                }
-            }
-
-            //Add the grid to the UI
-            scvAlbums.Content = grdAlbums;
-        }
+        }                
 
         private void AlbumClicked(object sender, MouseButtonEventArgs e)
         {
@@ -752,6 +678,128 @@ namespace CarMedia
             return img;
         }
 
+        private void BuildAndPopulateAlbumView()//string AlbumName, System.Drawing.Image AlbumArt)
+        {
+            List<Album> albums = ((from a in lstTracks
+                                   select a.Album).ToList()).GroupBy(i => i.AlbumName).Select(group => group.First()).OrderBy(x => x.AlbumName).ToList();
+
+            //Count the albums
+            //If theres more than 0
+            //start first row
+            //Create grid row with 4 columns
+
+            Grid grdAlbums = new Grid();
+
+            for (int i = 0; i < 4; i++)
+            {
+                ColumnDefinition column = new ColumnDefinition();
+                grdAlbums.ColumnDefinitions.Add(column);
+            }
+
+            for (int i = 0; i < Math.Round(Convert.ToDouble(albums.Count / 4)) + 1; i++)
+            {
+                RowDefinition row = new RowDefinition();
+                row.Height = new GridLength(220);
+                grdAlbums.RowDefinitions.Add(row);
+            }
+
+            //populate the grid with the albums
+            int xLocation = 0, yLocation = 0;
+            foreach (var a in albums)
+            {
+                StackPanel sp = new StackPanel();
+                sp.MouseDown += AlbumClicked;
+                Image i = new Image();
+                if (a.AlbumArt != null)
+                {
+                    i = ConvertDrawingImageToWPFImage(a.AlbumArt);
+                }
+                else
+                {
+                    i.Source = new BitmapImage(new Uri(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString() + "\\Images\\NoAlbumArt.png"));
+                }
+                i.Height = 150;
+                i.Width = 150;
+                sp.Children.Add(i);
+
+                //Create a new lable to hold the Album Name
+                Label lblAlbumName = new Label();
+                lblAlbumName.Margin = new Thickness(4, 0, 0, 4);
+                lblAlbumName.FontSize = 14;
+                lblAlbumName.FontWeight = FontWeights.Bold;
+                lblAlbumName.HorizontalAlignment = HorizontalAlignment.Center;
+
+                if (a.AlbumName != null)
+                {
+                    lblAlbumName.Content = a.AlbumShortName;
+                    sp.Children.Add(lblAlbumName);
+                }
+                else
+                {
+                    //Put in a blank label to fill the space
+                    lblAlbumName.Content = "    ";
+                    sp.Children.Add(lblAlbumName);
+                }
+
+                //Create a new label to hold the ArtistName
+                Label lblArtistName = new Label();
+                lblArtistName.Margin = new Thickness(4, -15, 0, 0);
+                lblArtistName.FontSize = 10;
+                lblArtistName.HorizontalAlignment = HorizontalAlignment.Center;
+                if (a.Artist.ArtistName != null)
+                {
+                    lblArtistName.Content = a.Artist.ArtistShortName;
+                    sp.Children.Add(lblArtistName);
+                }
+                else
+                {
+                    //Put in a blank label to fill the space
+                    lblArtistName.Content = "    ";
+                    sp.Children.Add(lblArtistName);
+                }
+
+                //Add the stackpanel to the grid
+                //Set the stackpanel to the correct row and column position
+                grdAlbums.Children.Add(sp);
+                Grid.SetColumn(sp, xLocation);
+                Grid.SetRow(sp, yLocation);
+                xLocation++;
+
+                //check if row has been filled
+                if (xLocation == 4)
+                {
+                    xLocation = 0;
+                    yLocation++;
+                }
+            }
+
+            //Add the grid to the Albums View
+            scvAlbums.Content = grdAlbums;
+        }
+
+        private void BuildAndPopulateArtistsView()
+        {
+            List<Artist> artists = ((from a in lstTracks
+                                     select a.Artist).GroupBy(i => i.ArtistName).Select(group => group.First()).OrderBy(x => x.ArtistName)).ToList();
+
+            lbxArtistsTracks.Items.Clear();
+            Label l = new Label() { Content = "All Artists", FontSize = 48, Foreground = new SolidColorBrush(Colors.White), Background = new SolidColorBrush(Colors.Black), HorizontalContentAlignment = HorizontalAlignment.Center, Width = lbxArtistsTracks.Width };
+            lbxArtists.Items.Add(l);
+
+            lbxArtists.FontSize = 28;
+            lbxArtistsTracks.FontSize = 28;
+            lbxArtistsTracks.Foreground = new SolidColorBrush(Colors.White);
+
+            foreach (var artist in artists)
+            {
+                StackPanel sp = new StackPanel();
+                sp.Margin = new Thickness(0, 0, 0, 15);
+                sp.Children.Add(new Label() { Content = artist.ArtistName, Foreground = new SolidColorBrush(Colors.White) });
+                lbxArtists.Items.Add(sp);
+            }
+
+        }
+
         private void txtSongs_MouseDown(object sender, MouseButtonEventArgs e)
         {
             //lvSongs.Visibility = Visibility.Visible;
@@ -769,6 +817,12 @@ namespace CarMedia
             //nowPlaying.Visibility = Visibility.Hidden;            
             returnToWindow.Insert(0, MakeVisible.AlbumsGrid);
             SetViewsVisibility(MakeVisible.AlbumsGrid);
+        }
+
+        private void txtArtists_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            returnToWindow.Insert(0, MakeVisible.Artists);
+            SetViewsVisibility(MakeVisible.Artists);
         }
 
         private void lbxAlbumsTracks_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -795,7 +849,7 @@ namespace CarMedia
             try
             {
                 string tName = ((Label)((StackPanel)selectedStackpanel.Children[1]).Children[0]).Content.ToString();
-                string aName = ((Label)((StackPanel)selectedStackpanel.Children[1]).Children[1]).Content.ToString();
+                string aName = ((Label)((StackPanel)selectedStackpanel. Children[1]).Children[1]).Content.ToString();
                 var IdOfTrackToPlay = (from t in lstTracks
                                        where t.TrackName == tName && t.Artist.ArtistName == aName
                                        select t.TrackId).FirstOrDefault();
@@ -807,7 +861,60 @@ namespace CarMedia
             }
             catch { }
         }
-       
+
+        private void btnNowPlaying_Click(object sender, RoutedEventArgs e)
+        {
+            SetViewsVisibility(MakeVisible.NowPlaying);
+        }
+
+        private void lbxArtists_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (((ListBox)sender).SelectedIndex != -1 && ((ListBox)sender).SelectedIndex != 0)
+            {
+                selectedArtistName = ((Label)(((StackPanel)((ListBox)sender).SelectedItem).Children[0])).Content.ToString();
+
+                //Get all the tracks from this artist
+                List<string> artistsTracks = (from t in lstTracks
+                                              where t.Artist.ArtistName == selectedArtistName
+                                              select t.TrackName).ToList();
+
+                lbxArtistsTracks.Items.Clear();
+                Label l = new Label() { Content = selectedArtistName, FontSize = 48, Foreground = new SolidColorBrush(Colors.White), Background = new SolidColorBrush(Colors.Black), HorizontalContentAlignment = HorizontalAlignment.Center, Width = lbxArtistsTracks.Width };
+                lbxArtistsTracks.Items.Add(l);
+
+                //Add all these tracks to the Artists Tracks View
+                foreach (var track in artistsTracks)
+                {
+                    StackPanel sp = new StackPanel();
+                    sp.Margin = new Thickness(0, 0, 0, 15);
+                    sp.Children.Add(new Label() { Content = track, Foreground = new SolidColorBrush(Colors.White) });
+                    lbxArtistsTracks.Items.Add(sp);
+                }
+
+                returnToWindow.Insert(0, MakeVisible.Artists);
+                SetViewsVisibility(MakeVisible.ArtistsTracks);
+            }
+        }
+
+        private void lbxArtistsTracks_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (((ListBox)sender).SelectedIndex != -1 && ((ListBox)sender).SelectedIndex != 0)
+            {
+                string tName = ((Label)(((StackPanel)((ListBox)sender).SelectedItem).Children[0])).Content.ToString();
+                try
+                {
+                    var IdOfTrackToPlay = (from t in lstTracks
+                                           where t.TrackName == tName && t.Artist.ArtistName == selectedArtistName
+                                           select t.TrackId).FirstOrDefault();
+                    trackPlaying = lstTracks[IdOfTrackToPlay];
+
+                    PlaySelectedSong(IdOfTrackToPlay);
+                    returnToWindow.Insert(1, MakeVisible.ArtistsTracks);
+                    SetViewsVisibility(MakeVisible.NowPlaying);
+                }
+                catch { }
+            }
+        }
     }
     
 }
