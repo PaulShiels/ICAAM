@@ -75,6 +75,7 @@
       <DependentUpon>Camera.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper.cs" />
+    <Compile Include="Playlist.cs" />
     <Compile Include="Track.cs" />
     <Compile Include="WebCam.cs" />
     <Page Include="Camera.xaml">

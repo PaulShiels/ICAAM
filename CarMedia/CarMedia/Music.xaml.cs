@@ -32,11 +32,14 @@ namespace CarMedia
         private List<Track> lstTracks = new List<Track>();
         private List<Track> lstSelectedTracks = new List<Track>();
         private List<Track> lstOrderedTracks = new List<Track>();
+        private List<Playlist> lstPlaylists = new List<Playlist>();
+        private bool mouseHeldDown;
+        private int playlistButtonHeldCounter = 0;
         private string selectedArtistName; //This is needed to ensure the correct track is select from the list of artists tracks
         private MediaElement mePlayer = new MediaElement();
         private DispatcherTimer timer = new DispatcherTimer(), sliderChanging = new DispatcherTimer();
         private Track trackPlaying;
-        private enum MakeVisible { None, AllSongs, AlbumsGrid, AlbumTracks, Artists, ArtistsTracks, NowPlaying, PlayControls };
+        private enum MakeVisible { None, AllSongs, AlbumsGrid, AlbumTracks, Artists, ArtistsTracks, Playlists, PlaylistsTracks, NowPlaying, PlayControls };
         //private MakeVisible viewToMakeVisible = MakeVisible.AllSongs;
         //private enum MusicPlayerReturnToWindow { AllSongs, AlbumsGrid, AlbumTracks, Artists, ArtistsTracks, NowPlaying };
         //private List<MakeVisible> returnToWindow = new List<MakeVisible>();//List is used to keep the history of the last 2 views
@@ -189,6 +192,7 @@ namespace CarMedia
             //This saves the delay if we were to build the views when the button is clicked
             BuildAndPopulateAlbumView();
             BuildAndPopulateArtistsView();
+            BuildAndPopulatePlaylistsView();
         }
 
         private void retriveTracksFromThisFolder(string file)
@@ -267,6 +271,20 @@ namespace CarMedia
                 //btnStop.IsEnabled = false;
                 btnNowPlaying.Visibility = Visibility.Hidden;
             }
+
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                if (playlistButtonHeldCounter >= 1)
+                {
+                    ctxMenu.IsOpen = true;
+                    playlistButtonHeldCounter = 0;
+                }
+                else
+                {
+                    ctxMenu.IsOpen = false;
+                    playlistButtonHeldCounter++;
+                }
+            }
         }
 
         private void BtnBack_Click(object sender, RoutedEventArgs e)
@@ -287,6 +305,8 @@ namespace CarMedia
                 lbxAlbumsTracks.SelectedIndex = -1;
                 lbxArtistsTracks.SelectedIndex = -1;
                 lbxArtists.SelectedIndex = -1;
+                lbxPlaylists.SelectedIndex = -1;
+                lbxPlaylistsTracks.SelectedIndex = -1;
             }
             //spPlayControls.Visibility = Visibility.Hidden;
             //if (nowPlaying.Visibility == Visibility.Visible && lvSongs.Visibility == Visibility.Hidden)
@@ -404,6 +424,8 @@ namespace CarMedia
                         lbxAlbumsTracks.Visibility = Visibility.Hidden;
                         lbxArtists.Visibility = Visibility.Hidden;
                         lbxArtistsTracks.Visibility = Visibility.Hidden;
+                        lbxPlaylists.Visibility = Visibility.Hidden;
+                        lbxPlaylistsTracks.Visibility = Visibility.Hidden;
                         nowPlaying.Visibility = Visibility.Hidden;
                         spPlayControls.Visibility = Visibility.Hidden;
                         break;
@@ -416,6 +438,8 @@ namespace CarMedia
                         lbxAlbumsTracks.Visibility = Visibility.Hidden;
                         lbxArtists.Visibility = Visibility.Hidden;
                         lbxArtistsTracks.Visibility = Visibility.Hidden;
+                        lbxPlaylists.Visibility = Visibility.Hidden;
+                        lbxPlaylistsTracks.Visibility = Visibility.Hidden;
                         nowPlaying.Visibility = Visibility.Hidden;
                         spPlayControls.Visibility = Visibility.Hidden;
                         break;
@@ -428,6 +452,8 @@ namespace CarMedia
                         lbxAlbumsTracks.Visibility = Visibility.Hidden;
                         lbxArtists.Visibility = Visibility.Hidden;
                         lbxArtistsTracks.Visibility = Visibility.Hidden;
+                        lbxPlaylists.Visibility = Visibility.Hidden;
+                        lbxPlaylistsTracks.Visibility = Visibility.Hidden;
                         nowPlaying.Visibility = Visibility.Hidden;
                         spPlayControls.Visibility = Visibility.Hidden;
                         break;
@@ -440,6 +466,8 @@ namespace CarMedia
                         lbxAlbumsTracks.Visibility = Visibility.Visible;
                         lbxArtists.Visibility = Visibility.Hidden;
                         lbxArtistsTracks.Visibility = Visibility.Hidden;
+                        lbxPlaylists.Visibility = Visibility.Hidden;
+                        lbxPlaylistsTracks.Visibility = Visibility.Hidden;
                         nowPlaying.Visibility = Visibility.Hidden;
                         spPlayControls.Visibility = Visibility.Hidden;
                         break;
@@ -451,6 +479,8 @@ namespace CarMedia
                         lbxAlbumsTracks.Visibility = Visibility.Hidden;
                         lbxArtists.Visibility = Visibility.Visible;
                         lbxArtistsTracks.Visibility = Visibility.Hidden;
+                        lbxPlaylists.Visibility = Visibility.Hidden;
+                        lbxPlaylistsTracks.Visibility = Visibility.Hidden;
                         nowPlaying.Visibility = Visibility.Hidden;
                         spPlayControls.Visibility = Visibility.Hidden;
                         break;
@@ -462,6 +492,34 @@ namespace CarMedia
                         lbxAlbumsTracks.Visibility = Visibility.Hidden;
                         lbxArtists.Visibility = Visibility.Hidden;
                         lbxArtistsTracks.Visibility = Visibility.Visible;
+                        lbxPlaylists.Visibility = Visibility.Hidden;
+                        lbxPlaylistsTracks.Visibility = Visibility.Hidden;
+                        nowPlaying.Visibility = Visibility.Hidden;
+                        spPlayControls.Visibility = Visibility.Hidden;
+                        break;
+                    }
+                case MakeVisible.Playlists:
+                    {
+                        lbxAllTracks.Visibility = Visibility.Hidden;
+                        scvAlbums.Visibility = Visibility.Hidden;
+                        lbxAlbumsTracks.Visibility = Visibility.Hidden;
+                        lbxArtists.Visibility = Visibility.Hidden;
+                        lbxArtistsTracks.Visibility = Visibility.Hidden;
+                        lbxPlaylists.Visibility = Visibility.Visible;
+                        lbxPlaylistsTracks.Visibility = Visibility.Hidden;
+                        nowPlaying.Visibility = Visibility.Hidden;
+                        spPlayControls.Visibility = Visibility.Hidden;
+                        break;
+                    }
+                case MakeVisible.PlaylistsTracks:
+                    {
+                        lbxAllTracks.Visibility = Visibility.Hidden;
+                        scvAlbums.Visibility = Visibility.Hidden;
+                        lbxAlbumsTracks.Visibility = Visibility.Hidden;
+                        lbxArtists.Visibility = Visibility.Hidden;
+                        lbxArtistsTracks.Visibility = Visibility.Visible;
+                        lbxPlaylists.Visibility = Visibility.Hidden;
+                        lbxPlaylistsTracks.Visibility = Visibility.Visible;
                         nowPlaying.Visibility = Visibility.Hidden;
                         spPlayControls.Visibility = Visibility.Hidden;
                         break;
@@ -474,6 +532,8 @@ namespace CarMedia
                         lbxAlbumsTracks.Visibility = Visibility.Hidden;
                         lbxArtists.Visibility = Visibility.Hidden;
                         lbxArtistsTracks.Visibility = Visibility.Hidden;
+                        lbxPlaylists.Visibility = Visibility.Hidden;
+                        lbxPlaylistsTracks.Visibility = Visibility.Hidden;
                         nowPlaying.Visibility = Visibility.Visible;
                         spPlayControls.Visibility = Visibility.Visible;
                         break;
@@ -800,6 +860,25 @@ namespace CarMedia
 
         }
 
+        private void BuildAndPopulatePlaylistsView()
+        {
+            Playlist p1 = new Playlist("Playlist1", lstTracks.GetRange(0, 5));
+            Playlist p2 = new Playlist("Playlist2", lstTracks.GetRange(10, 5));
+            Playlist p3 = new Playlist("Playlist3", lstTracks.GetRange(15, 9));
+            lstPlaylists.Add(p1);
+            lstPlaylists.Add(p2);
+            lstPlaylists.Add(p3);
+
+            lbxPlaylists.Items.Clear();
+            Label l = new Label() { Content = "Playlists", FontSize = 48, Foreground = new SolidColorBrush(Colors.White), Background = new SolidColorBrush(Colors.Black), HorizontalContentAlignment = HorizontalAlignment.Center, Width = lbxArtistsTracks.Width };
+            lbxPlaylists.Items.Add(l);
+
+            foreach (var playlist in lstPlaylists)
+            {
+                lbxPlaylists.Items.Add(playlist.PlaylistName);
+            }
+        }
+
         private void txtSongs_MouseDown(object sender, MouseButtonEventArgs e)
         {
             //lvSongs.Visibility = Visibility.Visible;
@@ -823,6 +902,17 @@ namespace CarMedia
         {
             returnToWindow.Insert(0, MakeVisible.Artists);
             SetViewsVisibility(MakeVisible.Artists);
+        }
+
+        private void btnPlaylists_Click(object sender, RoutedEventArgs e)
+        {
+            returnToWindow.Insert(0, MakeVisible.Playlists);
+            SetViewsVisibility(MakeVisible.Playlists);
+        }
+
+        private void btnNowPlaying_Click(object sender, RoutedEventArgs e)
+        {
+            SetViewsVisibility(MakeVisible.NowPlaying);
         }
 
         private void lbxAlbumsTracks_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -860,12 +950,7 @@ namespace CarMedia
                 SetViewsVisibility(MakeVisible.NowPlaying);
             }
             catch { }
-        }
-
-        private void btnNowPlaying_Click(object sender, RoutedEventArgs e)
-        {
-            SetViewsVisibility(MakeVisible.NowPlaying);
-        }
+        }               
 
         private void lbxArtists_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -915,6 +1000,59 @@ namespace CarMedia
                 catch { }
             }
         }
+
+        private void lbxPlaylists_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (ctxMenu.IsOpen == false && ((ListBox)sender).SelectedIndex != -1 && ((ListBox)sender).SelectedIndex != 0)
+            {
+                string selectedPlaylist = ((ListBox)sender).SelectedItem.ToString();
+
+                //Get all the tracks from this playlist
+                var playlist = (from p in lstPlaylists
+                                where p.PlaylistName == selectedPlaylist
+                                select p).FirstOrDefault();
+
+                lstSelectedTracks.Clear();
+                lbxPlaylistsTracks.Items.Clear();
+                Label l = new Label() { Content = selectedPlaylist, FontSize = 48, Foreground = new SolidColorBrush(Colors.White), Background = new SolidColorBrush(Colors.Black), HorizontalContentAlignment = HorizontalAlignment.Center, Width = lbxArtistsTracks.Width };
+                lbxPlaylistsTracks.Items.Add(l);
+
+                //Add all these tracks to the Artists Tracks View
+                foreach (var track in playlist.PlaylistTracks)
+                {
+                    StackPanel sp = new StackPanel();
+                    sp.Margin = new Thickness(0, 0, 0, 15);
+                    sp.Children.Add(new Label() { Content = track.TrackName, Foreground = new SolidColorBrush(Colors.White) });
+                    lbxPlaylistsTracks.Items.Add(sp);
+                    lstSelectedTracks.Add(track);
+                }
+
+                returnToWindow.Insert(0, MakeVisible.Playlists);
+                SetViewsVisibility(MakeVisible.PlaylistsTracks);
+            }
+        } 
+        
+        private void lbxPlaylistsTracks_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (((ListBox)sender).SelectedIndex != -1 && ((ListBox)sender).SelectedIndex != 0)
+            {
+                string tName = ((Label)(((StackPanel)((ListBox)sender).SelectedItem).Children[0])).Content.ToString();
+                try
+                {
+                    var IdOfTrackToPlay = (from t in lstSelectedTracks
+                                           where t.TrackName == tName
+                                           select t.TrackId).FirstOrDefault();
+                    trackPlaying = lstTracks[IdOfTrackToPlay];
+
+                    PlaySelectedSong(IdOfTrackToPlay);
+                    returnToWindow.Insert(1, MakeVisible.PlaylistsTracks);
+                    SetViewsVisibility(MakeVisible.NowPlaying);
+                }
+                catch { }
+            }
+        }
+
+        
     }
     
 }
