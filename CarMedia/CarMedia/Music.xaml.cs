@@ -33,9 +33,11 @@ namespace CarMedia
         private List<Track> lstSelectedTracks = new List<Track>();
         private List<Track> lstOrderedTracks = new List<Track>();
         private List<Playlist> lstPlaylists = new List<Playlist>();
-        private bool mouseHeldDown;
         private int playlistButtonHeldCounter = 0;
         private string selectedArtistName; //This is needed to ensure the correct track is select from the list of artists tracks
+        private Playlist selectedPlaylist;
+        private Window newPlaylistWindow;
+        private string nameOfNewPlaylistBeingAdded;
         private MediaElement mePlayer = new MediaElement();
         private DispatcherTimer timer = new DispatcherTimer(), sliderChanging = new DispatcherTimer();
         private Track trackPlaying;
@@ -517,7 +519,7 @@ namespace CarMedia
                         scvAlbums.Visibility = Visibility.Hidden;
                         lbxAlbumsTracks.Visibility = Visibility.Hidden;
                         lbxArtists.Visibility = Visibility.Hidden;
-                        lbxArtistsTracks.Visibility = Visibility.Visible;
+                        lbxArtistsTracks.Visibility = Visibility.Hidden;
                         lbxPlaylists.Visibility = Visibility.Hidden;
                         lbxPlaylistsTracks.Visibility = Visibility.Visible;
                         nowPlaying.Visibility = Visibility.Hidden;
@@ -870,14 +872,17 @@ namespace CarMedia
             lstPlaylists.Add(p3);
 
             lbxPlaylists.Items.Clear();
-            Label l = new Label() { Content = "Playlists", FontSize = 48, Foreground = new SolidColorBrush(Colors.White), Background = new SolidColorBrush(Colors.Black), HorizontalContentAlignment = HorizontalAlignment.Center, Width = lbxArtistsTracks.Width };
-            lbxPlaylists.Items.Add(l);
+            StackPanel sp = new StackPanel() { Orientation = Orientation.Horizontal, Background = new SolidColorBrush(Colors.Black), Width=lbxArtistsTracks.Width};
+            sp.Children.Add(new Button() { Content = "+", FontSize = 80, VerticalContentAlignment=VerticalAlignment.Center, Padding=new Thickness(0,-50,0,-30), Margin=new Thickness(10), BorderBrush = new SolidColorBrush(Colors.Transparent), Background = new SolidColorBrush(Colors.Black), FontWeight = FontWeights.ExtraBold, Foreground = new SolidColorBrush(Colors.White)});
+            sp.Children.Add(new Label() { Content = "Playlists", FontSize = 48, Foreground = new SolidColorBrush(Colors.White), Background = new SolidColorBrush(Colors.Black), Margin = new Thickness(200,0,0,0) });            
+            ((Button)sp.Children[0]).Click+=BtnAddNewPlaylist_Click;
+            lbxPlaylists.Items.Add(sp);
 
             foreach (var playlist in lstPlaylists)
             {
-                lbxPlaylists.Items.Add(playlist.PlaylistName);
+                lbxPlaylists.Items.Add(new Label() { Content = playlist.PlaylistName, Margin = new Thickness(0, 0, 0, 15), Foreground = new SolidColorBrush(Colors.White) });
             }
-        }
+        }        
 
         private void txtSongs_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -1003,33 +1008,35 @@ namespace CarMedia
 
         private void lbxPlaylists_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (ctxMenu.IsOpen == false && ((ListBox)sender).SelectedIndex != -1 && ((ListBox)sender).SelectedIndex != 0)
-            {
-                string selectedPlaylist = ((ListBox)sender).SelectedItem.ToString();
+            //if (ctxMenu.IsOpen == false && ((ListBox)sender).SelectedIndex != -1 && ((ListBox)sender).SelectedIndex != 0 && lbxPlaylists.Items.Contains(selectedPlaylist))
+            //{
+            //   // string selectedPlaylistName = ((ListBox)sender).SelectedItem.ToString();
 
-                //Get all the tracks from this playlist
-                var playlist = (from p in lstPlaylists
-                                where p.PlaylistName == selectedPlaylist
-                                select p).FirstOrDefault();
+            //   // //Get all the tracks from this playlist
+            //   //selectedPlaylist = (from p in lstPlaylists
+            //   //                 where p.PlaylistName == selectedPlaylistName
+            //   //                 select p).FirstOrDefault();
 
-                lstSelectedTracks.Clear();
-                lbxPlaylistsTracks.Items.Clear();
-                Label l = new Label() { Content = selectedPlaylist, FontSize = 48, Foreground = new SolidColorBrush(Colors.White), Background = new SolidColorBrush(Colors.Black), HorizontalContentAlignment = HorizontalAlignment.Center, Width = lbxArtistsTracks.Width };
-                lbxPlaylistsTracks.Items.Add(l);
+            //    lstSelectedTracks.Clear();
+            //    lbxPlaylistsTracks.Items.Clear();
+            //    Label l = new Label() { Content = selectedPlaylist.PlaylistName, FontSize = 48, Foreground = new SolidColorBrush(Colors.White), Background = new SolidColorBrush(Colors.Black), HorizontalContentAlignment = HorizontalAlignment.Center, Width = lbxArtistsTracks.Width };
+            //    lbxPlaylistsTracks.Items.Add(l);
 
-                //Add all these tracks to the Artists Tracks View
-                foreach (var track in playlist.PlaylistTracks)
-                {
-                    StackPanel sp = new StackPanel();
-                    sp.Margin = new Thickness(0, 0, 0, 15);
-                    sp.Children.Add(new Label() { Content = track.TrackName, Foreground = new SolidColorBrush(Colors.White) });
-                    lbxPlaylistsTracks.Items.Add(sp);
-                    lstSelectedTracks.Add(track);
-                }
+            //    //Add all these tracks to the Artists Tracks View
+            //    foreach (var track in selectedPlaylist.PlaylistTracks)
+            //    {
+            //        StackPanel sp = new StackPanel();
+            //        sp.Margin = new Thickness(0, 0, 0, 15);
+            //        sp.Children.Add(new Label() { Content = track.TrackName, Foreground = new SolidColorBrush(Colors.White) });
+            //        lbxPlaylistsTracks.Items.Add(sp);
+            //        lstSelectedTracks.Add(track);
+            //    }
 
-                returnToWindow.Insert(0, MakeVisible.Playlists);
-                SetViewsVisibility(MakeVisible.PlaylistsTracks);
-            }
+            //    returnToWindow.Insert(0, MakeVisible.Playlists);
+            //    SetViewsVisibility(MakeVisible.PlaylistsTracks);
+            //}
+            returnToWindow.Insert(0, MakeVisible.Playlists);
+            SetViewsVisibility(MakeVisible.PlaylistsTracks);
         } 
         
         private void lbxPlaylistsTracks_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1050,6 +1057,77 @@ namespace CarMedia
                 }
                 catch { }
             }
+        }
+
+        private void CtxMenuDelete_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this playlist?", "Delete Playlist?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            if (result == MessageBoxResult.Yes)
+            {
+                lbxPlaylists.Items.RemoveAt(lstPlaylists.IndexOf(selectedPlaylist)+1);
+                lstPlaylists.Remove(selectedPlaylist);
+            }
+        }
+
+        private void lbxPlaylists_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (((ListBox)sender).SelectedIndex != -1 && ((ListBox)sender).SelectedIndex != 0)
+            {
+                string selectedPlaylistName = ((Label)((ListBox)sender).SelectedItem).Content.ToString();
+
+                //Get all the tracks from this playlist
+                selectedPlaylist = (from p in lstPlaylists
+                                    where p.PlaylistName == selectedPlaylistName
+                                    select p).FirstOrDefault();
+
+                lstSelectedTracks.Clear();
+                lbxPlaylistsTracks.Items.Clear();
+                Label l = new Label() { Content = selectedPlaylist.PlaylistName, FontSize = 48, Foreground = new SolidColorBrush(Colors.White), Background = new SolidColorBrush(Colors.Black), HorizontalContentAlignment = HorizontalAlignment.Center, Width = lbxArtistsTracks.Width };
+                lbxPlaylistsTracks.Items.Add(l);
+
+                //Add all these tracks to the Artists Tracks View
+                foreach (var track in selectedPlaylist.PlaylistTracks)
+                {
+                    StackPanel sp = new StackPanel();
+                    sp.Margin = new Thickness(0, 0, 0, 15);
+                    sp.Children.Add(new Label() { Content = track.TrackName, Foreground = new SolidColorBrush(Colors.White) });
+                    lbxPlaylistsTracks.Items.Add(sp);
+                    lstSelectedTracks.Add(track);
+                }
+            }
+        }
+
+        private void BtnAddNewPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            newPlaylistWindow = new Window() { Width=350, Height=300, AllowsTransparency=true, Background=new SolidColorBrush(Colors.Transparent), BorderBrush=new SolidColorBrush(Colors.Transparent), WindowStyle=WindowStyle.None };
+            Canvas.SetLeft(newPlaylistWindow, 300);
+            Canvas.SetTop(newPlaylistWindow, 60);
+            StackPanel spNewPlaylist = new StackPanel() {Opacity=0.9, Background=new SolidColorBrush(Colors.Black) };
+            spNewPlaylist.Children.Add(new Label() { Content = "Add New Playlist", Margin=new Thickness(0,0,0,20), FontSize=28, Foreground=new SolidColorBrush(Colors.White), HorizontalAlignment=HorizontalAlignment.Center });
+            StackPanel spGetPlaylistName = new StackPanel();
+            spGetPlaylistName.Children.Add(new Label() { Content = "New Playlist Name: ", FontSize=24, Foreground=new SolidColorBrush(Colors.White), Margin=new Thickness(20,0,0,0) });
+            TextBox tbxNewPlaylistName = new TextBox() { Width = 300, MaxLength = 25, FontSize = 24, Margin = new Thickness(25, 0, 0, 20), HorizontalAlignment=HorizontalAlignment.Left };
+            spGetPlaylistName.Children.Add(tbxNewPlaylistName);
+            spNewPlaylist.Children.Add(spGetPlaylistName);
+            tbxNewPlaylistName.TextChanged += tbxNewPlaylistName_TextChanged;
+            Button btnAddNewPlaylistToPlaylists = new Button() { Content = "Add Playlist", Foreground = new SolidColorBrush(Colors.White), FontSize = 24, Margin = new Thickness(20), MaxWidth = 200 };
+            btnAddNewPlaylistToPlaylists.Click += BtnAddNewPlaylistToPlaylists_Click;
+            spNewPlaylist.Children.Add(btnAddNewPlaylistToPlaylists);
+            newPlaylistWindow.Content = spNewPlaylist;
+            lbxPlaylists.Opacity = 0.4;
+            dpButtonsColumn.Opacity = 0.4;
+            newPlaylistWindow.Show();
+        }
+
+        void tbxNewPlaylistName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            nameOfNewPlaylistBeingAdded = ((TextBox)sender).Text.ToString();
+        }
+
+        private void BtnAddNewPlaylistToPlaylists_Click(object sender, RoutedEventArgs e)
+        {
+            newPlaylistWindow.Close();
+            MessageBox.Show(nameOfNewPlaylistBeingAdded);
         }
 
         
