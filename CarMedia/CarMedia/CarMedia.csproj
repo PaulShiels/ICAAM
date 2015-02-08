@@ -68,17 +68,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Album.cs" />
-    <Compile Include="Artist.cs" />
-    <Compile Include="Base.cs" />
-    <Compile Include="Camera.xaml.cs">
+    <Compile Include="Music Player\Album.cs" />
+    <Compile Include="Music Player\Artist.cs" />
+    <Compile Include="Camera\Camera.xaml.cs">
       <DependentUpon>Camera.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helper.cs" />
-    <Compile Include="Playlist.cs" />
-    <Compile Include="Track.cs" />
-    <Compile Include="WebCam.cs" />
-    <Page Include="Camera.xaml">
+    <Compile Include="Camera\Helper.cs" />
+    <Compile Include="Music Player\Playlist.cs" />
+    <Compile Include="Music Player\Track.cs" />
+    <Compile Include="Camera\WebCam.cs" />
+    <Page Include="Camera\Camera.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -101,13 +100,13 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Music.xaml">
+    <Page Include="Music Player\Music.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Music.xaml.cs">
+    <Compile Include="Music Player\Music.xaml.cs">
       <DependentUpon>Music.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -153,9 +152,6 @@
     <Resource Include="Images\settings_Icon.png" />
     <Resource Include="Images\clockFace.png" />
     <Resource Include="Images\voltmeter.png" />
-    <Content Include="Music\1. Robert Miles - Children.mp3" />
-    <Content Include="Music\13. Paul van Dyk - Home %28Paul van Dyk Remix%29.mp3" />
-    <Content Include="Music\8. Motorcycle - As The Rush Comes.mp3" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
