@@ -58,7 +58,8 @@
             <TextBlock x:Name="npAlbumTitle" HorizontalAlignment="Center" FontSize="16" Margin="0,5" Foreground="CornflowerBlue"></TextBlock>
         </StackPanel>            
             </Grid>
-        <ListBox x:Name="lbxAllTracks" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Width="700" Height="380" ScrollViewer.VerticalScrollBarVisibility="Hidden" Opacity="0.7" Background="#D8000000" SelectionChanged="lbxAllTracks_SelectionChanged"></ListBox>
+        <ListBox x:Name="lbxAllTracks" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Width="700" Height="380" ScrollViewer.VerticalScrollBarVisibility="Hidden" Opacity="0.7" Background="#D8000000" SelectionChanged="lbxAllTracks_SelectionChanged">
+        </ListBox>
         <ScrollViewer Name="scvAlbums" Visibility="Hidden" Grid.RowSpan="2" Grid.Column="1" Grid.Row="1" Width="700" Height="380" VerticalScrollBarVisibility="Hidden">
             <!--<Grid>
                 <Grid.ColumnDefinitions>
@@ -102,7 +103,7 @@
                 <Button x:Name="btnEqualizer" Margin="25,10,0,0" Height="40" Width="60">Equalizer</Button>
                 <Button x:Name="btnEject" Margin="25,10,0,0" Height="40" Width="60">Eject</Button>
                 <Button x:Name="btnRip" Margin="25,10,0,0" Height="40" Width="60">Rip</Button>
-                <Button x:Name="btnFavorite" Margin="25,10,0,0" Height="40" Width="60">Favorite</Button>
+                <Button x:Name="btnAddToPlaylist" Margin="25,10,0,0" Height="40" Width="60" Click="btnAddToPlaylist_Click">Add To Playlist</Button>
             </StackPanel>
         </StackPanel>
         <ListBox x:Name="lbxPlaylists" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Width="700" Height="380" FontSize="28" Visibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Opacity="0.7" Background="#D8000000" Foreground="White" MouseUp="lbxPlaylists_MouseUp"  SelectionChanged="lbxPlaylists_SelectionChanged">

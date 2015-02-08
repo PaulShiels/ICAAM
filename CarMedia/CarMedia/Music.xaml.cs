@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -36,7 +37,7 @@ namespace CarMedia
         private int playlistButtonHeldCounter = 0;
         private string selectedArtistName; //This is needed to ensure the correct track is select from the list of artists tracks
         private Playlist selectedPlaylist;
-        private Window newPlaylistWindow;
+        private Window newPlaylistWindow = new Window();
         private string nameOfNewPlaylistBeingAdded;
         private MediaElement mePlayer = new MediaElement();
         private DispatcherTimer timer = new DispatcherTimer(), sliderChanging = new DispatcherTimer();
@@ -874,7 +875,7 @@ namespace CarMedia
             lbxPlaylists.Items.Clear();
             StackPanel sp = new StackPanel() { Orientation = Orientation.Horizontal, Background = new SolidColorBrush(Colors.Black), Width=lbxArtistsTracks.Width};
             sp.Children.Add(new Button() { Content = "+", FontSize = 80, VerticalContentAlignment=VerticalAlignment.Center, Padding=new Thickness(0,-50,0,-30), Margin=new Thickness(10), BorderBrush = new SolidColorBrush(Colors.Transparent), Background = new SolidColorBrush(Colors.Black), FontWeight = FontWeights.ExtraBold, Foreground = new SolidColorBrush(Colors.White)});
-            sp.Children.Add(new Label() { Content = "Playlists", FontSize = 48, Foreground = new SolidColorBrush(Colors.White), Background = new SolidColorBrush(Colors.Black), Margin = new Thickness(200,0,0,0) });            
+            sp.Children.Add(new Label() { Content = "Playlists", FontSize = 48, Foreground = new SolidColorBrush(Colors.White), Background = new SolidColorBrush(Colors.Black), Margin = new Thickness(200,0,0,0), });            
             ((Button)sp.Children[0]).Click+=BtnAddNewPlaylist_Click;
             lbxPlaylists.Items.Add(sp);
 
@@ -1035,8 +1036,11 @@ namespace CarMedia
             //    returnToWindow.Insert(0, MakeVisible.Playlists);
             //    SetViewsVisibility(MakeVisible.PlaylistsTracks);
             //}
-            returnToWindow.Insert(0, MakeVisible.Playlists);
-            SetViewsVisibility(MakeVisible.PlaylistsTracks);
+            if (((ListBox)sender).SelectedIndex != -1 && ((ListBox)sender).SelectedIndex != 0)
+            {
+                returnToWindow.Insert(0, MakeVisible.Playlists);
+                SetViewsVisibility(MakeVisible.PlaylistsTracks);
+            }
         } 
         
         private void lbxPlaylistsTracks_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1099,38 +1103,141 @@ namespace CarMedia
 
         private void BtnAddNewPlaylist_Click(object sender, RoutedEventArgs e)
         {
-            newPlaylistWindow = new Window() { Width=350, Height=300, AllowsTransparency=true, Background=new SolidColorBrush(Colors.Transparent), BorderBrush=new SolidColorBrush(Colors.Transparent), WindowStyle=WindowStyle.None };
-            Canvas.SetLeft(newPlaylistWindow, 300);
-            Canvas.SetTop(newPlaylistWindow, 60);
-            StackPanel spNewPlaylist = new StackPanel() {Opacity=0.9, Background=new SolidColorBrush(Colors.Black) };
-            spNewPlaylist.Children.Add(new Label() { Content = "Add New Playlist", Margin=new Thickness(0,0,0,20), FontSize=28, Foreground=new SolidColorBrush(Colors.White), HorizontalAlignment=HorizontalAlignment.Center });
-            StackPanel spGetPlaylistName = new StackPanel();
-            spGetPlaylistName.Children.Add(new Label() { Content = "New Playlist Name: ", FontSize=24, Foreground=new SolidColorBrush(Colors.White), Margin=new Thickness(20,0,0,0) });
-            TextBox tbxNewPlaylistName = new TextBox() { Width = 300, MaxLength = 25, FontSize = 24, Margin = new Thickness(25, 0, 0, 20), HorizontalAlignment=HorizontalAlignment.Left };
-            spGetPlaylistName.Children.Add(tbxNewPlaylistName);
-            spNewPlaylist.Children.Add(spGetPlaylistName);
-            tbxNewPlaylistName.TextChanged += tbxNewPlaylistName_TextChanged;
-            Button btnAddNewPlaylistToPlaylists = new Button() { Content = "Add Playlist", Foreground = new SolidColorBrush(Colors.White), FontSize = 24, Margin = new Thickness(20), MaxWidth = 200 };
-            btnAddNewPlaylistToPlaylists.Click += BtnAddNewPlaylistToPlaylists_Click;
-            spNewPlaylist.Children.Add(btnAddNewPlaylistToPlaylists);
-            newPlaylistWindow.Content = spNewPlaylist;
-            lbxPlaylists.Opacity = 0.4;
-            dpButtonsColumn.Opacity = 0.4;
+            if (!newPlaylistWindow.IsActive)
+            {
+                newPlaylistWindow = new Window() { Width = 350, Height = 330, AllowsTransparency = true, Background = new SolidColorBrush(Colors.Transparent), BorderBrush = new SolidColorBrush(Colors.Transparent), WindowStyle = WindowStyle.None };
+                Canvas.SetLeft(newPlaylistWindow, 350);
+                Canvas.SetTop(newPlaylistWindow, 60);
+                StackPanel spNewPlaylist = new StackPanel() { Opacity = 0.9, Background = new SolidColorBrush(Colors.Black) };
+                StackPanel spAddTo = new StackPanel() { Orientation = Orientation.Horizontal, HorizontalAlignment=HorizontalAlignment.Right };
+                spAddTo.Children.Add(new Label() { Content = "Add New Playlist", Margin = new Thickness(0, 0, 0, 20), FontSize = 28, Foreground = new SolidColorBrush(Colors.White), HorizontalAlignment = HorizontalAlignment.Center });
+                Button btnClose = new Button() { Content = "x", Foreground = new SolidColorBrush(Colors.Red), FontSize = 38, Padding = new Thickness(10, 0, 10, 0), Margin = new Thickness(50, -15, 0, 45) };
+                btnClose.Click += btnClose_Click;
+                spAddTo.Children.Add(btnClose);
+                spNewPlaylist.Children.Add(spAddTo);
+                StackPanel spGetPlaylistName = new StackPanel();
+                spGetPlaylistName.Children.Add(new Label() { Content = "New Playlist Name: ", FontSize = 24, Foreground = new SolidColorBrush(Colors.White), Margin = new Thickness(20, 0, 0, 0) });
+                TextBox tbxNewPlaylistName = new TextBox() { Width = 300, MaxLength = 25, FontSize = 24, Margin = new Thickness(25, 0, 0, 20), HorizontalAlignment = HorizontalAlignment.Left, Background = new SolidColorBrush(Colors.DarkGray) };
+                spGetPlaylistName.Children.Add(tbxNewPlaylistName);
+                spNewPlaylist.Children.Add(spGetPlaylistName);
+                tbxNewPlaylistName.TextChanged += tbxNewPlaylistName_TextChanged;
+                Button btnAddNewPlaylistToPlaylists = new Button() { Content = "Add Playlist", Foreground = new SolidColorBrush(Colors.White), FontSize = 24, Margin = new Thickness(20), MaxWidth = 200, Background = new SolidColorBrush(Colors.DarkGray) };
+                btnAddNewPlaylistToPlaylists.Click += BtnAddNewPlaylistToPlaylists_Click;
+                spNewPlaylist.Children.Add(btnAddNewPlaylistToPlaylists);
+                newPlaylistWindow.Content = spNewPlaylist;
+                lbxPlaylists.Opacity = 0.4;
+                dpButtonsColumn.Opacity = 0.4;
+                tbxNewPlaylistName.Focus();
+            }
             newPlaylistWindow.Show();
+
+            //Found the next 4 lines at: http://stackoverflow.com/questions/15554786/how-to-use-windows-on-screen-keyboard-in-c-sharp-winforms
+            Process onScreenKeyboardProc = new Process();
+            string progFiles = @"C:\Program Files\Common Files\Microsoft Shared\ink";
+            string onScreenKeyboardPath = System.IO.Path.Combine(progFiles, "TabTip.exe");
+            onScreenKeyboardProc = System.Diagnostics.Process.Start(onScreenKeyboardPath);
         }
 
-        void tbxNewPlaylistName_TextChanged(object sender, TextChangedEventArgs e)
+        private void tbxNewPlaylistName_TextChanged(object sender, TextChangedEventArgs e)
         {
+            //Check the text being entered against the list of avaiable playlists and show an error message if the name already exists
             nameOfNewPlaylistBeingAdded = ((TextBox)sender).Text.ToString();
+            foreach (var playlist in lstPlaylists)
+            {
+                if (playlist.PlaylistName == nameOfNewPlaylistBeingAdded)
+                {
+                    ((Button)((StackPanel)newPlaylistWindow.Content).Children[2]).Visibility = Visibility.Hidden;//Hide the add button
+                    if ((((StackPanel)newPlaylistWindow.Content).Children).Count < 4)//Check if the label already exists
+                        ((StackPanel)newPlaylistWindow.Content).Children.Add(new Label() { Content = "Playlist Already Exists", HorizontalAlignment = HorizontalAlignment.Center, FontSize = 18, Foreground = new SolidColorBrush(Colors.Red) });//Add the error label
+                    ((Label)((StackPanel)newPlaylistWindow.Content).Children[3]).Visibility = Visibility.Visible;//Show the error label
+                    break;
+                }
+                else
+                {
+                    ((Button)((StackPanel)newPlaylistWindow.Content).Children[2]).Visibility = Visibility.Visible;//Show the Add button
+                    if ((((StackPanel)newPlaylistWindow.Content).Children).Count>3)
+                    ((Label)((StackPanel)newPlaylistWindow.Content).Children[3]).Visibility = Visibility.Hidden;//Hide the error label
+                }
+            }
         }
 
         private void BtnAddNewPlaylistToPlaylists_Click(object sender, RoutedEventArgs e)
         {
+            //Found the next 5 lines at: http://stackoverflow.com/questions/15554786/how-to-use-windows-on-screen-keyboard-in-c-sharp-winforms
+            //Kill all on screen keyboards
+            Process[] oskProcessArray = Process.GetProcessesByName("TabTip");
+            foreach (Process onscreenProcess in oskProcessArray)
+            {
+                onscreenProcess.Kill();
+            }
+
             newPlaylistWindow.Close();
-            MessageBox.Show(nameOfNewPlaylistBeingAdded);
+            lbxPlaylists.Opacity = 0.7;
+            dpButtonsColumn.Opacity = 0.7;
+            lstPlaylists.Add(new Playlist(nameOfNewPlaylistBeingAdded, new List<Track>()));
+            lbxPlaylists.Items.Add(new Label() { Content = nameOfNewPlaylistBeingAdded, Margin = new Thickness(0, 0, 0, 15), Foreground = new SolidColorBrush(Colors.White) });
         }
 
-        
-    }
-    
+        private void btnAddToPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            if (!newPlaylistWindow.IsActive)
+            {
+                newPlaylistWindow = new Window() { Width = 350, Height = 300, AllowsTransparency = true, Background = new SolidColorBrush(Colors.Transparent), BorderBrush = new SolidColorBrush(Colors.Transparent), WindowStyle = WindowStyle.None };
+                Canvas.SetLeft(newPlaylistWindow, 300);
+                Canvas.SetTop(newPlaylistWindow, 60);
+                ListBox lbxPlaylistList = new ListBox() { Width = 330, Height = 280, Opacity = 0.8, Background = new SolidColorBrush(Colors.Black) };
+                ScrollViewer.SetVerticalScrollBarVisibility(lbxPlaylistList, ScrollBarVisibility.Hidden);
+                ScrollViewer.SetHorizontalScrollBarVisibility(lbxPlaylistList, ScrollBarVisibility.Hidden);
+                StackPanel spAddTo = new StackPanel() { Orientation = Orientation.Horizontal };
+                spAddTo.Children.Add(new Label() { Content = "Add Track To:", Margin = new Thickness(0, 0, 100, 5), FontSize = 28, Foreground = new SolidColorBrush(Colors.White) });
+                Button btnClose = new Button() { Content = "x", Foreground = new SolidColorBrush(Colors.Red), FontSize = 38, Padding = new Thickness(10, 0, 10, 0), Margin = new Thickness(0, -15, 0, 45) };
+                btnClose.Click+=btnClose_Click;
+                spAddTo.Children.Add(btnClose);
+                lbxPlaylistList.Items.Add(spAddTo);
+                lbxPlaylists.Opacity = 0.4;
+                dpButtonsColumn.Opacity = 0.4;
+
+                foreach (var playlist in lstPlaylists)
+                {
+                    Label l = new Label() { Content = playlist.PlaylistName, Margin = new Thickness(0, 0, 0, 15), FontSize = 28, Foreground = new SolidColorBrush(Colors.White), Opacity = 0.7 };
+                    l.MouseUp += ModalPlaylist_MouseUp;
+                    lbxPlaylistList.Items.Add(l);
+                }
+                newPlaylistWindow.Content = lbxPlaylistList;
+            }
+            newPlaylistWindow.Show();
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            lbxPlaylists.Opacity = 0.7;
+            dpButtonsColumn.Opacity = 0.7;
+            newPlaylistWindow.Close();
+
+            //Found the next 5 lines at: http://stackoverflow.com/questions/15554786/how-to-use-windows-on-screen-keyboard-in-c-sharp-winforms
+            //Kill all on screen keyboards
+            Process[] oskProcessArray = Process.GetProcessesByName("TabTip");
+            foreach (Process onscreenProcess in oskProcessArray)
+            {
+                onscreenProcess.Kill();
+            }
+        }
+
+        private void ModalPlaylist_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            string selectedPlaylistName = ((Label)sender).Content.ToString();
+
+            Playlist playlist = (from p in lstPlaylists
+                                 where p.PlaylistName == selectedPlaylistName
+                                 select p).FirstOrDefault();
+            foreach (var plst in lstPlaylists)
+            {
+                if (plst.PlaylistName == playlist.PlaylistName && !plst.PlaylistTracks.Contains(trackPlaying))
+                {
+                    plst.PlaylistTracks.Add(trackPlaying);
+                }
+            }
+            newPlaylistWindow.Close();
+        }
+    }    
 }
