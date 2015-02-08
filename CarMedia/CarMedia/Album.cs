@@ -8,6 +8,7 @@ using TagLib;
 
 namespace CarMedia
 {
+    [Serializable]
     public class Album
     {
         public int AlbumId { get; set; }

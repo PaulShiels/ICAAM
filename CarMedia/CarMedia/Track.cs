@@ -9,6 +9,7 @@ using TagLib;
 
 namespace CarMedia
 {
+    [Serializable]
     public class Track
     {
         public int TrackId { get; set; }

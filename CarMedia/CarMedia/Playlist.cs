@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarMedia
 {
+    [Serializable]
     class Playlist
     {
         public string PlaylistName { get; set; }

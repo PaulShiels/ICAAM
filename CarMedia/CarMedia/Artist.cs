@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarMedia
 {
+    [Serializable]
     public class Artist
     {
         //public int ArtistId { get; set; }

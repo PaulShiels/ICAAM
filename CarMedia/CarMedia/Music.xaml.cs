@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -865,13 +866,14 @@ namespace CarMedia
 
         private void BuildAndPopulatePlaylistsView()
         {
-            Playlist p1 = new Playlist("Playlist1", lstTracks.GetRange(0, 5));
-            Playlist p2 = new Playlist("Playlist2", lstTracks.GetRange(10, 5));
-            Playlist p3 = new Playlist("Playlist3", lstTracks.GetRange(15, 9));
-            lstPlaylists.Add(p1);
-            lstPlaylists.Add(p2);
-            lstPlaylists.Add(p3);
+            //Playlist p1 = new Playlist("Playlist One", lstTracks.GetRange(0, 5));
+            //Playlist p2 = new Playlist("Playlist Two", lstTracks.GetRange(10, 5));
+            //Playlist p3 = new Playlist("Playlist Three", lstTracks.GetRange(15, 6));
+            //lstPlaylists.Add(p1);
+            //lstPlaylists.Add(p2);
+            //lstPlaylists.Add(p3);
 
+            DeserializePlaylists(ref lstPlaylists);
             lbxPlaylists.Items.Clear();
             StackPanel sp = new StackPanel() { Orientation = Orientation.Horizontal, Background = new SolidColorBrush(Colors.Black), Width=lbxArtistsTracks.Width};
             sp.Children.Add(new Button() { Content = "+", FontSize = 80, VerticalContentAlignment=VerticalAlignment.Center, Padding=new Thickness(0,-50,0,-30), Margin=new Thickness(10), BorderBrush = new SolidColorBrush(Colors.Transparent), Background = new SolidColorBrush(Colors.Black), FontWeight = FontWeights.ExtraBold, Foreground = new SolidColorBrush(Colors.White)});
@@ -1070,6 +1072,7 @@ namespace CarMedia
             {
                 lbxPlaylists.Items.RemoveAt(lstPlaylists.IndexOf(selectedPlaylist)+1);
                 lstPlaylists.Remove(selectedPlaylist);
+                SerializePlaylists(lstPlaylists);
             }
         }
 
@@ -1176,6 +1179,7 @@ namespace CarMedia
             dpButtonsColumn.Opacity = 0.7;
             lstPlaylists.Add(new Playlist(nameOfNewPlaylistBeingAdded, new List<Track>()));
             lbxPlaylists.Items.Add(new Label() { Content = nameOfNewPlaylistBeingAdded, Margin = new Thickness(0, 0, 0, 15), Foreground = new SolidColorBrush(Colors.White) });
+            SerializePlaylists(lstPlaylists);
         }
 
         private void btnAddToPlaylist_Click(object sender, RoutedEventArgs e)
@@ -1235,9 +1239,28 @@ namespace CarMedia
                 if (plst.PlaylistName == playlist.PlaylistName && !plst.PlaylistTracks.Contains(trackPlaying))
                 {
                     plst.PlaylistTracks.Add(trackPlaying);
+                    SerializePlaylists(lstPlaylists);
                 }
             }
             newPlaylistWindow.Close();
+        }
+
+        private static void SerializePlaylists(List<Playlist> playlists)
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            using (Stream str = new FileStream("Playlists.dat", FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                bf.Serialize(str, playlists);
+            }
+        }
+
+        private static void DeserializePlaylists(ref List<Playlist> lstPlaylists)
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            using (Stream str = File.OpenRead("Playlists.dat"))
+            {
+                lstPlaylists = (List<Playlist>)bf.Deserialize(str);
+            }
         }
     }    
 }
