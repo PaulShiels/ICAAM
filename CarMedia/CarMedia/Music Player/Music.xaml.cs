@@ -125,7 +125,9 @@ namespace CarMedia
                     }
                     //Now add all the tracks from the first folder of the music folder to the list
                     foreach (var file in Directory.GetFiles(folder))
-                    {                        
+                    {
+                        FileInfo fi = new FileInfo(file);
+                        if (fi.Extension == ".mp3" || fi.Extension == ".wav" || fi.Extension == ".m4a" || fi.Extension == ".mv3" || fi.Extension == ".wma" || fi.Extension == ".aac" || fi.Extension == ".m4p" || fi.Extension == ".m4b" || fi.Extension == ".wm")
                             retriveTracksFromThisFolder(file);
                     }
                 }
@@ -133,6 +135,8 @@ namespace CarMedia
             //Add all the tracks in the music folder root to the list of all tracks
             foreach (var file in Directory.GetFiles(musicFolder))
             {
+                FileInfo fi = new FileInfo(file);
+                if (fi.Extension == ".mp3" || fi.Extension == ".wav" || fi.Extension == ".m4a" || fi.Extension == ".mv3" || fi.Extension == ".wma" || fi.Extension == ".aac" || fi.Extension == ".m4p" || fi.Extension == ".m4b" || fi.Extension == ".wm")
                 retriveTracksFromThisFolder(file);
             }
  

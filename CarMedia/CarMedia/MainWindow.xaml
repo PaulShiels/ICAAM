@@ -2,7 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" WindowStyle="None"
         Loaded="Window_Loaded"
-        Title="MainWindow" ResizeMode="NoResize" WindowState="Maximized">
+        Title="MainWindow" ResizeMode="NoResize" WindowState="Maximized"
+        Width="1280" Height="768">
         
     <Grid>
         <Grid.Background>
@@ -19,8 +20,77 @@
         
         
         <Canvas x:Name="MediaFrame" Background="Black" HorizontalAlignment="Left" x:FieldModifier="public" ></Canvas>
-        
-        <TextBlock Grid.Row="1" Background="Transparent"></TextBlock>
+
+        <StackPanel Grid.Row="1" Background="Transparent" Orientation="Horizontal">
+            <StackPanel>
+            <Label Content="Temperature" Margin="5,0,0,0" Foreground="White" FontSize="36"/>
+            <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                <Label Content="Outside: " Foreground="White" FontSize="18"/>
+                <Label x:Name="lblOutsideTemp" Foreground="White" FontSize="18"/>
+                <Label Content="°C" FontSize="18" Foreground="White"></Label>
+            </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <Button x:Name="btnIncreaseTemp" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnIncreaseTemp_Click">
+                            <Image Source="Images\plus.png" Width="90" Height="90"></Image>
+                        </Button>
+                        <Button x:Name="btnDecreaseTemp" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnDecreaseTemp_Click">
+                            <Image Source="Images\minus.png" Width="90" Height="90"></Image>
+                        </Button>
+                        <!--<Button x:Name="btnDecreaseTemp" Content="-" Foreground="White" FontSize="50" Margin="-4, -20" VerticalContentAlignment="Center" Background="Transparent"></Button>-->
+                    </StackPanel>
+                    <StackPanel>
+                        <Label Content="Inside" FontSize="60" Foreground="White"></Label>
+                        <StackPanel Orientation="Horizontal">
+                            <Label x:Name="lblTempInside" Content="20" FontSize="70" VerticalAlignment="Center" Foreground="White"/>
+                            <Label Content="°C" FontSize="70" Foreground="White" VerticalAlignment="Center"></Label>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            
+            <StackPanel Margin="80,0">            
+            <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                    <Label Content="Fan" Margin="5,0,0,0" Foreground="White" FontSize="36"/>
+                    <!--<Image Source="Images\fan.png" Height="30" Width="30" Margin="10,0,0,0"/>-->
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Margin="0,35,0,0">
+                    <Button x:Name="btnIncreaseTemp1" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnIncreaseTemp_Click">
+                        <Image Source="Images\plus.png" Width="90" Height="90"></Image>
+                    </Button>
+                    <Button x:Name="btnDecreaseTemp1" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnDecreaseTemp_Click">
+                        <Image Source="Images\minus.png" Width="90" Height="90"></Image>
+                    </Button>
+                    <!--<Button x:Name="btnDecreaseTemp" Content="-" Foreground="White" FontSize="50" Margin="-4, -20" VerticalContentAlignment="Center" Background="Transparent"></Button>-->
+                </StackPanel>
+                    <StackPanel VerticalAlignment="Bottom" Margin="5,0,0,20" Orientation="Horizontal">
+                        <StackPanel>
+                            <Image x:Name="imgFanBar4" Source="Images\fanBar4.png" HorizontalAlignment="Left" Margin="0,5"></Image>
+                            <Image x:Name="imgFanBar3" Source="Images\fanBar3.png" HorizontalAlignment="Left" Margin="0,5"></Image>
+                            <Image x:Name="imgFanBar2" Source="Images\fanBar2.png" HorizontalAlignment="Left" Margin="0,5"></Image>
+                            <Image x:Name="imgFanBar1" Source="Images\fanBar1.png" HorizontalAlignment="Left" Margin="0,5"></Image>
+                        </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+            
+            <StackPanel Margin="0,0">
+                <Button x:Name="btnBlowerWindscreen" Margin="0,5" Height="70" Background="Black" Opacity="0.8">
+                    <Image Source="Images\blowerWindscreen.png"></Image>
+                </Button>
+                <Button x:Name="btnBlowerFace" Background="Black" Height="70" Opacity="0.8">
+                    <Image Source="Images\blowerFace.png"></Image>
+                </Button>
+                <Button x:Name="btnBlowerFaceDown" Background="Black" Height="70" Opacity="0.8">
+                    <Image Source="Images\blowerFaceDown.png"></Image>
+                </Button>
+                <Button x:Name="btnBlowerDown" Background="Black" Height="70" Opacity="0.8">
+                    <Image Source="Images\blowerDown.png"></Image>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+
         <TextBlock Grid.Column="1" Background="Transparent"></TextBlock>
         
         <Grid Name="grdGauges" Grid.Column="1" Height="750" Grid.RowSpan="2" VerticalAlignment="Top">

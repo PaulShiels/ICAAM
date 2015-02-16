@@ -77,5 +77,15 @@ namespace CarMedia
                     ConnectSerialPort();
             }
         }
+
+        private void btnDecreaseTemp_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnIncreaseTemp_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
