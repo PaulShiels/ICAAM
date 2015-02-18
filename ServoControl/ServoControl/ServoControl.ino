@@ -1,4 +1,4 @@
-
+  
   #include <Servo.h> 
   #include "DHT.h"
   #define DHTPIN 2   // what pin we're connected to
@@ -11,6 +11,8 @@
   Servo servoTempControl;  
   Servo servoFanSpeed;
   
+  //Incoming string from c# application
+  byte incomingValues[4];
   //int pos = 0;    // variable to store the servo position 
   //Temperature Conrol Variables
   int i = 100; //70
@@ -26,7 +28,8 @@
   //Fan Speed Variables
   int fanSpeedSetting = 50; //Angle at which to set servo arm. 50 in this case is the fan speed at 0
   boolean userHasControl = false; //Used to allow the fan speed to be controlled automatically to allow the temperature to be changed quicker
-  //The fan can be noisey and the user may want to turn it down while still wanting the temperature adjusted.
+                                  //The fan can be noisey and the user may want to turn it down while still wanting the temperature adjusted.
+
   
   void setup() 
   { 
@@ -36,12 +39,32 @@
     dht.begin();
     actualTemp = getTemp();  
   } 
-  
-  
+
   void loop() 
   { 
-    char c = Serial.read();
-  
+    if(Serial.available()==4)
+    {
+      for (int i=0;i<4;i++){
+        incomingValues[i] = (byte)Serial.read();
+//        delay(20);
+      }   
+      
+      if (loopCounter > 99)
+      {
+        fanSpeedSetting = incomingValues[0];
+        setFanSpeed(fanSpeedSetting);
+        desiredTemp = incomingValues[1];    
+        tempDifference = getDiff(desiredTemp, actualTemp);
+      }      
+    }
+    else 
+    {
+      Serial.flush();
+    }    
+    
+    
+    
+  char c=' ';
     //////Set desired temp /////////////////////////////
     if (c=='a')
     {
@@ -91,7 +114,7 @@
     ///////////////////////////////////////////////
   
     ////////////////Adjust controls according to Temperature Difference //////////////////////
-    if (adjustTempControlLoopCounter > 19)
+    if (loopCounter > 1000)
     {
       if (tempDifference >=1)
       {
@@ -145,26 +168,26 @@
     //  }
     //////////////////////////////////////////////////////////////////////////////////////////
   
-    Serial.print("Desired Temp = ");
-    Serial.print(desiredTemp);
-    Serial.print("         ");
-    Serial.print("Actual Temp = ");
-    Serial.print(actualTemp);
-    Serial.print("         ");
-    Serial.print("Difference = ");
-    Serial.print(tempDifference);
-    Serial.print("         ");
-    Serial.print("Motor Value = ");
-    Serial.print(i);
-    Serial.print("         ");
-    Serial.print("Fan Speed = ");
-    Serial.println(fanSpeedSetting);
+//    Serial.print("Desired Temp = ");
+//    Serial.print(desiredTemp);
+//    Serial.print("         ");
+//    Serial.print("Actual Temp = ");
+//    Serial.print(actualTemp);
+//    Serial.print("         ");
+//    Serial.print("Difference = ");
+//    Serial.print(tempDifference);
+//    Serial.print("         ");
+//    Serial.print("Motor Value = ");
+//    Serial.print(i);
+//    Serial.print("         ");
+//    Serial.print("Fan Speed = ");
+//    Serial.println(fanSpeedSetting);
   
     servoTempControl.write(i);
   
-    if (loopCounter >50)
+    if (loopCounter >1000)
     {
-      actualTemp = getTemp();
+      //actualTemp = getTemp();
       loopCounter=0;
     }
     else
@@ -247,6 +270,30 @@
     // Read temperature as Celsius
     float t = dht.readTemperature();
     return t;
+  }
+  
+  void setFanSpeed(byte fanspeed)
+  {
+    if (fanspeed == 0)
+    {
+      servoFanSpeed.write(140);
+    }
+    if (fanspeed == 1)
+    {
+      servoFanSpeed.write(115);
+    }
+    if (fanspeed == 2)
+    {
+      servoFanSpeed.write(90);
+    }
+    if (fanspeed == 3)
+    {
+      servoFanSpeed.write(65);
+    }
+    if (fanspeed == 4)
+    {
+      servoFanSpeed.write(40);
+    }
   }
   
   int adjustFanSpeed(float tempDifference)

@@ -32,7 +32,7 @@ namespace CarMedia
 
         public Camera()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -53,13 +53,13 @@ namespace CarMedia
             Arduino.DiscardInBuffer();
             Thread.Sleep(400);
             if (Arduino.IsOpen)// && MainWindow.camera.Visibility==Visibility.Visible)
-            {
-                int bufSize = Arduino.ReadBufferSize;
-                if (bufSize > 0)
-                {
-                    old_Dis = new_Dis;
-                    txtDistance.Content = Arduino.ReadExisting();                    
-                }
+            {                
+                //int bufSize = Arduino.ReadBufferSize;
+                //if (bufSize > 0)
+                //{
+                //    old_Dis = new_Dis;
+                //    txtDistance.Content = Arduino.ReadExisting();                    
+                //}
             }
         }
 

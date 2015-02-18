@@ -4,7 +4,7 @@
         Loaded="Window_Loaded"
         Title="MainWindow" ResizeMode="NoResize" WindowState="Maximized"
         Width="1280" Height="768">
-        
+
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="Images/MainBackground1.jpg"/>
@@ -17,18 +17,18 @@
             <ColumnDefinition Width="8*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        
-        
+
+
         <Canvas x:Name="MediaFrame" Background="Black" HorizontalAlignment="Left" x:FieldModifier="public" ></Canvas>
 
         <StackPanel Grid.Row="1" Background="Transparent" Orientation="Horizontal">
             <StackPanel>
-            <Label Content="Temperature" Margin="5,0,0,0" Foreground="White" FontSize="36"/>
-            <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-                <Label Content="Outside: " Foreground="White" FontSize="18"/>
-                <Label x:Name="lblOutsideTemp" Foreground="White" FontSize="18"/>
-                <Label Content="°C" FontSize="18" Foreground="White"></Label>
-            </StackPanel>
+                <Label Content="Temperature" Margin="5,0,0,0" Foreground="White" FontSize="36"/>
+                <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                    <Label Content="Outside: " Foreground="White" FontSize="18"/>
+                    <Label x:Name="lblOutsideTemp" Foreground="White" FontSize="18"/>
+                    <Label Content="°C" FontSize="18" Foreground="White"></Label>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel>
                         <Button x:Name="btnIncreaseTemp" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnIncreaseTemp_Click">
@@ -42,28 +42,28 @@
                     <StackPanel>
                         <Label Content="Inside" FontSize="60" Foreground="White"></Label>
                         <StackPanel Orientation="Horizontal">
-                            <Label x:Name="lblTempInside" Content="20" FontSize="70" VerticalAlignment="Center" Foreground="White"/>
+                            <Label x:Name="lblTempInside" FontSize="70" VerticalAlignment="Center" Foreground="White"/>
                             <Label Content="°C" FontSize="70" Foreground="White" VerticalAlignment="Center"></Label>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
-            
-            <StackPanel Margin="80,0">            
-            <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+
+            <StackPanel Margin="80,0">
+                <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
                     <Label Content="Fan" Margin="5,0,0,0" Foreground="White" FontSize="36"/>
                     <!--<Image Source="Images\fan.png" Height="30" Width="30" Margin="10,0,0,0"/>-->
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <StackPanel Margin="0,35,0,0">
-                    <Button x:Name="btnIncreaseTemp1" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnIncreaseTemp_Click">
-                        <Image Source="Images\plus.png" Width="90" Height="90"></Image>
-                    </Button>
-                    <Button x:Name="btnDecreaseTemp1" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnDecreaseTemp_Click">
-                        <Image Source="Images\minus.png" Width="90" Height="90"></Image>
-                    </Button>
-                    <!--<Button x:Name="btnDecreaseTemp" Content="-" Foreground="White" FontSize="50" Margin="-4, -20" VerticalContentAlignment="Center" Background="Transparent"></Button>-->
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Margin="0,35,0,0">
+                        <Button x:Name="btnIncreaseTemp1" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnIncreaseFanSpeed_Click">
+                            <Image Source="Images\plus.png" Width="90" Height="90"></Image>
+                        </Button>
+                        <Button x:Name="btnDecreaseTemp1" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnDecreaseFanSpeed_Click">
+                            <Image Source="Images\minus.png" Width="90" Height="90"></Image>
+                        </Button>
+                        <!--<Button x:Name="btnDecreaseTemp" Content="-" Foreground="White" FontSize="50" Margin="-4, -20" VerticalContentAlignment="Center" Background="Transparent"></Button>-->
+                    </StackPanel>
                     <StackPanel VerticalAlignment="Bottom" Margin="5,0,0,20" Orientation="Horizontal">
                         <StackPanel>
                             <Image x:Name="imgFanBar4" Source="Images\fanBar4.png" HorizontalAlignment="Left" Margin="0,5"></Image>
@@ -71,37 +71,40 @@
                             <Image x:Name="imgFanBar2" Source="Images\fanBar2.png" HorizontalAlignment="Left" Margin="0,5"></Image>
                             <Image x:Name="imgFanBar1" Source="Images\fanBar1.png" HorizontalAlignment="Left" Margin="0,5"></Image>
                         </StackPanel>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
-        </StackPanel>
-            
-            <StackPanel Margin="0,0">
-                <Button x:Name="btnBlowerWindscreen" Margin="0,5" Height="70" Background="Black" Opacity="0.8">
-                    <Image Source="Images\blowerWindscreen.png"></Image>
-                </Button>
-                <Button x:Name="btnBlowerFace" Background="Black" Height="70" Opacity="0.8">
-                    <Image Source="Images\blowerFace.png"></Image>
-                </Button>
-                <Button x:Name="btnBlowerFaceDown" Background="Black" Height="70" Opacity="0.8">
+
+            <StackPanel Width="220" Margin="-70,0">
+                <StackPanel Orientation="Horizontal" Margin="0,13,0,0">
+                    <Button x:Name="btnBlowerWindscreen" Height="80" Width="100" Margin="-65,0,0,0" Background="Black" Opacity="0.8" Click="btnBlowerWindscreen_Click">
+                        <Image Source="Images\blowerWindscreen.png"></Image>
+                    </Button>
+                    <Button x:Name="btnBlowerFace" Background="Black" Margin="25,0,0,0"  Height="80" Width="100" Opacity="0.8" Click="btnBlowerFace_Click">
+                        <Image Source="Images\blowerFace.png"></Image>
+                    </Button>
+                </StackPanel>
+                <Button x:Name="btnBlowerFaceDown" Background="Black" Height="80" Width="100" Margin="0,18, 0,0" Opacity="0.8" Click="btnBlowerFaceDown_Click">
                     <Image Source="Images\blowerFaceDown.png"></Image>
                 </Button>
-                <Button x:Name="btnBlowerDown" Background="Black" Height="70" Opacity="0.8">
+                <Button x:Name="btnBlowerDown" Background="Black" Height="80" Width="100" Margin="0,18, 0,0" Opacity="0.8" Click="btnBlowerDown_Click">
                     <Image Source="Images\blowerDown.png"></Image>
                 </Button>
             </StackPanel>
         </StackPanel>
 
         <TextBlock Grid.Column="1" Background="Transparent"></TextBlock>
-        
+
         <Grid Name="grdGauges" Grid.Column="1" Height="750" Grid.RowSpan="2" VerticalAlignment="Top">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="125*"/>
+                <RowDefinition Height="125*"/>
+                <RowDefinition Height="104*"/>
+                <RowDefinition Height="21*"/>
             </Grid.RowDefinitions>
 
-            <Image Source="Images/voltmeter.png"></Image>            
-            <Rectangle Margin="101,50,100,115" Name="rectangleMinute" StrokeThickness="4" Width="4" Height="50" Stroke="Red">
+            <Image Source="Images/voltmeter.png"></Image>
+            <Rectangle Margin="173,68,172,132" Name="rectangleMinute" StrokeThickness="4" Width="4" Height="50" Stroke="Red">
                 <Rectangle.Fill>
                     <SolidColorBrush Color="White" />
                 </Rectangle.Fill>
@@ -109,10 +112,10 @@
                     <RotateTransform x:Name="voltHand" CenterX="0" CenterY="70" Angle="50" />
                 </Rectangle.RenderTransform>
             </Rectangle>
-            
-            
+
+
             <Image Source="Images/voltmeter.png" Grid.Row="1"></Image>
-            <Image Source="Images/voltmeter.png" Grid.Row="2"></Image>
+            <Image Source="Images/voltmeter.png" Grid.Row="2" Grid.RowSpan="2"></Image>
         </Grid>
 
     </Grid>
