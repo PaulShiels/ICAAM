@@ -77,6 +77,9 @@
     <Compile Include="Music Player\Playlist.cs" />
     <Compile Include="Music Player\Track.cs" />
     <Compile Include="Camera\WebCam.cs" />
+    <Compile Include="Radio.xaml.cs">
+      <DependentUpon>Radio.xaml</DependentUpon>
+    </Compile>
     <Page Include="Camera\Camera.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -101,6 +104,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Music Player\Music.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Radio.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -137,6 +144,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\fequencyTicks.png" />
     <Resource Include="Images\Home_Icon.png" />
     <Resource Include="Images\back_Arrow.png" />
     <Resource Include="Images\clockFace.jpg" />
@@ -171,6 +179,10 @@
     <Resource Include="Images\blowerFace.png" />
     <Resource Include="Images\blowerFaceDown.png" />
     <Resource Include="Images\blowerWindscreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\arrowBack.png" />
+    <Resource Include="Images\arrowForward.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

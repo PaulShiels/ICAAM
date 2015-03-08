@@ -29,12 +29,13 @@ namespace CarMedia
         public static Home HomeScreen = new Home();
         public static Music musicPlayer = new Music();
         public static Camera camera = new Camera();
+        public static Radio radio = new Radio();
         private DispatcherTimer timer = new DispatcherTimer();
         private int tickcount = 0;
         public static SerialPort ArduinoPort = new SerialPort();
         public static byte[] ArduinoBuffer = new byte[4];
         public static Grid gauges = new Grid();
-        public static byte fanSpeed, desiredTemperature=20;
+        public static byte fanSpeed, desiredTemperature=20, blowerPosition = 3;
         public static List<string> ArduinoOutputs = new List<string>();
 
         public MainWindow()
@@ -46,8 +47,10 @@ namespace CarMedia
             MediaFrame.Children.Add(HomeScreen);
             MediaFrame.Children.Add(musicPlayer);
             MediaFrame.Children.Add(camera);
+            MediaFrame.Children.Add(radio);
             Canvas.SetZIndex(MainWindow.musicPlayer, 0);
             Canvas.SetZIndex(MainWindow.camera, 0);
+            Canvas.SetZIndex(MainWindow.radio, 0);
             Canvas.SetZIndex(MainWindow.HomeScreen, 1);
             musicPlayer.Visibility = Visibility.Hidden;
             gauges = grdGauges;
@@ -75,8 +78,8 @@ namespace CarMedia
                     //byte[] data = BitConverter.GetBytes(FanSpeed);
                     ArduinoBuffer[0] = Convert.ToByte(fanSpeed);
                     ArduinoBuffer[1] = Convert.ToByte(desiredTemperature);
-                    ArduinoBuffer[2] = Convert.ToByte(11);//Blower Direction 1, 2, 3, 4
-                    ArduinoBuffer[3] = Convert.ToByte(191);
+                    ArduinoBuffer[2] = Convert.ToByte(blowerPosition);
+                    ArduinoBuffer[3] = Convert.ToByte(radio.listenToFrequency);
                     //ArduinoPort.Write(sb.ToString());
                     //if (ArduinoPort.BytesToWrite>4)
                     try
@@ -148,22 +151,22 @@ namespace CarMedia
 
         private void btnBlowerWindscreen_Click(object sender, RoutedEventArgs e)
         {
-
+            blowerPosition = 3;
         }
 
         private void btnBlowerFace_Click(object sender, RoutedEventArgs e)
         {
-
+            blowerPosition = 0;
         }
 
         private void btnBlowerFaceDown_Click(object sender, RoutedEventArgs e)
         {
-
+            blowerPosition = 1;
         }
 
         private void btnBlowerDown_Click(object sender, RoutedEventArgs e)
         {
-
+            blowerPosition = 2;
         }
     }
 }

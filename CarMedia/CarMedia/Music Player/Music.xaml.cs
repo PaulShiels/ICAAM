@@ -225,6 +225,7 @@ namespace CarMedia
                 btnNowPlaying.Visibility = Visibility.Hidden;
             }
 
+            if(MainWindow.musicPlayer.Visibility==Visibility.Visible)
             if (Mouse.LeftButton == MouseButtonState.Pressed)
             {
                 if (playlistButtonHeldCounter >= 1)

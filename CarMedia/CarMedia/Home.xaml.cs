@@ -50,7 +50,8 @@ namespace CarMedia
 
         private void btnRadio_Click(object sender, RoutedEventArgs e)
         {
-            
+            MainWindow.radio.Visibility = Visibility.Visible;
+            MainWindow.HomeScreen.Visibility = Visibility.Hidden;
         }
 
         private void btnMusic_Click(object sender, RoutedEventArgs e)
