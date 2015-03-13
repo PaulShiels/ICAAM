@@ -8,20 +8,21 @@
   DHT dht(DHTPIN, DHTTYPE);
   
   // create servo objects to control a servos
-  Servo servoTempControl;  
   Servo servoFanSpeed;
-  Servo servoBlowerPosition; 
+  Servo servoBlowerPositionFront;
+  Servo servoBlowerPositionRear;
   
   //Incoming string from c# application
   byte incomingValues[4];
   //int pos = 0;    // variable to store the servo position 
   
   //Temperature Conrol Variables
-  int i = 100; //70
-  boolean atMaxTemp = false;
-  boolean atMinTemp = false;
+  //int i = 100; //70
+  int blowerPositionFront;
+  int blowerPositionRear;
+
   int desiredTemps[] = {10, 11, 15, 17, 18, 19, 20, 24, 28};
-  int desiredTemp = 0;
+  int desiredTemp = 10;
   float actualTemp = 0;
   int tempDifference =0;
   int loopCounter = 0;
@@ -35,21 +36,18 @@
   int blowerPotPin = A0;
   int previousBlowerPosition;
   int blowerPosition = 3;
-  int blowerLs0 = 13;
-  int blowerLs1 = 12;
-  int blowerLs2 = 10;
-  int blowerLs3 = 7;
   
   void setup() 
   { 
-    pinMode(blowerLs0, INPUT);
-    pinMode(blowerLs1, INPUT);
-    pinMode(blowerLs2, INPUT);
-    pinMode(blowerLs3, INPUT); 
     Serial.begin(9600);
-    servoTempControl.attach(9);  // attaches the servo on pin 9 to the servo object 
+    //servoTempControl.attach(9);  // attaches the servo on pin 9 to the servo object 
     servoFanSpeed.attach(11);
-    servoBlowerPosition.attach(8);
+    servoBlowerPositionFront.attach(9);
+    servoBlowerPositionRear.attach(10);        
+    servoBlowerPositionFront.write(165);  
+    servoBlowerPositionRear.write(45);
+    blowerPositionFront = 165;
+    blowerPositionRear = 45;
     dht.begin();
     actualTemp = getTemp();  
   } 
@@ -66,8 +64,7 @@
       fanSpeedSetting = incomingValues[0];
       setFanSpeed(fanSpeedSetting);
       desiredTemp = incomingValues[1]; 
-      tempDifference = getDiff(desiredTemp, actualTemp);
-      previousBlowerPosition = blowerPosition;
+      tempDifference = getDiff(desiredTemp, actualTemp);      
       blowerPosition = incomingValues[2];    
     }
     else 
@@ -86,214 +83,23 @@
           //fanSpeedSetting = adjustFanSpeed(tempDifference);
           //servoFanSpeed.write(adjustFanSpeed(tempDifference));
         }
-        
+                
         if (desiredTemp > actualTemp)
         {
-          if (atMaxTemp == false)
-          {
-            if (loopCounter >= 5000)
-            {
-              increaseTempPosition();
-            }
-            atMinTemp = false;
-            //Check if the heat is turned up full
-            if (digitalRead(12) == LOW)
-            {
-              atMaxTemp = true;
-            }
-            else
-            {
-              atMaxTemp = false;
-            }
-          }
+          increaseTemp();
         }
         
         if (desiredTemp < actualTemp)
         {
-          //Check is heat turned down full
-          if (atMinTemp == false)
-          {
-            if (loopCounter >= 5000)
-            {
-              decreaseTempPosition();
-            }
-            atMaxTemp = false;
-            if (digitalRead(12) == LOW)
-            {
-              atMinTemp = true;
-            }
-            else
-            {
-              atMinTemp = false;
-            }
-          }
+          decreaseTemp();
         }
       } 
     }
-    servoTempControl.write(i);
+    //servoTempControl.write(i);
     //////////////////////////////////////////////////////////////////////////////////////////
     
     ///////////////Set the Blower Position /////////////////////////////////////////
-    
-    char b = Serial.read();
-    if (b == 'c')
-      blowerPosition = 0;
-    if (b == 'v')
-      blowerPosition = 1;
-      if (b == 'b')
-      blowerPosition = 2;
-      if (b == 'n')
-      blowerPosition = 3;
-      
-      Serial.print("Position = ");
-      Serial.println(blowerPosition);
-      
-      //if (digitalRead(blowerLs0) == LOW || digitalRead(blowerLs1) || digitalRead(blowerLs2) == LOW || digitalRead(blowerLs3))
-          
-          
-      switch (blowerPosition)
-      {
-      case 0:
-      {
-        if (digitalRead(blowerLs0) == LOW)
-          servoBlowerPosition.write(100);        
-        else
-          if (digitalRead(blowerLs0) == HIGH)
-              servoBlowerPosition.write(130);
-        break;
-      }
-        
-      case 1:
-      {
-        if (digitalRead(blowerLs1) == LOW)
-          servoBlowerPosition.write(100);        
-        else 
-        {
-          if(previousBlowerPosition >1)
-          {
-            if (digitalRead(blowerLs1) == HIGH)
-              servoBlowerPosition.write(130);            
-          }
-          else
-            if (digitalRead(blowerLs1) == HIGH)
-              servoBlowerPosition.write(70);
-        } 
-          servoBlowerPosition.write(100);  
-        break;
-      }
-      
-      case 2:
-      {
-        if (digitalRead(blowerLs2) == LOW)
-          servoBlowerPosition.write(100);        
-        else
-        {
-          if(previousBlowerPosition >2)
-          {
-            if (digitalRead(blowerLs2) == HIGH)
-              servoBlowerPosition.write(130);
-          }
-          else
-           if   (previousBlowerPosition < 2)
-          {
-            if (digitalRead(blowerLs2) == HIGH)
-              servoBlowerPosition.write(70);
-          }
-        }
-          servoBlowerPosition.write(100);   
-        break;
-      }
-        
-      case 3:
-      {
-        if (digitalRead(blowerLs3) == LOW)
-          servoBlowerPosition.write(100);        
-        else
-          if (digitalRead(blowerLs3) == HIGH)
-            servoBlowerPosition.write(70);
-        break;
-      }
-    }
 
-//    blowerPositionPot = analogRead(blowerPotPin);
-//    Serial.println(blowerPositionPot);
-//    switch (blowerPosition)
-//    {
-//      case 0:
-//      {
-//        if (blowerPositionPot > 10)
-//        {
-//          while (blowerPositionPot > 10)
-//          {
-//            blowerPositionPot = analogRead(blowerPotPin);
-//          //Serial.println("Case 0");
-//            servoBlowerPosition.write(130);
-//          }
-//        }
-//        break;
-//      }
-//        
-//      case 1:
-//      {
-//        if (blowerPositionPot > 170) //310
-//        {
-//          while (blowerPositionPot > 170)
-//          {
-//            blowerPositionPot = analogRead(blowerPotPin);
-//          //Serial.println("Case 1, 1");
-//            servoBlowerPosition.write(130);
-//          }        
-//        }
-//        if (blowerPositionPot < 130) //270
-//        {
-//          while (blowerPositionPot < 130)
-//          {
-//            blowerPositionPot = analogRead(blowerPotPin);
-//          //Serial.println("Case 1, 2");
-//            servoBlowerPosition.write(70);
-//          }
-//        }
-//        break;
-//      }
-//      
-//      case 2:
-//      {
-//        if (blowerPositionPot > 530) //710
-//        {
-//          while (blowerPositionPot > 530)
-//          {
-//            blowerPositionPot = analogRead(blowerPotPin);
-//          //Serial.println("Case 2, 1");
-//            servoBlowerPosition.write(130);
-//          }
-//        }
-//        if (blowerPositionPot < 490)
-//        {
-//          while (blowerPositionPot < 490) //660
-//          {
-//            blowerPositionPot = analogRead(blowerPotPin);
-//          //Serial.println("Case 2, 2");
-//            servoBlowerPosition.write(70);
-//          }          
-//        }
-//        break;
-//      }
-//      
-//      case 3:
-//      {
-//        if (blowerPositionPot < 770) //1010)
-//        {
-//          while (blowerPositionPot < 770) //1010)
-//          {
-//            blowerPositionPot = analogRead(blowerPotPin);
-//          //Serial.println("Case 3");
-//            servoBlowerPosition.write(70);
-//          }          
-//        }
-//        break;
-//      }
-//    }    
-//    servoBlowerPosition.write(100);
     ////////////////////////////////////////////////////////////////////////////////////////
   
     
@@ -310,55 +116,7 @@
     }
     
     
-      //  char c=' ';
-//    //////Set desired temp /////////////////////////////
-//    if (c=='a')
-//    {
-//      desiredTemp = desiredTemps[0];
-//      tempDifference = getDiff(desiredTemp, actualTemp);
-//    }
-//    if (c=='s')
-//    {
-//      desiredTemp = desiredTemps[1];
-//      tempDifference = getDiff(desiredTemp, actualTemp);
-//    }
-//    if (c=='d')
-//    {
-//      desiredTemp = desiredTemps[2];
-//      tempDifference = getDiff(desiredTemp, actualTemp);
-//    }
-//    if (c=='f')
-//    {
-//      desiredTemp = desiredTemps[3];
-//      tempDifference = getDiff(desiredTemp, actualTemp);
-//    }
-//    if (c=='g')
-//    {
-//      desiredTemp = desiredTemps[4];
-//      tempDifference = getDiff(desiredTemp, actualTemp);
-//    }
-//    if (c=='h')
-//    {
-//      desiredTemp = desiredTemps[5];
-//      tempDifference = getDiff(desiredTemp, actualTemp);
-//    }
-//    if (c=='j')
-//    {
-//      desiredTemp = desiredTemps[6];
-//      tempDifference = getDiff(desiredTemp, actualTemp);
-//    }
-//    if (c=='k')
-//    {
-//      desiredTemp = desiredTemps[7];
-//      tempDifference = getDiff(desiredTemp, actualTemp);
-//    }
-//    if (c=='l')
-//    {
-//      desiredTemp = desiredTemps[8];
-//      tempDifference = getDiff(desiredTemp, actualTemp);
-//    }
-    ///////////////////////////////////////////////
-  
+ 
   
   
     //////////////////////Adjust Fan Speed ///////////////////////////////////////////////////
@@ -389,72 +147,10 @@
     //  }
     //////////////////////////////////////////////////////////////////////////////////////////
   
-//    Serial.print("Desired Temp = ");
-//    Serial.print(desiredTemp);
-//    Serial.print("         ");
-//    Serial.print("Actual Temp = ");
-//    Serial.print(actualTemp);
-//    Serial.print("         ");
-//    Serial.print("Difference = ");
-//    Serial.print(tempDifference);
-//    Serial.print("         ");
-//    Serial.print("Motor Value = ");
-//    Serial.print(i);
-//    Serial.print("         ");
-//    Serial.print("Fan Speed = ");
-//    Serial.println(fanSpeedSetting);
-    
-    
-    
-//    if (c=='m')
-//    {    
-//      increaseTempPosition();
-//    }
-//    if (c=='z')
-//    {
-//      decreaseTempPosition();
-//    }
-//    if (c=='w')
-//    {
-//      setToMax();
-//    }
-//    if (c=='q')
-//    {
-//      setToMin();
-//    }
-//    if (c=='p')
-//    {
-//      i++;
-//    }
-//    if (c=='o')
-//    {
-//      i--;
-//    }   
+  
   }
   
-  void increaseTempPosition()
-  {
-    servoTempControl.write(140);
-    delay(70);
-  }
-  
-  void decreaseTempPosition()
-  {
-    servoTempControl.write(60);
-    delay(70);
-  }
-  
-  void setToMax()
-  {
-    servoTempControl.write(120);
-    delay(1400);
-  }
-  
-  void setToMin()
-  {
-    servoTempControl.write(80);
-    delay(1400);
-  }
+ 
   
   float getDiff(float num1, float num2)
   {
@@ -506,33 +202,63 @@
     }
   }
   
-  void setBlowerPosition()
+  
+    void increaseTemp()
   {
+    blowerPositionFront+=20;
+    if(blowerPositionFront > 180)
+    {
+      servoBlowerPositionFront.write(180);
+      blowerPositionFront=180;
+      blowerPositionRear += 20;
+      if (blowerPositionRear > 140)
+      {
+        servoBlowerPositionRear.write(140);
+        blowerPositionRear=140;
+      }
+      {
+      servoBlowerPositionRear.write(blowerPositionRear);
+      }
+    }
+    else
+    {
+      servoBlowerPositionFront.write(blowerPositionFront);
+    }
+    delay(100);
   }
   
-//  int adjustFanSpeed(float tempDifference)
-//  {
-//    if (tempDifference >= 0 && tempDifference < 3)
-//    {
-//      fanSpeedSetting=1;
-//      return 115;
-//    }
-//    if (tempDifference >= 3 && tempDifference < 5)
-//    {
-//      fanSpeedSetting=2;
-//      return 90;
-//    }
-//    if (tempDifference >= 5 && tempDifference < 7)
-//    {
-//      fanSpeedSetting=3;
-//      return 65;
-//    }
-//    if (tempDifference >= 7)
-//    {
-//      fanSpeedSetting=4;
-//      return 40;
-//    }
-//  }
+  void decreaseTemp()
+  {
+    if (blowerPositionRear <= 45)
+    {
+      blowerPositionFront-=20;    
+    }
+    //if(blowerPositionFront > 170)
+    if(blowerPositionRear > 45)
+    {
+//      int newPos = blowerPositionFront - 180;
+      blowerPositionRear -= 20;
+      servoBlowerPositionRear.write(blowerPositionRear);            
+    }
+    else
+    {
+      servoBlowerPositionRear.write(45);
+      blowerPositionRear = 45;
+      if (blowerPositionFront < 10)
+      {
+        //If the servo turns below the minimun temperature then turn it back up to the minimum
+        servoBlowerPositionFront.write(10);
+        blowerPositionFront=10;
+      }
+      else
+      {
+        servoBlowerPositionFront.write(blowerPositionFront);
+      }
+    }
+    delay(100);
+  }
+  
+
 
 
 

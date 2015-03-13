@@ -79,7 +79,7 @@ namespace CarMedia
                     ArduinoBuffer[0] = Convert.ToByte(fanSpeed);
                     ArduinoBuffer[1] = Convert.ToByte(desiredTemperature);
                     ArduinoBuffer[2] = Convert.ToByte(blowerPosition);
-                    ArduinoBuffer[3] = Convert.ToByte(radio.listenToFrequency);
+                    ArduinoBuffer[3] = Convert.ToByte(14);//radio.listenToFrequency);
                     //ArduinoPort.Write(sb.ToString());
                     //if (ArduinoPort.BytesToWrite>4)
                     try
