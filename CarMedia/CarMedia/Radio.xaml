@@ -34,7 +34,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Thumb">
                         <Ellipse  Stroke="Red"
-                          StrokeThickness="7"
+                          StrokeThickness="15"
                           Name="Ellipse" 
                           Fill="OrangeRed" />
                         <ControlTemplate.Triggers>
@@ -97,6 +97,7 @@
     </UserControl.Resources>
     
     <Grid>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="7*"/>
@@ -109,6 +110,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <Button Panel.ZIndex="5" x:Name="HomeBtn" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" MaxHeight="40" VerticalAlignment="Top" Click="HomeBtn_Click"  HorizontalAlignment="Center">
+            <Image x:Name="imgHomeIcon"></Image>
+        </Button>
         <Border BorderBrush="Black" BorderThickness="3" CornerRadius="3" Margin="10" MouseDown="spPresetFeq_MouseDown" MouseUp="spPresetFreqMouseUp">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" Color="#FFABBBD3" Opacity="0.8" Direction="135" ShadowDepth="10" />

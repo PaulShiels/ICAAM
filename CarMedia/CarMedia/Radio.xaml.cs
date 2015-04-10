@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -28,6 +29,7 @@ namespace CarMedia
         public Radio()
         {
             InitializeComponent();
+            imgHomeIcon.Source = new BitmapImage(new Uri(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString() + "\\Images\\Home_Icon.png"));
         }
 
         private void sldrRadioFrequency_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -90,6 +92,15 @@ namespace CarMedia
             }
             stopwatch.Reset();
             
+        }
+
+        private void HomeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.HomeScreen.Visibility = Visibility.Visible;
+            MainWindow.camera.Visibility = Visibility.Hidden;
+            MainWindow.radio.Visibility = Visibility.Hidden;
+            MainWindow.gauges.Visibility = System.Windows.Visibility.Visible;
+            Canvas.SetZIndex(MainWindow.camera, 0);
         }
         
     }

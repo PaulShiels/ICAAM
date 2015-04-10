@@ -66,6 +66,7 @@ namespace CarMedia
         private void HomeBtn_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.HomeScreen.Visibility = Visibility.Visible;
+            MainWindow.radio.Visibility = Visibility.Hidden;
             MainWindow.camera.Visibility = Visibility.Hidden;
             MainWindow.gauges.Visibility = System.Windows.Visibility.Visible;
             Canvas.SetZIndex(MainWindow.camera, 0);

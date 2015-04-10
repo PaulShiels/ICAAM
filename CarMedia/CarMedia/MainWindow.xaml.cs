@@ -15,6 +15,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Windows.Forms;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
 
 namespace CarMedia
 {
@@ -35,8 +38,17 @@ namespace CarMedia
         public static SerialPort ArduinoPort = new SerialPort();
         public static byte[] ArduinoBuffer = new byte[4];
         public static Grid gauges = new Grid();
-        public static byte fanSpeed, desiredTemperature=20, blowerPosition = 3;
+        public static byte fanSpeed, desiredTemperature=24, blowerPosition = 3;
         public static List<string> ArduinoOutputs = new List<string>();
+
+        private const int APPCOMMAND_VOLUME_MUTE = 0x80000;
+        private const int APPCOMMAND_VOLUME_UP = 0xA0000;
+        private const int APPCOMMAND_VOLUME_DOWN = 0x90000;
+        private const int WM_APPCOMMAND = 0x319;
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SendMessageW(IntPtr hWnd, int Msg,
+            IntPtr wParam, IntPtr lParam);
 
         public MainWindow()
         {
@@ -53,6 +65,7 @@ namespace CarMedia
             Canvas.SetZIndex(MainWindow.radio, 0);
             Canvas.SetZIndex(MainWindow.HomeScreen, 1);
             musicPlayer.Visibility = Visibility.Hidden;
+            radio.Visibility = Visibility.Hidden;
             gauges = grdGauges;
         }
         
@@ -87,12 +100,12 @@ namespace CarMedia
                         ArduinoPort.Write(ArduinoBuffer, 0, 4);
                     }
                     catch (Exception ex)
-                    { };
+                    { }
                 }
             }
             if (tickcount >50)
             {
-                tickcount = 0;
+                tickcount = 0; 
             }
             tickcount++;
         }
@@ -137,12 +150,11 @@ namespace CarMedia
             if (fanSpeed < 4)
             {
                 fanSpeed += 1;
-            }
-            
+            }            
         }
 
         private void btnDecreaseFanSpeed_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             if (fanSpeed > 0)
             {
                 fanSpeed -= 1;
@@ -167,6 +179,24 @@ namespace CarMedia
         private void btnBlowerDown_Click(object sender, RoutedEventArgs e)
         {
             blowerPosition = 2;
+        }
+
+        private void btnIncreaseVolume_Click(object sender, RoutedEventArgs e)
+        {
+            SendMessageW(new WindowInteropHelper(this).Handle, WM_APPCOMMAND, new WindowInteropHelper(this).Handle,
+                (IntPtr)APPCOMMAND_VOLUME_UP);
+        }
+
+        private void btnDecreaseVolume_Click(object sender, RoutedEventArgs e)
+        {
+            SendMessageW(new WindowInteropHelper(this).Handle, WM_APPCOMMAND, new WindowInteropHelper(this).Handle,
+                (IntPtr)APPCOMMAND_VOLUME_DOWN);
+        }
+
+        private void btnDecreaseMute_Click(object sender, RoutedEventArgs e)
+        {
+            SendMessageW(new WindowInteropHelper(this).Handle, WM_APPCOMMAND, new WindowInteropHelper(this).Handle,
+                (IntPtr)APPCOMMAND_VOLUME_MUTE);
         }
     }
 }

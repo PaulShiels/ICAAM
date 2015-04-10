@@ -51,11 +51,13 @@ namespace CarMedia
         private void btnRadio_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.radio.Visibility = Visibility.Visible;
+            MainWindow.musicPlayer.Visibility = Visibility.Hidden;
             MainWindow.HomeScreen.Visibility = Visibility.Hidden;
         }
 
         private void btnMusic_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow.radio.Visibility = Visibility.Hidden;
             MainWindow.musicPlayer.Visibility = Visibility.Visible;
             MainWindow.HomeScreen.Visibility = Visibility.Hidden;
 
@@ -86,6 +88,7 @@ namespace CarMedia
 
         private void btnCamera_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow.musicPlayer.Visibility = Visibility.Hidden;
             MainWindow.camera.Visibility = System.Windows.Visibility.Visible;
             MainWindow.gauges.Visibility = System.Windows.Visibility.Hidden;
             Canvas.SetZIndex(MainWindow.camera, 1);

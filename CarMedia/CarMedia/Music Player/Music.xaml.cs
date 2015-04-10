@@ -597,6 +597,7 @@ namespace CarMedia
         private void HomeBtn_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.HomeScreen.Visibility = Visibility.Visible;
+            MainWindow.radio.Visibility = Visibility.Hidden;
             MainWindow.musicPlayer.Visibility = Visibility.Hidden;
             //SetViewsVisibility(MakeVisible.None);
             Canvas.SetZIndex(MainWindow.musicPlayer, 0);

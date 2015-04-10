@@ -47,7 +47,7 @@
             <Image x:Name="imgHomeIcon"></Image>
         </Button>
         <Button x:Name="BtnBack" Grid.Column="1"  Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Left" MaxHeight="50" Click="BtnBack_Click">
-            <Image Source="Images\back_Arrow.png"></Image>
+            <Image Source="/Images\back_Arrow.png"></Image>
         </Button>
         <!--<Label x:Name="lblNowShowing" FontSize="28" Foreground="White" MaxWidth="200" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="50,0,0,0" ></Label>-->
         <Grid x:Name="nowPlaying" Visibility="Hidden" Grid.Row="1" Grid.Column="1" Margin="0,15,15,0" Opacity="0.7" Background="#D8000000">

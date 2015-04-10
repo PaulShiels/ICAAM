@@ -109,7 +109,7 @@
                     <SolidColorBrush Color="White" />
                 </Rectangle.Fill>
                 <Rectangle.RenderTransform>
-                    <RotateTransform x:Name="voltHand" CenterX="0" CenterY="70" Angle="50" />
+                    <RotateTransform x:Name="voltHand" CenterX="0" CenterY="70" Angle="-30" />
                 </Rectangle.RenderTransform>
             </Rectangle>
 
@@ -118,5 +118,26 @@
             <Image Source="Images/voltmeter.png" Grid.Row="2" Grid.RowSpan="2"></Image>
         </Grid>
 
+        <StackPanel Grid.Column="1" Margin="0,160,0,0" Orientation="Horizontal">
+            <StackPanel>
+                <Label Content="V" FontSize="42" FontWeight="Bold" Margin="0,0,0,-10" Foreground="CornflowerBlue"></Label>
+                <Label Content="O" FontSize="42" FontWeight="Bold" Margin="0,-10" Foreground="CornflowerBlue"></Label>
+                <Label Content="L" FontSize="42" FontWeight="Bold" Margin="5,-10,0,0" Foreground="CornflowerBlue"></Label>
+            </StackPanel>
+            <StackPanel >
+                <Button x:Name="btnIncreaseVolume" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnIncreaseVolume_Click">
+                    <Image Source="Images\plus.png" Width="50" Height="50"></Image>
+                </Button>
+                <Button x:Name="btnDecreaseVolume" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnDecreaseVolume_Click">
+                    <Image Source="Images\minus.png" Width="50" Height="50"></Image>
+                </Button>
+                <Button x:Name="btnDecreaseMute" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnDecreaseMute_Click">
+                    <StackPanel>
+                        <TextBlock Text="Mute" Foreground="Red" FontSize="20"></TextBlock>
+                    </StackPanel>
+                </Button>
+                <!--<Button x:Name="btnDecreaseTemp" Content="-" Foreground="White" FontSize="50" Margin="-4, -20" VerticalContentAlignment="Center" Background="Transparent"></Button>-->
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
