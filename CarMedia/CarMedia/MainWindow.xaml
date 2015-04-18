@@ -25,7 +25,7 @@
             <StackPanel>
                 <Label Content="Temperature" Margin="5,0,0,0" Foreground="White" FontSize="36"/>
                 <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-                    <Label Content="Outside: " Foreground="White" FontSize="18"/>
+                    <Label Content="Outside: " Foreground="White" FontSize="18" MouseDown="Label_MouseDown"/>
                     <Label x:Name="lblOutsideTemp" Foreground="White" FontSize="18"/>
                     <Label Content="°C" FontSize="18" Foreground="White"></Label>
                 </StackPanel>

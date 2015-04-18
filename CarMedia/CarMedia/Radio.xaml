@@ -246,7 +246,7 @@
                 </Border.Background>
                 <Image Source="Images\arrowBack.png" MouseLeftButtonUp="Image_MouseLeftButtonUp_1"></Image>
             </Border>
-            <Slider x:Name="sldrRadioFrequency" Style="{StaticResource Horizontal_Slider}" Minimum="87.5" Maximum="108" Width="700" TickPlacement="None" VerticalAlignment="Center" Interval="5" TickFrequency="0.1" ValueChanged="sldrRadioFrequency_ValueChanged" SnapsToDevicePixels="True" IsSnapToTickEnabled="True" LargeChange="0.1">                
+            <Slider x:Name="sldrRadioFrequency" Style="{StaticResource Horizontal_Slider}" Minimum="87.5" Maximum="108" Width="700" TickPlacement="None" VerticalAlignment="Center" Interval="5" TickFrequency="0.05" ValueChanged="sldrRadioFrequency_ValueChanged" SnapsToDevicePixels="True" IsSnapToTickEnabled="True" LargeChange="0.05" SmallChange="0.05">                
 
             </Slider>
             <Border BorderBrush="Black" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" BorderThickness="3" CornerRadius="3" Margin="20">

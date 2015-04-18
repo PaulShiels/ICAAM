@@ -34,6 +34,8 @@ namespace CarMedia
         private List<Track> lstTracks = new List<Track>();
         private List<Track> lstSelectedTracks = new List<Track>();
         private List<Track> lstOrderedTracks = new List<Track>();
+        private bool mouseOverTrack = false;
+        private bool mouseOverPlaylist = false;
         private List<Playlist> lstPlaylists = new List<Playlist>();
         private int playlistButtonHeldCounter = 0;
         private string selectedArtistName; //This is needed to ensure the correct track is select from the list of artists tracks
@@ -225,7 +227,7 @@ namespace CarMedia
                 btnNowPlaying.Visibility = Visibility.Hidden;
             }
 
-            if(MainWindow.musicPlayer.Visibility==Visibility.Visible)
+            if(mouseOverPlaylist==true)//MainWindow.musicPlayer.Visibility==Visibility.Visible)
             if (Mouse.LeftButton == MouseButtonState.Pressed)
             {
                 if (playlistButtonHeldCounter >= 1)
@@ -704,6 +706,8 @@ namespace CarMedia
                     StackPanel spTrack = new StackPanel();
                     spTrack.Orientation = Orientation.Horizontal;
                     spTrack.Margin = new Thickness(0, 0, 0, 15);
+                    spTrack.MouseEnter += spTrack_MouseEnter;
+                    spTrack.MouseLeave += spTrack_MouseLeave;
 
                     //Create the album art Holder if this album has an album art
                     StackPanel spArt = new StackPanel();
@@ -796,6 +800,16 @@ namespace CarMedia
             //        //scvAlbums.Visibility = Visibility.Hidden;
             //    }
             //}
+        }
+
+        void spTrack_MouseLeave(object sender, MouseEventArgs e)
+        {
+            mouseOverTrack = false;
+        }
+
+        void spTrack_MouseEnter(object sender, MouseEventArgs e)
+        {
+            mouseOverTrack = true;
         }
 
         private void BuildAndPopulateAlbumView()
@@ -932,6 +946,7 @@ namespace CarMedia
             DeserializePlaylists(ref lstPlaylists);
             lbxPlaylists.Items.Clear();
             StackPanel sp = new StackPanel() { Orientation = Orientation.Horizontal, Background = new SolidColorBrush(Colors.Black), Width=lbxArtistsTracks.Width};
+            
             sp.Children.Add(new Button() { Content = "+", FontSize = 80, VerticalContentAlignment=VerticalAlignment.Center, Padding=new Thickness(0,-50,0,-30), Margin=new Thickness(10), BorderBrush = new SolidColorBrush(Colors.Transparent), Background = new SolidColorBrush(Colors.Black), FontWeight = FontWeights.ExtraBold, Foreground = new SolidColorBrush(Colors.White)});
             sp.Children.Add(new Label() { Content = "Playlists", FontSize = 48, Foreground = new SolidColorBrush(Colors.White), Background = new SolidColorBrush(Colors.Black), Margin = new Thickness(200,0,0,0), });            
             ((Button)sp.Children[0]).Click+=BtnAddNewPlaylist_Click;
@@ -939,8 +954,21 @@ namespace CarMedia
 
             foreach (var playlist in lstPlaylists)
             {
-                lbxPlaylists.Items.Add(new Label() { Content = playlist.PlaylistName, Margin = new Thickness(0, 0, 0, 15), Foreground = new SolidColorBrush(Colors.White) });
+                Label l = new Label() { Content = playlist.PlaylistName, Margin = new Thickness(0, 0, 0, 15), Foreground = new SolidColorBrush(Colors.White) };
+                l.MouseEnter+=l_MouseEnter;
+                l.MouseLeave+=l_MouseLeave;
+                lbxPlaylists.Items.Add(l);
             }
+        }
+
+        void l_MouseLeave(object sender, MouseEventArgs e)
+        {
+            mouseOverPlaylist = false;
+        }
+
+        void l_MouseEnter(object sender, MouseEventArgs e)
+        {
+            mouseOverPlaylist = true;
         }        
 
         private void txtSongs_MouseDown(object sender, MouseButtonEventArgs e)

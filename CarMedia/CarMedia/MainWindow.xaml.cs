@@ -34,12 +34,13 @@ namespace CarMedia
         public static Camera camera = new Camera();
         public static Radio radio = new Radio();
         private DispatcherTimer timer = new DispatcherTimer();
-        private int tickcount = 0;
         public static SerialPort ArduinoPort = new SerialPort();
-        public static byte[] ArduinoBuffer = new byte[4];
+        public static byte[] ArduinoBuffer = new byte[8];
         public static Grid gauges = new Grid();
-        public static byte fanSpeed, desiredTemperature=24, blowerPosition = 3;
+        public static byte fanSpeed, tempPosFont=50, desiredTemp, tempPosRear=5, blowerPosition = 3, resetArduino=0;
+        public static byte radioFreq1, radioFreq2, autoTuneOn=0;
         public static List<string> ArduinoOutputs = new List<string>();
+        private int radioSignalLevel;
 
         private const int APPCOMMAND_VOLUME_MUTE = 0x80000;
         private const int APPCOMMAND_VOLUME_UP = 0xA0000;
@@ -77,37 +78,63 @@ namespace CarMedia
             //MediaFrame.Width = this.Width - (this.Width * 0.2);
             camera.Visibility = System.Windows.Visibility.Hidden;
             ConnectSerialPort();
-            lblTempInside.Content = "20";
+            //lblTempInside.Content = (tempPosFont + tempPosRear).ToString();
             timer.Start();
         }
 
         public void timer_Tick(object sender, EventArgs e)
         {
-            //if (tickcount > 10)
+            if (ArduinoPort.IsOpen)
             {
-                tickcount = 0;
-                if (ArduinoPort.IsOpen)
+                //if (ArduinoPort.BytesToRead > 0)
                 {
-                    //byte[] data = BitConverter.GetBytes(FanSpeed);
-                    ArduinoBuffer[0] = Convert.ToByte(fanSpeed);
-                    ArduinoBuffer[1] = Convert.ToByte(desiredTemperature);
-                    ArduinoBuffer[2] = Convert.ToByte(blowerPosition);
-                    ArduinoBuffer[3] = Convert.ToByte(14);//radio.listenToFrequency);
-                    //ArduinoPort.Write(sb.ToString());
-                    //if (ArduinoPort.BytesToWrite>4)
-                    try
+                    //string s = ArduinoPort.ReadByte().ToString();
+                    //if (s == "9")
                     {
-                        ArduinoPort.Write(ArduinoBuffer, 0, 4);
+                        //byte[] data = BitConverter.GetBytes(FanSpeed);
+                        ArduinoBuffer[0] = Convert.ToByte(fanSpeed);
+                        ArduinoBuffer[1] = Convert.ToByte(tempPosFont);
+                        ArduinoBuffer[2] = Convert.ToByte(tempPosRear);
+                        ArduinoBuffer[3] = Convert.ToByte(blowerPosition);
+                        ArduinoBuffer[4] = Convert.ToByte(radioFreq1);
+                        ArduinoBuffer[5] = Convert.ToByte(radioFreq2);
+                        //ArduinoBuffer[6] = Convert.ToByte(autoTuneOn);
+                        ArduinoBuffer[6] = Convert.ToByte(resetArduino);//radio.listenToFrequency);
+
+                        ////ArduinoPort.Write(sb.ToString());
+                        //if (ArduinoPort.BytesToWrite>4)
+                        try
+                        {
+                            ArduinoPort.DiscardOutBuffer();                            
+                            ArduinoPort.Write(ArduinoBuffer, 0, 8);
+                            if (ArduinoPort.BytesToRead >= 12)
+                            {                                
+                                //if (ArduinoPort.BytesToRead > 20)
+                                //{
+                                //    ArduinoPort.DiscardInBuffer();
+                                //}
+                                //else
+                                {
+                                    byte[] b = new byte[50];
+                                    ArduinoPort.Read(b, 0, 20);
+                                    lblTempInside.Content  = System.BitConverter.ToSingle(b, 0);
+                                    lblOutsideTemp.Content = System.BitConverter.ToSingle(b, 4);
+                                    float voltage = System.BitConverter.ToSingle(b, 8);                                    
+                                    voltHand.Angle = (voltage - 8) * (60 - -60) / (16 - 8)+ -60; //map the voltage from a value of to within the range of 8 to 16                                    
+                                    radioSignalLevel = System.BitConverter.ToInt16(b, 12);
+                                    //lblTempInside.Content = voltage; //string.Format("{0} {1}", f, f2);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        { }
                     }
-                    catch (Exception ex)
-                    { }
                 }
             }
-            if (tickcount >50)
-            {
-                tickcount = 0; 
-            }
-            tickcount++;
+            else
+                ConnectSerialPort();
+            
+            resetArduino = 0;
         }
 
         private void ConnectSerialPort()
@@ -127,22 +154,54 @@ namespace CarMedia
             }
             catch
             {
-                Console.WriteLine("Unable to connect to Serial Port, Try again?");
-                if (Console.ReadLine() == "y")
-                    ConnectSerialPort();
+                //Console.WriteLine("Unable to connect to Serial Port, Try again?");
+                //if (Console.ReadLine() == "y")
+                  //  ConnectSerialPort();
             }
+        }
+
+        private void resetArdunoConnection()
+        {
+            //ArduinoPort.Close();
+            //Thread.Sleep(1000);
+            //ConnectSerialPort();
         }
 
         private void btnDecreaseTemp_Click(object sender, RoutedEventArgs e)
         {
-            desiredTemperature--;
-            lblTempInside.Content = desiredTemperature.ToString();
+            if (tempPosFont >= 175 && tempPosRear > 5)
+            {
+                tempPosFont = 175;
+                tempPosRear -= 10;
+            }
+            else
+            {
+                tempPosRear = 5;
+                if (tempPosFont > 20)
+                {
+                    if (tempPosFont - 10 < 20)
+                        tempPosFont = 20;
+                    else
+                        tempPosFont -= 10;
+                }
+            }
+            lblTempInside.Content = string.Format("{0} {1}", tempPosFont, tempPosRear);
         }
 
         private void btnIncreaseTemp_Click(object sender, RoutedEventArgs e)
         {
-            desiredTemperature++;
-            lblTempInside.Content = desiredTemperature.ToString();
+            if (tempPosFont < 175)
+                tempPosFont += 10;
+            else
+            {
+                tempPosFont = 175;
+                if (tempPosRear < 115)
+                    if (tempPosRear + 10 > 115)
+                        tempPosRear = 115;
+                    else
+                        tempPosRear += 10;
+            }
+            lblTempInside.Content = string.Format("{0} {1}", tempPosFont, tempPosRear);
         }
 
         private void btnIncreaseFanSpeed_Click(object sender, RoutedEventArgs e)
@@ -183,6 +242,7 @@ namespace CarMedia
 
         private void btnIncreaseVolume_Click(object sender, RoutedEventArgs e)
         {
+            //Used this tutorial found here to adjust system volume: http://www.dotnetcurry.com/showarticle.aspx?ID=431
             SendMessageW(new WindowInteropHelper(this).Handle, WM_APPCOMMAND, new WindowInteropHelper(this).Handle,
                 (IntPtr)APPCOMMAND_VOLUME_UP);
         }
@@ -197,6 +257,20 @@ namespace CarMedia
         {
             SendMessageW(new WindowInteropHelper(this).Handle, WM_APPCOMMAND, new WindowInteropHelper(this).Handle,
                 (IntPtr)APPCOMMAND_VOLUME_MUTE);
+        }
+
+        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            resetArdunoConnection();
+            resetArduino = 1;
+        }
+    }
+
+    public static class ExtensionMethods
+    {
+        public static int Map(this int value, int fromSource, int toSource, int fromTarget, int toTarget)
+        {
+            return (value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget);
         }
     }
 }

@@ -45,20 +45,22 @@ namespace CarMedia
                 }
             }
             else
-            {
+            {                
                 lblRadioFrequency.Content = lblRadioFrequency.Content.ToString() + ".00";
             }
             listenToFrequency = lblRadioFrequency.Content.ToString();
+            MainWindow.radioFreq1 = Convert.ToByte(listenToFrequency.Substring(0, listenToFrequency.IndexOf('.')));
+            MainWindow.radioFreq2 = Convert.ToByte(listenToFrequency.Substring(listenToFrequency.IndexOf('.')+1,2));
         }
 
         private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            sldrRadioFrequency.Value += 0.1;
+            sldrRadioFrequency.Value += 0.05;
         }
 
         private void Image_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)
         {
-            sldrRadioFrequency.Value -= 0.1;
+            sldrRadioFrequency.Value -= 0.05;
         }
 
         private void spPresetFeq_MouseDown(object sender, MouseButtonEventArgs e)
