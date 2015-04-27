@@ -1,0 +1,10 @@
+﻿<UserControl x:Class="CarMedia.Phone"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:local="clr-namespace:WpfAppControl;assembly=WpfAppcontrol"
+         Height="300" Width="300">
+    <Grid Name="grid">
+        <Button Content="Button" Height="20" Click="Button_Click"></Button>
+        
+    </Grid>
+</UserControl>

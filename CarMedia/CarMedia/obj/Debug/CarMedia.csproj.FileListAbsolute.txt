@@ -46,3 +46,5 @@ C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\
 C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Camera\Camera.g.cs
 C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Radio.baml
 C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Radio.g.cs
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Phone.baml
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Phone.g.cs

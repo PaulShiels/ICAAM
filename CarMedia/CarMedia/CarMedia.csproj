@@ -55,7 +55,8 @@
     <Reference Include="taglib-sharp">
       <HintPath>..\packages\taglib.2.1.0.0\lib\taglib-sharp.dll</HintPath>
     </Reference>
-    <Reference Include="WebCam_Capture">
+    <Reference Include="WebCam_Capture, Version=1.0.2395.24959, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Downloads\EasyWebCam\EasyWebCam\DLL for Add Reference\WebCam_Capture.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
@@ -77,6 +78,9 @@
     <Compile Include="Music Player\Playlist.cs" />
     <Compile Include="Music Player\Track.cs" />
     <Compile Include="Camera\WebCam.cs" />
+    <Compile Include="Phone.xaml.cs">
+      <DependentUpon>Phone.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Radio.xaml.cs">
       <DependentUpon>Radio.xaml</DependentUpon>
     </Compile>
@@ -104,6 +108,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Music Player\Music.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Phone.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,89 +1,90 @@
-//label 1: fan
-//label 2: rear right
-//label 3: rear left
-//label 4: front right
-//label 5: front left
+  //label 1: fan
+  //label 2: rear right
+  //label 3: rear left
+  //label 4: front right
+  //label 5: front left
+  
+  #include <Servo.h> 
+  #include <SimpleTimer.h>
+  #include <stdlib.h>
+  #include <stdio.h>
+  #include <StopWatch.h>
+  #include <TEA5767.h>
+  #include <Wire.h>
+  StopWatch StopwatchTempSetting; //Create the stopwatch object
+  StopWatch StopwatchBlowerDirectionFanSpeed;
+  #include "DHT.h"
+  #define DHTPINInside 2   // what pin we're connected to
+  #define DHTPINOutside 8
+  #define DHTTYPE DHT22   // DHT 22  (AM2302)
+  
+  // Initialize DHT sensor for normal 16mhz Arduino
+  DHT dhtIn(DHTPINInside, DHTTYPE);
+  DHT dhtOut(DHTPINOutside, DHTTYPE);
+  union {
+        float inTemp;
+        char bytes[4];
+      } insideTemp;
+  union {
+        float outTemp;
+        char bytes[4];
+      } outsideTemp;
+  //float insideTemp = 32.1;
+  //float outsideTemp = 4.2;
+  
+  // create servo objects to control a servos
+  Servo servoFanSpeed;
+  Servo servoTemperaturePositionFront;
+  Servo servoTemperaturePositionRear;
+  Servo servoBlowerPositionFront;
+  Servo servoBlowerPositionRear;
+  const int servoTemperaturePositionFrontEnabledPin = 9;
+  const int servoFanPositionDirectionEnabledPin = 10;
+  
+  SimpleTimer timer;
+  SimpleTimer timerCheckStopwatch;
+  
+  //Incoming string from c# application
+  byte incomingValues[8];
+  byte arrayToSend[50];
+  byte resetBoard=0;
+  //int pos = 0;    // variable to store the servo position 
+  
+  //Temperature Conrol Variables
+  //int i = 100; //70
+  int blowerPositionFront = 50;
+  int blowerPositionRear = 5;
+  int previousblowerPositionFront = 50;
+  int previousblowerPositionRear = 5;
+  boolean tempAtMax = false;
+  boolean tempAtMin = false;
+  
+  int desiredTemps[] = {10, 11, 15, 17, 18, 19, 20, 24, 28};
+  byte desiredTemp=1;
+  float actualTemp = 0;
+  int tempDifference =0;
+  
+  //Fan Speed Variables
+  int fanSpeedSetting = 0; //Angle at which to set servo arm. 10 in this case is the fan speed at 0
+  int previousFanSpeedSetting=0;
+  boolean userHasControl = false; //Used to allow the fan speed to be controlled automatically to allow the temperature to be changed quicker
+  //The fan can be noisey and the user may want to turn it down while still wanting the temperature adjusted.
+  
+  //Blower Direction variables
+  int blowerDirection= 3;
+  int previousBlowerDirection = 3;
 
-#include <Servo.h> 
-#include <SimpleTimer.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <StopWatch.h>
-#include <TEA5767.h>
-#include <Wire.h>
-StopWatch StopwatchTempSetting; //Create the stopwatch object
-StopWatch StopwatchBlowerDirectionFanSpeed;
-#include "DHT.h"
-#define DHTPINInside 2   // what pin we're connected to
-#define DHTPINOutside 8
-#define DHTTYPE DHT22   // DHT 22  (AM2302)
-
-// Initialize DHT sensor for normal 16mhz Arduino
-DHT dhtIn(DHTPINInside, DHTTYPE);
-DHT dhtOut(DHTPINOutside, DHTTYPE);
-union {
-      float inTemp;
-      char bytes[4];
-    } insideTemp;
-union {
-      float outTemp;
-      char bytes[4];
-    } outsideTemp;
-//float insideTemp = 32.1;
-//float outsideTemp = 4.2;
-
-// create servo objects to control a servos
-Servo servoFanSpeed;
-Servo servoTemperaturePositionFront;
-Servo servoTemperaturePositionRear;
-Servo servoBlowerPositionFront;
-Servo servoBlowerPositionRear;
-const int servoTemperaturePositionFrontEnabledPin = 9;
-const int servoFanPositionDirectionEnabledPin = 10;
-
-SimpleTimer timer;
-SimpleTimer timerCheckStopwatch;
-
-//Incoming string from c# application
-byte incomingValues[7];
-byte arrayToSend[50];
-byte resetBoard=0;
-//int pos = 0;    // variable to store the servo position 
-
-//Temperature Conrol Variables
-//int i = 100; //70
-int blowerPositionFront;
-int blowerPositionRear;
-int previousblowerPositionFront;
-int previousblowerPositionRear;
-boolean tempAtMax = false;
-boolean tempAtMin = false;
-
-int desiredTemps[] = {10, 11, 15, 17, 18, 19, 20, 24, 28};
-byte desiredTemp=1;
-float actualTemp = 0;
-int tempDifference =0;
-
-//Fan Speed Variables
-int fanSpeedSetting = 0; //Angle at which to set servo arm. 10 in this case is the fan speed at 0
-int previousFanSpeedSetting;
-boolean userHasControl = false; //Used to allow the fan speed to be controlled automatically to allow the temperature to be changed quicker
-//The fan can be noisey and the user may want to turn it down while still wanting the temperature adjusted.
-
-//Blower Direction variables
-int blowerDirection= 3;
-int previousBlowerDirection;
-
-//Radio Tuner variables
-TEA5767 Radio;
-int search_mode = 0;
-int search_direction;
-double oldFrequency;
-double newFrequency=94.90;
-union{
-  int sigLevel;
-  char bytes[2];
-  } radioSignalLevel;
+  //Radio Tuner variables
+  TEA5767 Radio;
+  int search_mode = 0;
+  int search_direction;
+  double oldFrequency;
+  double newFrequency=94.90;
+  byte autoTuneOn = false;
+  union{
+    int sigLevel;
+    char bytes[2];
+    } radioSignalLevel;
   
   //Read Battery Voltage variables
   int analogInput = 0;
@@ -115,16 +116,12 @@ union{
     servoTemperaturePositionRear.attach(5); 
     servoBlowerPositionFront.attach(4);
     servoBlowerPositionRear.attach(3);    
-    //servoTemperaturePositionFront.write(165);  
-    //servoTemperaturePositionRear.write(0);
-    blowerPositionFront = 50;
-    blowerPositionRear = 5;
     dhtIn.begin();
     dhtOut.begin();
     timer.setInterval(2000, getTemp);
-    timerCheckStopwatch.setInterval(100, checkStopwatch);
-    digitalWrite(servoTemperaturePositionFrontEnabledPin,HIGH);
-    digitalWrite(servoFanPositionDirectionEnabledPin,HIGH);
+    timerCheckStopwatch.setInterval(500, checkStopwatch);
+    digitalWrite(servoTemperaturePositionFrontEnabledPin,LOW);
+    digitalWrite(servoFanPositionDirectionEnabledPin,LOW);
     servoTemperaturePositionFront.write(50);
   
     //getTemp();  
@@ -132,24 +129,22 @@ union{
 
   void loop() 
   { 
-    //Serial.write(9);
-    //    while(Serial.available()!=4)
-    if(Serial.available()==7)
+    
+    
+    if(Serial.available()>=7)
     {
       for (int i=0;i<7;i++){
         incomingValues[i] = (byte)Serial.read();
         //        delay(20);
-      }   
-  
+      }    
       previousFanSpeedSetting = fanSpeedSetting;
-      fanSpeedSetting = incomingValues[0];
-      //setFanSpeed(fanSpeedSetting);
-      previousblowerPositionFront = blowerPositionFront;
-      previousblowerPositionRear = blowerPositionRear;
+    previousblowerPositionFront = blowerPositionFront;
+    previousblowerPositionRear = blowerPositionRear;
+    previousBlowerDirection = blowerDirection;
+      fanSpeedSetting = incomingValues[0];            
       blowerPositionFront = incomingValues[1]; 
       blowerPositionRear = incomingValues[2]; 
-      //tempDifference = getDiff(desiredTemp, actualTemp);      
-      previousBlowerDirection = blowerDirection;
+      //tempDifference = getDiff(desiredTemp, actualTemp);            
       oldFrequency = newFrequency;
       blowerDirection = incomingValues[3];
       char *freqString, *stopstring; 
@@ -158,7 +153,8 @@ union{
       //freqString.concat(incomingValues[4],'.');
       //freqString += ".";
       //freqString += String)incomingValues[5]);    
-      //resetBoard = incomingValues[5];   
+      //resetBoard = incomingValues[5]; 
+      //autoTuneOn = incomingValues[6];
       resetBoard = incomingValues[6];   
       //Serial.flush();
       
@@ -181,6 +177,56 @@ union{
     timer.run(); 
     timerCheckStopwatch.run();
     AdjustTemperatureControls();  
+    
+    //Check if the temperature setting has changed
+    //Check if the timer is running and if not skip the next step and start the timer
+    //Check if the timer has been running for 2 seconds or more and if so disable the relay.
+//    if (previousblowerPositionFront == blowerPositionFront && previousblowerPositionRear == blowerPositionRear)
+//    {
+////      if (StopwatchTempSetting.isRunning())
+////      {
+////        if (StopwatchTempSetting.elapsed() > 500)
+//        {
+//           digitalWrite(servoTemperaturePositionFrontEnabledPin,LOW);        
+//        }
+//      //}
+////      else
+////      {
+////        digitalWrite(servoTemperaturePositionFrontEnabledPin,LOW);
+////        StopwatchTempSetting.start();
+////      }
+//    }
+//    else
+//    {
+////      StopwatchTempSetting.reset();
+////      StopwatchTempSetting.start();      
+//      digitalWrite(servoTemperaturePositionFrontEnabledPin,HIGH);    
+//    }
+//    
+//    //Check if the fan speed or blower direction has changed
+//    //Check if the timer is running and if not skip the next step and start the timer
+//    //Check if the timer has been running for 2 seconds or more and if so disable the relay.
+//    if (previousFanSpeedSetting == fanSpeedSetting && previousBlowerDirection == blowerDirection)
+//    {
+//      //if (StopwatchBlowerDirectionFanSpeed.isRunning())
+//      {
+//        //if (StopwatchBlowerDirectionFanSpeed.elapsed() > 500)
+//        {
+//           digitalWrite(servoFanPositionDirectionEnabledPin,LOW);        
+//        }
+//      }
+////      else
+////      {
+////        digitalWrite(servoFanPositionDirectionEnabledPin,LOW);
+////        StopwatchBlowerDirectionFanSpeed.start();
+////      }
+//    }
+//    else
+//    {
+////      StopwatchBlowerDirectionFanSpeed.reset();
+////      StopwatchBlowerDirectionFanSpeed.start();      
+//      digitalWrite(servoFanPositionDirectionEnabledPin,HIGH);    
+//    }
   }
 
   void sendData()
@@ -217,20 +263,22 @@ union{
     {
       if (StopwatchTempSetting.isRunning())
       {
-        if (StopwatchTempSetting.elapsed() > 500)
+        if (StopwatchTempSetting.elapsed() < 500)
         {
            digitalWrite(servoTemperaturePositionFrontEnabledPin,LOW);        
+           //StopwatchTempSetting.stop();
         }
       }
       else
-      {
+      {        
+        StopwatchTempSetting.reset();
         StopwatchTempSetting.start();
       }
     }
     else
     {
-      StopwatchTempSetting.start();
       StopwatchTempSetting.reset();
+      StopwatchTempSetting.start();      
       digitalWrite(servoTemperaturePositionFrontEnabledPin,HIGH);    
     }
     
@@ -241,21 +289,23 @@ union{
     {
       if (StopwatchBlowerDirectionFanSpeed.isRunning())
       {
-        if (StopwatchBlowerDirectionFanSpeed.elapsed() > 500)
-        {
-           digitalWrite(servoFanPositionDirectionEnabledPin,LOW);        
+          if (StopwatchBlowerDirectionFanSpeed.elapsed() < 500)
+        {A
+           //StopwatchTempSetting.stop();      
         }
       }
       else
-      {
+      {  
+        StopwatchTempSetting.reset();
         StopwatchBlowerDirectionFanSpeed.start();
       }
     }
     else
     {
-      StopwatchBlowerDirectionFanSpeed.start();
       StopwatchBlowerDirectionFanSpeed.reset();
-      digitalWrite(servoFanPositionDirectionEnabledPin,HIGH);    
+      StopwatchBlowerDirectionFanSpeed.start();   
+      digitalWrite(servoFanPositionDirectionEnabledPin,HIGH);       
+      
     }
   }
 
@@ -292,7 +342,7 @@ void getTemp()
   outsideTemp.outTemp = dhtOut.readTemperature();
   updateFmRadio();
   readBatteryVoltage();
-  sendData();
+  sendData();   
 }
 
 void AdjustTemperatureControls()
@@ -614,7 +664,7 @@ void decreaseTemp()
 //        }
 //    }
     
-    if (fanSpeedSetting == 4)
+    if (autoTuneOn == 1)
     {
       //last_pressed = current_millis;
       search_mode = 1;
@@ -638,7 +688,7 @@ void decreaseTemp()
      value = analogRead(analogInput);
      vout = (value * 5.00) / 1024.0; // see text
      vin = vout / (R2/(R1+R2)); 
-     if (vin < 0.09) 
+     if (vin < 2.09) 
      {
        vin=0.0;//statement to quash undesired reading !
      }     

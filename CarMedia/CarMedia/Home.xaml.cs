@@ -100,6 +100,11 @@ namespace CarMedia
             }
 
         }
+
+        private void btnPhone_Click(object sender, MouseButtonEventArgs e)
+        {
+            Phone f = new Phone();
+        }
           
     }
 }

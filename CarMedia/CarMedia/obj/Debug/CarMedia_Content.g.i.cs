@@ -8,8 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("music/1.%20robert%20miles%20-%20children.mp3")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("music/13.%20paul%20van%20dyk%20-%20home%20(paul%20van%20dyk%20remix).mp3")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("music/8.%20motorcycle%20-%20as%20the%20rush%20comes.mp3")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("wpfappcontrol.csproj")]
 
 

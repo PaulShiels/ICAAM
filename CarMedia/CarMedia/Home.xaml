@@ -212,9 +212,9 @@
         <Button x:Name="btnInternet" Content="Internet" Grid.Column="1" Grid.Row="3" Style="{StaticResource buttonStyle}"></Button>
         
         <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="0" Grid.Column="4">
-            <Image Source="Images/phone_Icon.png" MaxHeight="80" Margin="30,0" MouseDown="btnRadio_Click"></Image>            
+            <Image Source="Images/phone_Icon.png" MaxHeight="80" Margin="30,0" MouseDown="btnPhone_Click"></Image>            
         </StackPanel>
-        <Button x:Name="btnPhone" Content="Phone" Grid.Column="3" Style="{StaticResource buttonStyle}"></Button>
+        <Button x:Name="btnPhone" Content="Phone" Grid.Column="3" Style="{StaticResource buttonStyle}" MouseDown="btnPhone_Click"></Button>
         
         <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="1" Grid.Column="3">           
             <Button x:Name="btnGps" Content="GPS" Grid.Row="1" Style="{StaticResource buttonStyle}"></Button>
