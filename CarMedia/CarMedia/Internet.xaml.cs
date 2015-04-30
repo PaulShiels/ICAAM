@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,7 @@ namespace CarMedia
         public Internet()
         {
             InitializeComponent();
-            imgHomeIcon.Source = new BitmapImage(new Uri(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString() + "\\Images\\Home_Icon.png"));
+            //imgHomeIcon.Source = new BitmapImage(new Uri(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString() + "\\Images\\Home_Icon.png"));
         }
 
         private void HomeBtn_Click(object sender, RoutedEventArgs e)
@@ -35,6 +36,20 @@ namespace CarMedia
             MainWindow.internet.Visibility = Visibility.Hidden;
             ////SetViewsVisibility(MakeVisible.None);
             //Canvas.SetZIndex(MainWindow.musicPlayer, 0);
+        }
+
+        private void btn_Click(object sender, RoutedEventArgs e)
+        {
+            AppControl appcontrol = new AppControl();
+            Grid.SetColumn(appcontrol, 0);
+            Grid.SetRow(appcontrol, 0);
+            appcontrol.OnVisibleChanged(appcontrol,new RoutedEventArgs());
+        }
+
+        public void openBrowser()
+        {
+            ProcessStartInfo p = new ProcessStartInfo("Iexplore");
+            Process.Start(p);
         }
     }
 }

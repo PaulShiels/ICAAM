@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+README
+
+This is a sample configuration file for the application,
+which allows one to customize certain aspects of the contents displayed
+on the screen.
+
+All the elements and attributes here are compulsory (although where
+indicated, some attributes take in empty strings "").  All elements must
+also be laid out in the order in the sample.
+
+
+To run the application with this configuration file, launch it
+with this file passed in as a parameter.
+
+i.e. Run "ProjectMyScreenApp.exe Config.xml".
+
+One can also create a shortcut with the parameter passed in, for quicker
+launching of the app.
+
+
+Z-ORDER OF SCREEN ELEMENTS
+
+From top to bottom:
+- video output
+- phone image
+- screen background image
+- screen background color
+
+-->
+
+<Config
+    version="1">
+    <PhoneConfigurations>
+
+        <!--
+    This PhoneConfiguration is for a WXGA device.
+
+    The configuration is selected automatically  (app will be
+    updated accordingly) when a phone is plugged into the PC via USB.
+
+    NOTE: only 1 configuration for each resolution is supported.
+
+    resolutionX     is the width in pixels of the device's screen
+
+    resolutionY     is the height in pixels of the device's screen
+
+    default         "true" or "false", and determines if the given
+                    configuration is loaded (visible on the screen) by
+                    default if no phone is plugged in
+    -->
+        <PhoneConfiguration
+            resolutionX="768"
+            resolutionY="1280"
+            default="true">
+
+            <!--
+      App background properties
+
+      The entire app background will be filled with the specified color,
+      and the background image (if specified) is scaled to fit, and drawn
+      over it, in the center of the window.
+
+      color         the background color in ARGB hex values.
+
+      imageRelPath  a path (relative to exe) to a background
+                    image.  If no background image is desired, leave the
+                    atribute empty ("").
+      -->
+            <Background
+                color="0x00000000"
+                imageRelPath="BkgImage.png"
+          />
+
+            <!--
+      Phone image properties
+
+      The phone image will be drawn above the background image, scaled and
+      offset accordingly, if specified.
+
+      imageRelPath  a path (relative to exe) to a phone image. 
+                    If no background image is desired, leave the
+                    atribute empty ("")
+
+      scaleFactor   the scale factor of the phone image (and elements above
+                    if), as a fraction of the background image's width or
+                    height, whichever is more constrained.  If no
+                    background image was specified, the app window's
+                    dimensions are used instead
+
+      centerOffsetX the horizontal offset of the center of the phone image
+                    from the center of the background image in pixels
+                    if there is no background image, this is ignored
+
+      centerOffsetY the vertical offset of the center of the phone image
+                    from the center of the background image in pixels
+                    if there is no background image, this is ignored
+
+      ***Button     (optional) the left, top, right and bottom coordinates
+                    of the hardware back, windows and search buttons
+      -->
+            <PhoneImage
+                imageRelPath="PhoneImage_WXGA.png"
+                scaleFactor="1.0"
+                centerOffsetX="250"
+                centerOffsetY="0"
+                backButton="40,960,190,1080"
+                windowsButton="230,960,380,1080"
+                searchButton="415,960,565,1080"
+          />
+
+            <!--
+      Video Output properties
+
+      The video output captured from the phone's screen will be drawn
+      above the phone image, scaled and offset accordingly.
+
+      If no phone image is specified above (imageRelPath=""), the
+      attributes in the VideoOutput key is ignored.  Dummy attributes will
+      have to be specified, however, to satisfy the parser.
+
+      weight        the width of the video output as a fraction of the
+                    phone image's width.
+                    
+      topLeftOffsetX
+                    the horizontal offset of the top-left corner of the
+                    video output from the top-left corner of the phone
+                    image in pixels.
+
+      topLeftOffsetY
+                    the vertical offset of the top-left corner of the
+                    video output from the top-left corner of the phone
+                    image in pixels.
+      -->
+            <VideoOutput
+                weight="0.875"
+                topLeftOffsetX="34"
+                topLeftOffsetY="60"
+          />
+        </PhoneConfiguration>
+
+        <!--
+    This PhoneConfiguration is for a HD1080 device.
+    -->
+        <PhoneConfiguration
+            resolutionX="1080"
+            resolutionY="1920"
+            default="false">
+            <Background
+                color="0x00000000"
+                imageRelPath="BkgImage.png"
+          />
+            <PhoneImage
+                imageRelPath="PhoneImage_HD1080.png"
+                scaleFactor="1.0"
+                centerOffsetX="250"
+                centerOffsetY="0"
+          />
+            <VideoOutput
+                weight="0.875"
+                topLeftOffsetX="34"
+                topLeftOffsetY="60"
+          />
+            <TouchDots
+                enabled="true"
+                color="0xb2f79608"
+                radius="38"
+          />
+        </PhoneConfiguration>
+
+        <!--
+    This PhoneConfiguration is for a HD720 device.
+    -->
+        <PhoneConfiguration
+            resolutionX="720"
+            resolutionY="1280"
+            default="false">
+            <Background
+                color="0x00000000"
+                imageRelPath="BkgImage.png"
+          />
+            <PhoneImage
+                imageRelPath="PhoneImage_HD720.png"
+                scaleFactor="1.0"
+                centerOffsetX="250"
+                centerOffsetY="0"
+                backButton="40,1005,190,1095"
+                windowsButton="230,1005,380,1095"
+                searchButton="415,1005,565,1095"
+          />
+            <VideoOutput
+                weight="0.875"
+                topLeftOffsetX="34"
+                topLeftOffsetY="60"
+          />
+        </PhoneConfiguration>
+
+        <!--
+    This PhoneConfiguration is for a WVGA device.
+    -->
+        <PhoneConfiguration
+            resolutionX="480"
+            resolutionY="800"
+            default="false">
+            <Background
+                color="0x00000000"
+                imageRelPath="BkgImage.png"
+          />
+            <PhoneImage
+                imageRelPath="PhoneImage_WVGA.png"
+                scaleFactor="1.0"
+                centerOffsetX="250"
+                centerOffsetY="0"
+                backButton="40,960,190,1080"
+                windowsButton="230,960,380,1080"
+                searchButton="415,960,565,1080"
+          />
+            <VideoOutput
+                weight="0.875"
+                topLeftOffsetX="34"
+                topLeftOffsetY="60"
+          />
+        </PhoneConfiguration>
+
+        <!--
+    This PhoneConfiguration is for a FWVGA device.
+    -->
+        <PhoneConfiguration
+            resolutionX="480"
+            resolutionY="854"
+            default="false">
+            <Background
+                color="0x00000000"
+                imageRelPath="BkgImage.png"
+          />
+
+            <PhoneImage
+              imageRelPath="PhoneImage_FWVGA.png"
+              scaleFactor="1.0"
+                centerOffsetX="250"
+                centerOffsetY="0"
+                backButton="40,960,190,1080"
+                windowsButton="230,960,380,1080"
+                searchButton="415,960,565,1080"
+          />
+            <VideoOutput
+                weight="0.875"
+                topLeftOffsetX="34"
+                topLeftOffsetY="60"
+          />
+
+        </PhoneConfiguration>
+
+
+    </PhoneConfigurations>
+</Config>

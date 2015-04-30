@@ -30,10 +30,10 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    
 
-    
-    <Grid>             
+
+
+    <Grid MouseLeftButtonDown="grid_MouseLeftButtonDown">             
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.5*"/>
             <ColumnDefinition  Width="1.5*"/>
@@ -217,9 +217,9 @@
         <Button x:Name="btnPhone" Content="Phone" Grid.Column="3" Style="{StaticResource buttonStyle}" MouseDown="btnPhone_Click"></Button>
         
         <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="1" Grid.Column="3">           
-            <Button x:Name="btnGps" Content="GPS" Grid.Row="1" Style="{StaticResource buttonStyle}"></Button>
+            <Button x:Name="btnGps" Content="GPS" Grid.Row="1" Style="{StaticResource buttonStyle}" Click="btnGps_Click"></Button>
         </StackPanel>
-        <Image Source="Images/gps_Icon.png" Grid.Column="4" Grid.Row="1" MaxHeight="80" MouseDown="btnRadio_Click"></Image>
+        <Image Source="Images/gps_Icon.png" Grid.Column="4" Grid.Row="1" MaxHeight="80" MouseDown="btnGps_Click"></Image>
         
         <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="2" Grid.Column="3">            
             <Button x:Name="btnCamera" Content="Camera" Style="{StaticResource buttonStyle}" Click="btnCamera_Click"></Button>

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +25,15 @@ namespace CarMedia
     public partial class Home
     {
         System.Timers.Timer timer = new System.Timers.Timer(1000);
+
+        //http://stackoverflow.com/questions/12019524/get-active-window-of-net-application
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        static extern bool SetCursorPos(int x, int y);
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
+
+        public const int MOUSEEVENTF_LEFTDOWN = 0x02;
+        public const int MOUSEEVENTF_LEFTUP = 0x04;
 
         public Home()
         {
@@ -103,17 +115,69 @@ namespace CarMedia
 
         private void btnPhone_Click(object sender, MouseButtonEventArgs e)
         {
-            Phone f = new Phone();
+            try
+            {
+                var procInfo = new ProcessStartInfo(@"ProjectMyScreenApp\ProjectMyScreenApp.exe");
+                System.Diagnostics.Process.Start(procInfo);
+                Thread.Sleep(2000);
+                System.Windows.Forms.SendKeys.SendWait("{ESC}");
+                Thread.Sleep(2000);
+                clickLeftMouseButton(316, 187);
+                System.Windows.Forms.SendKeys.SendWait("E");
+                
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void btnGps_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var procInfo = new ProcessStartInfo(@"ProjectMyScreenApp\ProjectMyScreenApp.exe");
+                System.Diagnostics.Process.Start(procInfo);
+                Thread.Sleep(2000);
+                System.Windows.Forms.SendKeys.SendWait("{ESC}");
+                Thread.Sleep(2000);
+                clickLeftMouseButton(390, 269);
+                System.Windows.Forms.SendKeys.SendWait("E");
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private void btnInternet_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.radio.Visibility = Visibility.Hidden;
-            MainWindow.phone.Visibility = Visibility.Hidden;
-            MainWindow.musicPlayer.Visibility = Visibility.Hidden;
-            MainWindow.HomeScreen.Visibility = Visibility.Hidden;
-            MainWindow.internet.Visibility = Visibility.Visible;
+            //MainWindow.radio.Visibility = Visibility.Hidden;
+            //MainWindow.phone.Visibility = Visibility.Hidden;
+            //MainWindow.musicPlayer.Visibility = Visibility.Hidden;
+            //MainWindow.HomeScreen.Visibility = Visibility.Hidden;
+            //MainWindow.internet.Visibility = Visibility.Visible;
+            MainWindow.internet.openBrowser();
         }
+
+        private void grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            int x = System.Windows.Forms.Control.MousePosition.X;
+            int y = System.Windows.Forms.Control.MousePosition.Y;
+
+            // sample code
+            MessageBox.Show(x.ToString() + "  " + y.ToString());
+        }
+
+        public static void clickLeftMouseButton(int xpos, int ypos)
+        {
+            SetCursorPos(xpos, ypos);
+            mouse_event(MOUSEEVENTF_LEFTDOWN, xpos, ypos, 0, 0);
+            mouse_event(MOUSEEVENTF_LEFTUP, xpos, ypos, 0, 0);
+            SetCursorPos(1300, 0);
+        }
+
+        
           
     }
 }

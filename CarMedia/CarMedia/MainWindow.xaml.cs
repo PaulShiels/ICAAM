@@ -44,18 +44,23 @@ namespace CarMedia
         public static List<string> ArduinoOutputs = new List<string>();
         private int radioSignalLevel;
 
+        [DllImport("user32.dll")]
+        public static extern IntPtr SendMessageW(IntPtr hWnd, int Msg,
+            IntPtr wParam, IntPtr lParam);
         private const int APPCOMMAND_VOLUME_MUTE = 0x80000;
         private const int APPCOMMAND_VOLUME_UP = 0xA0000;
         private const int APPCOMMAND_VOLUME_DOWN = 0x90000;
         private const int WM_APPCOMMAND = 0x319;
 
-        [DllImport("user32.dll")]
-        public static extern IntPtr SendMessageW(IntPtr hWnd, int Msg,
-            IntPtr wParam, IntPtr lParam);
+        
 
         public MainWindow()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch(Exception e) { }
             //this.RemoveLogicalChild(HomeScreen);
             //this.RemoveVisualChild(HomeScreen);
             //PublishFrameworkElement(HomeScreen, );
@@ -63,7 +68,7 @@ namespace CarMedia
             MediaFrame.Children.Add(musicPlayer);
             MediaFrame.Children.Add(camera);
             MediaFrame.Children.Add(radio);
-            MediaFrame.Children.Add(phone);
+            //MediaFrame.Children.Add(phone);
             MediaFrame.Children.Add(internet);
             Canvas.SetZIndex(MainWindow.musicPlayer, 0);
             Canvas.SetZIndex(MainWindow.camera, 0);
