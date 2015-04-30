@@ -48,3 +48,7 @@ C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\
 C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Radio.g.cs
 C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Phone.baml
 C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Phone.g.cs
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Internet.baml
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Internet.g.cs
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\WpfAppControl.dll
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\WpfAppControl.pdb

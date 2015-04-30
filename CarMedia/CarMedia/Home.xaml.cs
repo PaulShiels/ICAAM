@@ -105,6 +105,15 @@ namespace CarMedia
         {
             Phone f = new Phone();
         }
+
+        private void btnInternet_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.radio.Visibility = Visibility.Hidden;
+            MainWindow.phone.Visibility = Visibility.Hidden;
+            MainWindow.musicPlayer.Visibility = Visibility.Hidden;
+            MainWindow.HomeScreen.Visibility = Visibility.Hidden;
+            MainWindow.internet.Visibility = Visibility.Visible;
+        }
           
     }
 }

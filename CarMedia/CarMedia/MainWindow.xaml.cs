@@ -34,6 +34,7 @@ namespace CarMedia
         public static Camera camera = new Camera();
         public static Radio radio = new Radio();
         public static Phone phone = new Phone();
+        public static Internet internet = new Internet();
         private DispatcherTimer timer = new DispatcherTimer();
         public static SerialPort ArduinoPort = new SerialPort();
         public static byte[] ArduinoBuffer = new byte[8];
@@ -63,10 +64,12 @@ namespace CarMedia
             MediaFrame.Children.Add(camera);
             MediaFrame.Children.Add(radio);
             MediaFrame.Children.Add(phone);
+            MediaFrame.Children.Add(internet);
             Canvas.SetZIndex(MainWindow.musicPlayer, 0);
             Canvas.SetZIndex(MainWindow.camera, 0);
             Canvas.SetZIndex(MainWindow.radio, 0);
-            Canvas.SetZIndex(MainWindow.phone, 10);
+            Canvas.SetZIndex(MainWindow.phone, 0);
+            Canvas.SetZIndex(MainWindow.internet, 0);
             Canvas.SetZIndex(MainWindow.HomeScreen, 1);
             musicPlayer.Visibility = Visibility.Hidden;
             radio.Visibility = Visibility.Hidden;

@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="CarMedia.Internet"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:local="clr-namespace:WpfAppControl;assembly=WpfAppcontrol"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Width="935" Height="465" MaxHeight="465" >
+    <Grid>
+        <StackPanel>
+            <Button x:Name="HomeBtn" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="Transparent" BorderBrush="Transparent" MaxHeight="40" VerticalAlignment="Top" Click="HomeBtn_Click" HorizontalAlignment="Center">
+                <Image x:Name="imgHomeIcon"></Image>
+            </Button>
+            <!--<local:AppControl x:Name="appControl" />-->
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

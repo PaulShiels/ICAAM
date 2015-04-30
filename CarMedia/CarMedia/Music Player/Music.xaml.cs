@@ -25,7 +25,7 @@ namespace CarMedia
     /// </summary>
     public partial class Music
     {
-        private const string musicFolder = "C:\\Music\\";
+        private string musicFolder = Directory.GetCurrentDirectory() + "\\Music"; //C:\\Music\\";
         private List<MediaPlayer> songs = new List<MediaPlayer>();
         private MediaPlayer s = new MediaPlayer();
         public static bool mediaPlayerIsPlaying = false, mediaPaused = false, mediaStopped=false;

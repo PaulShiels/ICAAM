@@ -69,6 +69,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Internet.xaml.cs">
+      <DependentUpon>Internet.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Music Player\Album.cs" />
     <Compile Include="Music Player\Artist.cs" />
     <Compile Include="Camera\Camera.xaml.cs">
@@ -89,6 +92,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Home.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Internet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -191,6 +198,12 @@
   <ItemGroup>
     <Resource Include="Images\arrowBack.png" />
     <Resource Include="Images\arrowForward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\..\Downloads\WpfAppControl\WpfAppControl\WpfAppControl\WpfAppControl.csproj">
+      <Project>{2fabfd7c-6dcf-4e7a-89f8-ca71f200d78a}</Project>
+      <Name>WpfAppControl</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

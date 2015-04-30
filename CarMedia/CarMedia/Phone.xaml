@@ -4,7 +4,7 @@
          xmlns:local="clr-namespace:WpfAppControl;assembly=WpfAppcontrol"
          Height="300" Width="300">
     <Grid Name="grid">
-        <Button Content="Button" Height="20" Click="Button_Click"></Button>
+        <Button Content="Button" Visibility="Hidden" Height="20" Click="Button_Click"></Button>
         
     </Grid>
 </UserControl>
