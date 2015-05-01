@@ -25,7 +25,7 @@ namespace CarMedia
     public partial class Home
     {
         System.Timers.Timer timer = new System.Timers.Timer(1000);
-
+        
         //http://stackoverflow.com/questions/12019524/get-active-window-of-net-application
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         static extern bool SetCursorPos(int x, int y);
@@ -115,39 +115,12 @@ namespace CarMedia
 
         private void btnPhone_Click(object sender, MouseButtonEventArgs e)
         {
-            try
-            {
-                var procInfo = new ProcessStartInfo(@"ProjectMyScreenApp\ProjectMyScreenApp.exe");
-                System.Diagnostics.Process.Start(procInfo);
-                Thread.Sleep(2000);
-                System.Windows.Forms.SendKeys.SendWait("{ESC}");
-                Thread.Sleep(2000);
-                clickLeftMouseButton(316, 187);
-                System.Windows.Forms.SendKeys.SendWait("E");
-                
-            }
-            catch (Exception ex)
-            {
-
-            }
+            openApplication(316, 187);
         }
 
         private void btnGps_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var procInfo = new ProcessStartInfo(@"ProjectMyScreenApp\ProjectMyScreenApp.exe");
-                System.Diagnostics.Process.Start(procInfo);
-                Thread.Sleep(2000);
-                System.Windows.Forms.SendKeys.SendWait("{ESC}");
-                Thread.Sleep(2000);
-                clickLeftMouseButton(390, 269);
-                System.Windows.Forms.SendKeys.SendWait("E");
-            }
-            catch (Exception ex)
-            {
-
-            }
+            openApplication(390, 269);
         }
 
         private void btnInternet_Click(object sender, RoutedEventArgs e)
@@ -162,11 +135,11 @@ namespace CarMedia
 
         private void grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            int x = System.Windows.Forms.Control.MousePosition.X;
-            int y = System.Windows.Forms.Control.MousePosition.Y;
+            //int x = System.Windows.Forms.Control.MousePosition.X;
+            //int y = System.Windows.Forms.Control.MousePosition.Y;
 
-            // sample code
-            MessageBox.Show(x.ToString() + "  " + y.ToString());
+            //// sample code
+            //MessageBox.Show(x.ToString() + "  " + y.ToString());
         }
 
         public static void clickLeftMouseButton(int xpos, int ypos)
@@ -177,6 +150,32 @@ namespace CarMedia
             SetCursorPos(1300, 0);
         }
 
+        private void openApplication(int coOrdX, int CoOrdY)
+        {
+            try
+            {
+                Process[] pname = Process.GetProcessesByName("ProjectMyScreenApp");
+                if (pname.Length == 0)
+                {
+                    ProcessStartInfo procInfo = new ProcessStartInfo(@"ProjectMyScreenApp\ProjectMyScreenApp.exe");
+                    System.Diagnostics.Process.Start(procInfo);
+                    Thread.Sleep(2000);
+                    System.Windows.Forms.SendKeys.SendWait("{ESC}");
+                    Thread.Sleep(2000);
+                    clickLeftMouseButton(coOrdX, CoOrdY);
+                    System.Windows.Forms.SendKeys.SendWait("E");
+                }
+                else
+                {
+                    foreach (var process in Process.GetProcessesByName("ProjectMyScreenApp.exe"))
+                    {
+                        process.Dispose();//.Kill();
+                    }
+                    openApplication(coOrdX, CoOrdY);
+                }
+            }
+            catch { }
+        }
         
           
     }

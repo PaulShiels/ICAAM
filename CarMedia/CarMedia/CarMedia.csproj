@@ -205,6 +205,19 @@
       <Name>WpfAppControl</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\oilTempGauge.png" />
+    <Resource Include="Images\psiGauge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\vwLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\clockFace2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\clockFace21.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -9,16 +9,16 @@
     MinWidth="935" Height="465">
 
     <!--MinWidth="650" MinHeight="420" MaxHeight="430"-->
-    
+
     <UserControl.Resources>
         <Style x:Key="buttonStyle">
-            <Setter Property="Control.Height" Value="70"/>
-            <Setter Property="Control.Width" Value="140"/>
+            <Setter Property="Control.Height" Value="25"/>
+            <Setter Property="Control.Width" Value="120"/>
             <Setter Property="Control.Background" Value="Transparent"/>
             <Setter Property="Control.FontFamily" Value="Segoe UI"/>
-            <Setter Property="Control.FontSize" Value="30"/>
+            <Setter Property="Control.FontSize" Value="14"/>
             <Setter Property="Control.Foreground" Value="White"/>
-            <Setter Property="Control.FontWeight" Value="Bold"/>
+            <Setter Property="Control.Margin" Value="-10,0,0,0"/>
             <Setter Property="Control.Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -33,14 +33,14 @@
 
 
 
-    <Grid MouseLeftButtonDown="grid_MouseLeftButtonDown">             
+    <Grid MouseLeftButtonDown="grid_MouseLeftButtonDown">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.5*"/>
             <ColumnDefinition  Width="1.5*"/>
             <ColumnDefinition  Width="3.2*"/>
             <ColumnDefinition  Width="1.5*"/>
             <ColumnDefinition  Width="1.5*"/>
-            
+
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -48,42 +48,43 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
-        
+
+
         <!--<Clock:AnalogClock Grid.RowSpan="4" Grid.ColumnSpan="5" Background="CornflowerBlue" HorizontalAlignment="Center" Margin="10,12,0,0" VerticalAlignment="Center"/>-->
 
         <!--Analog Clock in this grid found at: http://www.codeproject.com/Articles/29438/Analog-Clock-in-WPF-->
-        <Grid Width="300" Height="300" Grid.RowSpan="4" Grid.ColumnSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid Width="430" Height="430" Grid.RowSpan="4" Grid.ColumnSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+
+            <Image Source="Images/clockFace21.png" Margin="50,0,50,0"></Image>
             
-            <!--Clock face image found at: http://modculture.typepad.com/photos/uncategorized/2008/10/29/800496_m.jpg-->
-            <Image Source="Images/clockFace.png" Margin="-10,0,10,0"></Image>
-
-            <!-- Second  -->
-            <Rectangle Margin="150,0,149,150" Name="rectangleSecond" Stroke="White" Height="120" VerticalAlignment="Bottom">
-                <Rectangle.RenderTransform>
-                    <RotateTransform x:Name="secondHand" CenterX="0" CenterY="120" Angle="0" />
-                </Rectangle.RenderTransform>
-            </Rectangle>
-            <!-- -->
-
             <!-- Minute  -->
-            <Rectangle Margin="150,49,149,151" Name="rectangleMinute" Stroke="LightGreen">
+            <Rectangle Margin="214,0,208,140" Name="rectangleMinute" Stroke="Red" Height="130" Fill="Red">
                 <Rectangle.RenderTransform>
-                    <RotateTransform x:Name="minuteHand" CenterX="0" CenterY="100" Angle="0" />
+                    <RotateTransform x:Name="minuteHand" CenterX="2" CenterY="130" Angle="0" />
                 </Rectangle.RenderTransform>
             </Rectangle>
             <!-- -->
 
             <!-- Hour  -->
-            <Rectangle Margin="150,80,149,150" Name="rectangleHour" Stroke="LightYellow">
+            <Rectangle Margin="214,0,208,100" Name="rectangleHour" Stroke="Red" Fill="Red" Height="100">
                 <Rectangle.RenderTransform>
-                    <RotateTransform x:Name="hourHand" CenterX="0" CenterY="70" Angle="0" />
+                    <RotateTransform x:Name="hourHand" CenterX="2" CenterY="100" Angle="0" />
+                </Rectangle.RenderTransform>
+            </Rectangle>            
+            <!---->
+            
+            <!-- Second  -->
+            <Rectangle Margin="218,0,211,220" Name="rectangleSecond" Stroke="Red" Fill="Red" Height="135" VerticalAlignment="Bottom">
+                <Rectangle.RenderTransform>
+                    <RotateTransform x:Name="secondHand" CenterX="0" CenterY="135" Angle="0" />
                 </Rectangle.RenderTransform>
             </Rectangle>
-            <!---->
+            <!-- -->
+            <Image Source="Images/vwLogo.png" Margin="195,0,190,0"></Image>
     </Grid>        
         
-        <Border BorderBrush="Black" Grid.ColumnSpan="2" BorderThickness="3" CornerRadius="3" Margin="10" >
+        <Border BorderBrush="Black" Grid.ColumnSpan="2" BorderThickness="5" CornerRadius="20" Margin="10,15,180,15" >
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" Color="#FFABBBD3" Opacity="0.8" Direction="135" ShadowDepth="10" />
             </Border.Effect>
@@ -95,7 +96,7 @@
                 </Border.Background>
         </Border>
         
-        <Border BorderBrush="Black" Grid.Row="1" Grid.ColumnSpan="2" BorderThickness="3" CornerRadius="3" Margin="10" MouseDown="btnMusic_Click">
+        <Border BorderBrush="Black" Grid.Row="1" Grid.ColumnSpan="2" BorderThickness="5" CornerRadius="20" Margin="10,15,180,15" MouseDown="btnMusic_Click">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" Color="#FFABBBD3" Opacity="0.8" Direction="160" ShadowDepth="10" />
             </Border.Effect>
@@ -107,7 +108,7 @@
                 </Border.Background>
         </Border>
         
-        <Border BorderBrush="Black" Grid.Row="2" Grid.ColumnSpan="2" BorderThickness="3" CornerRadius="3" Margin="10" >
+        <Border BorderBrush="Black" Grid.Row="2" Grid.ColumnSpan="2" BorderThickness="5" CornerRadius="20" Margin="10,15,180,15" >
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" Color="#FFABBBD3" Opacity="0.8" Direction="210" ShadowDepth="10" />
             </Border.Effect>
@@ -119,7 +120,7 @@
                 </Border.Background>
         </Border>
         
-        <Border BorderBrush="Black" Grid.Row="3" Grid.ColumnSpan="2" BorderThickness="3" CornerRadius="3" Margin="10" >
+        <Border BorderBrush="Black" Grid.Row="3" Grid.ColumnSpan="2" BorderThickness="5" CornerRadius="20" Margin="10,15,180,15" >
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" Color="#FFABBBD3" Opacity="0.8" Direction="220" ShadowDepth="10" />
             </Border.Effect>
@@ -131,7 +132,7 @@
                 </Border.Background>
         </Border>
         
-        <Border BorderBrush="Black" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" BorderThickness="3" CornerRadius="3" Margin="10" >
+        <Border BorderBrush="Black" BorderThickness="5" CornerRadius="20" Margin="15,15,10,15" Grid.Column="4" >
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" Color="#FFABBBD3" Opacity="0.8" Direction="45" ShadowDepth="10" />
             </Border.Effect>
@@ -143,7 +144,7 @@
                 </Border.Background>
         </Border>
         
-        <Border BorderBrush="Black" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" BorderThickness="3" CornerRadius="3" Margin="10" >
+        <Border BorderBrush="Black" Grid.Row="1"  Grid.ColumnSpan="2" BorderThickness="5" CornerRadius="20" Margin="15,15,10,15" Grid.Column="4">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" Color="#FFABBBD3" Opacity="0.8" Direction="25" ShadowDepth="10" />
             </Border.Effect>
@@ -155,7 +156,7 @@
                 </Border.Background>
         </Border>
         
-        <Border BorderBrush="Black" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" BorderThickness="3" CornerRadius="3" Margin="10" MouseDown="btnCamera_Click">
+        <Border BorderBrush="Black" Grid.Row="2" Margin="15,15,10,15" Grid.Column="4" Grid.ColumnSpan="2" BorderThickness="5" CornerRadius="20"  MouseDown="btnCamera_Click">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" Color="#FFABBBD3" Opacity="0.8" Direction="325" ShadowDepth="10" />
             </Border.Effect>
@@ -167,7 +168,7 @@
                 </Border.Background>
         </Border>
         
-        <Border BorderBrush="Black" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" BorderThickness="3" CornerRadius="3" Margin="10" >
+        <Border BorderBrush="Black" Grid.Row="3" Margin="15,15,10,15" Grid.Column="4" Grid.ColumnSpan="2" BorderThickness="5" CornerRadius="20">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" Color="#FFABBBD3" Opacity="0.8" Direction="315" ShadowDepth="10" />
             </Border.Effect>
@@ -181,54 +182,71 @@
         
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Margin="20,0" Grid.Row="0">
             <StackPanel.Effect>
-                <DropShadowEffect ShadowDepth="3" Direction="180" Color="White" BlurRadius="10" />
+                <DropShadowEffect ShadowDepth="1" Direction="180" Color="White" BlurRadius="1" />
             </StackPanel.Effect>
-            <Image Source="Images/radio_Icon.png" MaxHeight="80" MouseDown="btnRadio_Click"></Image>            
+            <StackPanel>
+            <Image Source="Images/radio_Icon.png" MaxHeight="50" Margin="-10,25,0,0" MouseDown="btnRadio_Click"></Image>            
+                <Button x:Name="btnRadio" Grid.Column="1" Content="Radio" Style="{StaticResource buttonStyle}" Click="btnRadio_Click"></Button>
+             </StackPanel>
         </StackPanel>
-        <Button x:Name="btnRadio" Grid.Column="1" Content="Radio" Style="{StaticResource buttonStyle}" Click="btnRadio_Click"></Button>
+        
         
         <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="1" MouseDown="btnMusic_Click">
             <StackPanel.Effect>
-                <DropShadowEffect ShadowDepth="3" Direction="180" Color="White" BlurRadius="10" />
+                <DropShadowEffect ShadowDepth="1" Direction="180" Color="White" BlurRadius="1" />
             </StackPanel.Effect>
-            <Image Source="Images/music_Icon.png" MaxHeight="80"></Image>            
+            <StackPanel>
+                <Image Source="Images/music_Icon.png"  MaxHeight="50" Margin="-10,25,0,0"></Image>                
+                <Button x:Name="btnMusic" Content="Music" Grid.Column="1" Grid.Row="1" Click="btnMusic_Click" Style="{StaticResource buttonStyle}"></Button>
+            </StackPanel>            
         </StackPanel>
-        <Button x:Name="btnMusic" Content="Music" Grid.Column="1" Grid.Row="1" Click="btnMusic_Click" Style="{StaticResource buttonStyle}"></Button>
+        
         
         <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="2">
             <StackPanel.Effect>
-                <DropShadowEffect ShadowDepth="3" Direction="180" Color="White" BlurRadius="10" />
+                <DropShadowEffect ShadowDepth="1" Direction="180" Color="White" BlurRadius="1" />
             </StackPanel.Effect>
-            <Image Source="Images/video_Icon.png" MaxHeight="80" MouseDown="btnRadio_Click"></Image>            
+            <StackPanel>
+            <Image Source="Images/video_Icon.png" MaxHeight="50" MouseDown="btnRadio_Click" Margin="-10,25,0,0"></Image>            
+            <Button x:Name="btnVideo" Content="Video" Grid.Column="1" Grid.Row="2" Style="{StaticResource buttonStyle}"></Button>
+                </StackPanel>
         </StackPanel>
-        <Button x:Name="btnVideo" Content="Video" Grid.Column="1" Grid.Row="2" Style="{StaticResource buttonStyle}"></Button>
+        
         
         <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="3">
             <StackPanel.Effect>
-                <DropShadowEffect ShadowDepth="3" Direction="180" Color="White" BlurRadius="10" />
+                <DropShadowEffect ShadowDepth="1" Direction="180" Color="White" BlurRadius="1" />
             </StackPanel.Effect>
-            <Image Source="Images/internet_Icon.png" MaxHeight="80" MouseDown="btnInternet_Click"></Image>            
+            <StackPanel>
+            <Image Source="Images/internet_Icon.png" MaxHeight="50" Margin="-10,25,0,0" MouseDown="btnInternet_Click"></Image>            
+            <Button x:Name="btnInternet" Content="Internet" Grid.Column="1" Grid.Row="3" Style="{StaticResource buttonStyle}" Click="btnInternet_Click"></Button>
+                </StackPanel>
         </StackPanel>
-        <Button x:Name="btnInternet" Content="Internet" Grid.Column="1" Grid.Row="3" Style="{StaticResource buttonStyle}" Click="btnInternet_Click"></Button>
-        
-        <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="0" Grid.Column="4">
-            <Image Source="Images/phone_Icon.png" MaxHeight="80" Margin="30,0" MouseDown="btnPhone_Click"></Image>            
+
+
+        <StackPanel Orientation="Vertical" Margin="15,20,0,0" Grid.Row="0" Grid.Column="4">
+            	<Image Source="Images/phone_Icon.png" MaxHeight="55" Grid.Column="4"  MouseDown="btnPhone_Click" />
+                <Button x:Name="btnPhone" Content="Phone" Style="{StaticResource buttonStyle}" MouseDown="btnPhone_Click"/>
+            
         </StackPanel>
-        <Button x:Name="btnPhone" Content="Phone" Grid.Column="3" Style="{StaticResource buttonStyle}" MouseDown="btnPhone_Click"></Button>
         
-        <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="1" Grid.Column="3">           
+        
+        <StackPanel Orientation="Vertical" Margin="0,20,0,0" Grid.Row="1" Grid.Column="4">                       
+            <Image Source="Images/gps_Icon.png" Grid.Column="4" Grid.Row="1" MaxHeight="55" MouseDown="btnGps_Click"></Image>
             <Button x:Name="btnGps" Content="GPS" Grid.Row="1" Style="{StaticResource buttonStyle}" Click="btnGps_Click"></Button>
         </StackPanel>
-        <Image Source="Images/gps_Icon.png" Grid.Column="4" Grid.Row="1" MaxHeight="80" MouseDown="btnGps_Click"></Image>
         
-        <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="2" Grid.Column="3">            
+        
+        <StackPanel Orientation="Vertical" Margin="0,20,0,0" Grid.Row="2" Grid.Column="4">            
+            <Image Source="Images/camera_Icon.png" MaxHeight="55" Grid.Column="4" Grid.Row="2" MouseDown="btnCamera_Click"></Image>
             <Button x:Name="btnCamera" Content="Camera" Style="{StaticResource buttonStyle}" Click="btnCamera_Click"></Button>
         </StackPanel>
-        <Image Source="Images/camera_Icon.png" MaxHeight="80" Grid.Column="4" Grid.Row="2" MouseDown="btnCamera_Click"></Image>
         
-        <StackPanel Orientation="Horizontal" Margin="20,0" Grid.Row="3" Grid.Column="3">            
-            <Button x:Name="btnSettings" Content="Settings" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="3" Style="{StaticResource buttonStyle}"></Button>
+        
+        <StackPanel Orientation="Vertical" Margin="0,20,0,0" Grid.Row="3" Grid.Column="4">            
+            <Image Source="Images/settings_Icon.png" MaxHeight="55" Grid.Column="4" Grid.Row="3" MouseDown="btnRadio_Click"></Image>
+            <Button x:Name="btnSettings" Content="Settings" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="3" Style="{StaticResource buttonStyle}"></Button>
         </StackPanel>
-        <Image Source="Images/settings_Icon.png" MaxHeight="80" Grid.Column="4" Grid.Row="3" MouseDown="btnRadio_Click"></Image>
+        
     </Grid>
 </UserControl>
