@@ -128,8 +128,8 @@ namespace CarMedia
                                 {
                                     byte[] b = new byte[50];
                                     ArduinoPort.Read(b, 0, 20);
-                                    lblTempInside.Content  = System.BitConverter.ToSingle(b, 0);
-                                    lblOutsideTemp.Content = System.BitConverter.ToSingle(b, 4);
+                                    //lblTempInside.Content  = System.BitConverter.ToSingle(b, 0);
+                                    //lblOutsideTemp.Content = System.BitConverter.ToSingle(b, 4);
                                     float voltage = System.BitConverter.ToSingle(b, 8);                                    
                                     voltHand.Angle = (voltage - 8) * (60 - -60) / (16 - 8)+ -60; //map the voltage from a value of to within the range of 8 to 16                                    
                                     radioSignalLevel = System.BitConverter.ToInt16(b, 12);
@@ -196,7 +196,7 @@ namespace CarMedia
                         tempPosFont -= 10;
                 }
             }
-            lblTempInside.Content = string.Format("{0} {1}", tempPosFont, tempPosRear);
+            //lblTempInside.Content = string.Format("{0} {1}", tempPosFont, tempPosRear);
         }
 
         private void btnIncreaseTemp_Click(object sender, RoutedEventArgs e)
@@ -212,7 +212,7 @@ namespace CarMedia
                     else
                         tempPosRear += 10;
             }
-            lblTempInside.Content = string.Format("{0} {1}", tempPosFont, tempPosRear);
+            //lblTempInside.Content = string.Format("{0} {1}", tempPosFont, tempPosRear);            
         }
 
         private void btnIncreaseFanSpeed_Click(object sender, RoutedEventArgs e)
@@ -220,6 +220,7 @@ namespace CarMedia
             if (fanSpeed < 4)
             {
                 fanSpeed += 1;
+                showFanBars(fanSpeed);
             }            
         }
 
@@ -228,6 +229,44 @@ namespace CarMedia
             if (fanSpeed > 0)
             {
                 fanSpeed -= 1;
+                showFanBars(fanSpeed);
+            }
+        }
+
+        private void showFanBars(int fanSpeed)
+        {
+            switch (fanSpeed)
+            {
+                case 0:
+                    imgFanBar4.Opacity = 0.2;
+                    imgFanBar3.Opacity = 0.2;
+                    imgFanBar2.Opacity = 0.2;
+                    imgFanBar1.Opacity = 0.2;
+                    break;
+                case 1:
+                    imgFanBar4.Opacity = 0.2;
+                    imgFanBar3.Opacity = 0.2;
+                    imgFanBar2.Opacity = 0.2;
+                    imgFanBar1.Opacity = 1;
+                    break;
+                case 2:
+                    imgFanBar4.Opacity = 0.2;
+                    imgFanBar3.Opacity = 0.2;
+                    imgFanBar2.Opacity = 1;
+                    imgFanBar1.Opacity = 1;
+                    break;
+                case 3:
+                    imgFanBar4.Opacity = 0.2;
+                    imgFanBar3.Opacity = 1;
+                    imgFanBar2.Opacity = 1;
+                    imgFanBar1.Opacity = 1;
+                    break;
+                case 4:
+                    imgFanBar4.Opacity = 1;
+                    imgFanBar3.Opacity = 1;
+                    imgFanBar2.Opacity = 1;
+                    imgFanBar1.Opacity = 1;
+                    break;
             }
         }
 

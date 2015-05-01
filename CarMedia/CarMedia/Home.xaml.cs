@@ -47,6 +47,7 @@ namespace CarMedia
             timer.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed);
             timer.Enabled = true;
             ///////////////////////////////////////////////////////////////////////////////////////            
+            lblDate.Content = DateTime.Now.ToShortDateString();
         }
 
         void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

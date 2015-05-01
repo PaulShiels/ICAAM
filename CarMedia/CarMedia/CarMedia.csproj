@@ -218,6 +218,30 @@
   <ItemGroup>
     <Resource Include="Images\clockFace21.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fanBar11.png" />
+    <Resource Include="Images\fanBar12.png" />
+    <Resource Include="Images\fanBar13.png" />
+    <Resource Include="Images\fanBar14.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\hot-cold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\coldHot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fanBlade.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\volume.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\mute.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\volumeDown.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -22,77 +22,102 @@
 
         <Canvas x:Name="MediaFrame" Background="Black" HorizontalAlignment="Left" x:FieldModifier="public" ></Canvas>
 
+        
+        
         <StackPanel Grid.Row="1" Background="Transparent" Orientation="Horizontal">
-            <StackPanel>
-                <Label Content="Temperature" Margin="5,0,0,0" Foreground="White" FontSize="36"/>
-                <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-                    <Label Content="Outside: " Foreground="White" FontSize="18" MouseDown="Label_MouseDown"/>
-                    <Label x:Name="lblOutsideTemp" Foreground="White" FontSize="18"/>
+            <StackPanel VerticalAlignment="Bottom" Margin="0,10">
+                
+                <!--<Label Content="Temperature" Margin="5,0,0,0" Foreground="White" FontSize="36"/>-->
+                <StackPanel Orientation="Horizontal" Margin="5,0,0,25">
+                    <Label Content="Inside Temp: " Foreground="White" FontSize="18" MouseDown="Label_MouseDown"/>
+                    <Label x:Name="lblInsideTemp" Foreground="White" FontSize="18"/>
                     <Label Content="°C" FontSize="18" Foreground="White"></Label>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel>
-                        <Button x:Name="btnIncreaseTemp" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnIncreaseTemp_Click">
-                            <Image Source="Images\plus.png" Width="90" Height="90"></Image>
+                <StackPanel Orientation="Vertical">
+                    <Image Source="Images\coldHot.png" Width="210" />
+                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                        <Button x:Name="btnDecreaseTemp" VerticalContentAlignment="Center" BorderThickness="0" Margin="10,0,20,10" Background="Transparent" Click="btnDecreaseTemp_Click">
+                            <Image Source="Images\minus.png" Width="60" Height="60"></Image>
                         </Button>
-                        <Button x:Name="btnDecreaseTemp" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnDecreaseTemp_Click">
-                            <Image Source="Images\minus.png" Width="90" Height="90"></Image>
+                        <Button x:Name="btnIncreaseTemp" BorderThickness="0" VerticalContentAlignment="Center" Margin="50,0,10,10" Background="Transparent" Click="btnIncreaseTemp_Click">
+                            <Image Source="Images\plus.png" Width="60" Height="60"></Image>
                         </Button>
+                        
                         <!--<Button x:Name="btnDecreaseTemp" Content="-" Foreground="White" FontSize="50" Margin="-4, -20" VerticalContentAlignment="Center" Background="Transparent"></Button>-->
-                    </StackPanel>
-                    <StackPanel>
-                        <Label Content="Inside" FontSize="60" Foreground="White"></Label>
-                        <StackPanel Orientation="Horizontal">
-                            <Label x:Name="lblTempInside" FontSize="70" VerticalAlignment="Center" Foreground="White"/>
-                            <Label Content="°C" FontSize="70" Foreground="White" VerticalAlignment="Center"></Label>
-                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Margin="80,0">
+            <StackPanel VerticalAlignment="Bottom" Margin="120,0,80,10">
+                
                 <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-                    <Label Content="Fan" Margin="5,0,0,0" Foreground="White" FontSize="36"/>
-                    <!--<Image Source="Images\fan.png" Height="30" Width="30" Margin="10,0,0,0"/>-->
+                    <!--<Label Content="Fan" Margin="5,0,0,0" Foreground="White" FontSize="36"/>-->
+                    
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <StackPanel Margin="0,35,0,0">
-                        <Button x:Name="btnIncreaseTemp1" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnIncreaseFanSpeed_Click">
-                            <Image Source="Images\plus.png" Width="90" Height="90"></Image>
+                    <StackPanel Margin="0,15,0,0">
+                        <Button x:Name="btnIncreaseTemp1" BorderThickness="0" VerticalContentAlignment="Center" Margin="10,0,10,20" Background="Transparent" Click="btnIncreaseFanSpeed_Click">
+                            <Image Source="Images\fanBlade.png" Height="55" Width="55"/>
                         </Button>
-                        <Button x:Name="btnDecreaseTemp1" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnDecreaseFanSpeed_Click">
-                            <Image Source="Images\minus.png" Width="90" Height="90"></Image>
+                        <Button x:Name="btnDecreaseTemp1" BorderThickness="0" VerticalContentAlignment="Center" Margin="10,10,10,15" Background="Transparent" Click="btnDecreaseFanSpeed_Click">
+                            <Image Source="Images\fanBlade.png" Height="40" Width="40"/>
                         </Button>
                         <!--<Button x:Name="btnDecreaseTemp" Content="-" Foreground="White" FontSize="50" Margin="-4, -20" VerticalContentAlignment="Center" Background="Transparent"></Button>-->
                     </StackPanel>
-                    <StackPanel VerticalAlignment="Bottom" Margin="5,0,0,20" Orientation="Horizontal">
+                    <StackPanel VerticalAlignment="Bottom" Margin="5,0,0,10" Orientation="Horizontal">
                         <StackPanel>
-                            <Image x:Name="imgFanBar4" Source="Images\fanBar4.png" HorizontalAlignment="Left" Margin="0,5"></Image>
-                            <Image x:Name="imgFanBar3" Source="Images\fanBar3.png" HorizontalAlignment="Left" Margin="0,5"></Image>
-                            <Image x:Name="imgFanBar2" Source="Images\fanBar2.png" HorizontalAlignment="Left" Margin="0,5"></Image>
-                            <Image x:Name="imgFanBar1" Source="Images\fanBar1.png" HorizontalAlignment="Left" Margin="0,5"></Image>
+                            <Image x:Name="imgFanBar4" Source="Images\fanBar11.png" Opacity="0.2" HorizontalAlignment="Left" Margin="0,10"></Image>
+                            <Image x:Name="imgFanBar3" Source="Images\fanBar12.png" Opacity="0.2" HorizontalAlignment="Left" Margin="0,10"></Image>
+                            <Image x:Name="imgFanBar2" Source="Images\fanBar13.png" Opacity="0.2" HorizontalAlignment="Left" Margin="0,10"></Image>
+                            <Image x:Name="imgFanBar1" Source="Images\fanBar14.png" Opacity="0.2" HorizontalAlignment="Left" Margin="0,10"></Image>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Width="220" Margin="-70,0">
-                <StackPanel Orientation="Horizontal" Margin="0,13,0,0">
-                    <Button x:Name="btnBlowerWindscreen" Height="80" Width="100" Margin="-65,0,0,0" Background="Black" Opacity="0.8" Click="btnBlowerWindscreen_Click">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Width="220" Margin="20,0,0,20">
+                <StackPanel>
+                    <Button x:Name="btnBlowerWindscreen" Height="70" Width="90" Margin="10,10" Background="Black" Opacity="0.8" Click="btnBlowerWindscreen_Click">
                         <Image Source="Images\blowerWindscreen.png"></Image>
                     </Button>
-                    <Button x:Name="btnBlowerFace" Background="Black" Margin="25,0,0,0"  Height="80" Width="100" Opacity="0.8" Click="btnBlowerFace_Click">
-                        <Image Source="Images\blowerFace.png"></Image>
-                    </Button>
+                <Button x:Name="btnBlowerFace" Background="Black"  Height="70" Width="90" Opacity="0.8" Click="btnBlowerFace_Click">
+                    <Image Source="Images\blowerFace.png"></Image>
+                </Button>
                 </StackPanel>
-                <Button x:Name="btnBlowerFaceDown" Background="Black" Height="80" Width="100" Margin="0,18, 0,0" Opacity="0.8" Click="btnBlowerFaceDown_Click">
+                <StackPanel>
+                <Button x:Name="btnBlowerFaceDown" Background="Black" Height="70" Width="90" Margin="0,10, 0,0" Opacity="0.8" Click="btnBlowerFaceDown_Click">
                     <Image Source="Images\blowerFaceDown.png"></Image>
                 </Button>
-                <Button x:Name="btnBlowerDown" Background="Black" Height="80" Width="100" Margin="0,18, 0,0" Opacity="0.8" Click="btnBlowerDown_Click">
+                <Button x:Name="btnBlowerDown" Background="Black" Height="70" Width="90" Margin="0,10, 0,0" Opacity="0.8" Click="btnBlowerDown_Click">
                     <Image Source="Images\blowerDown.png"></Image>
                 </Button>
+                </StackPanel>
+            </StackPanel>                       
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Center" Margin="100,0,0,0" Grid.Row="1" VerticalAlignment="Top" Orientation="Horizontal">
+            <!--<StackPanel>
+                    <Label Content="V" FontSize="42" FontWeight="Bold" Margin="0,0,0,-10" Foreground="CornflowerBlue"></Label>
+                    <Label Content="O" FontSize="42" FontWeight="Bold" Margin="0,-10" Foreground="CornflowerBlue"></Label>
+                    <Label Content="L" FontSize="42" FontWeight="Bold" Margin="5,-10,0,0" Foreground="CornflowerBlue"></Label>
+                </StackPanel>-->
+            <StackPanel Orientation="Horizontal">                
+                <Button x:Name="btnDecreaseVolume" VerticalContentAlignment="Center" BorderThickness="0" Margin="10,0,10,10" Background="Transparent" Click="btnDecreaseVolume_Click">
+                    <Image Source="Images\volumeDown.png" Height="70" Width="70"/>
+                </Button>
+                <ProgressBar Name="pbrVolume" Height="20" Width="200" Maximum="100"></ProgressBar>
+                <Button x:Name="btnIncreaseVolume" VerticalContentAlignment="Center" BorderThickness="0" Margin="10,0,10,10" Background="Transparent" Click="btnIncreaseVolume_Click">
+                    <Image Source="Images\volume.png" Height="70" Width="70"/>
+                </Button>
+                <Button x:Name="btnDecreaseMute" BorderThickness="0" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnDecreaseMute_Click">
+                    <StackPanel>
+                        <Image Source="Images\mute.png" Height="70" Width="70"/>
+                    </StackPanel>
+                </Button>
+                <!--<Button x:Name="btnDecreaseTemp" Content="-" Foreground="White" FontSize="50" Margin="-4, -20" VerticalContentAlignment="Center" Background="Transparent"></Button>-->
             </StackPanel>
         </StackPanel>
+
 
         <TextBlock Grid.Column="1" Background="Transparent"></TextBlock>
 
@@ -115,30 +140,10 @@
             </Rectangle>
 
 
-            <Image Source="Images/voltmeter.png" Grid.Row="1"></Image>
-            <Image Source="Images/voltmeter.png" Grid.Row="2" Grid.RowSpan="2"></Image>
+            <Image Source="Images/oilTempGauge.png" Grid.Row="1"></Image>
+            <Image Source="Images/psiGauge.png" Grid.Row="2" Grid.RowSpan="2"></Image>
         </Grid>
 
-        <StackPanel Grid.Column="1" Margin="0,160,0,0" Orientation="Horizontal">
-            <StackPanel>
-                <Label Content="V" FontSize="42" FontWeight="Bold" Margin="0,0,0,-10" Foreground="CornflowerBlue"></Label>
-                <Label Content="O" FontSize="42" FontWeight="Bold" Margin="0,-10" Foreground="CornflowerBlue"></Label>
-                <Label Content="L" FontSize="42" FontWeight="Bold" Margin="5,-10,0,0" Foreground="CornflowerBlue"></Label>
-            </StackPanel>
-            <StackPanel >
-                <Button x:Name="btnIncreaseVolume" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnIncreaseVolume_Click">
-                    <Image Source="Images\plus.png" Width="50" Height="50"></Image>
-                </Button>
-                <Button x:Name="btnDecreaseVolume" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnDecreaseVolume_Click">
-                    <Image Source="Images\minus.png" Width="50" Height="50"></Image>
-                </Button>
-                <Button x:Name="btnDecreaseMute" VerticalContentAlignment="Center" Margin="10,0,10,10" Background="Transparent" Click="btnDecreaseMute_Click">
-                    <StackPanel>
-                        <TextBlock Text="Mute" Foreground="Red" FontSize="20"></TextBlock>
-                    </StackPanel>
-                </Button>
-                <!--<Button x:Name="btnDecreaseTemp" Content="-" Foreground="White" FontSize="50" Margin="-4, -20" VerticalContentAlignment="Center" Background="Transparent"></Button>-->
-            </StackPanel>
-        </StackPanel>
+        
     </Grid>
 </Window>

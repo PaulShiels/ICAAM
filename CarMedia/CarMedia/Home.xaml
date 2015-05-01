@@ -54,8 +54,14 @@
 
         <!--Analog Clock in this grid found at: http://www.codeproject.com/Articles/29438/Analog-Clock-in-WPF-->
         <Grid Width="430" Height="430" Grid.RowSpan="4" Grid.ColumnSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label Name="lblDate" Foreground="White" FontSize="18" ></Label>
 
-
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5,0,0,0">
+                <Label Content="Outside: " Foreground="White" FontSize="18"/>
+                <Label x:Name="lblOutsideTemp" Foreground="White" FontSize="18"/>
+                <Label Content="°C" FontSize="18" Foreground="White"></Label>
+            </StackPanel>
+            
             <Image Source="Images/clockFace21.png" Margin="50,0,50,0"></Image>
             
             <!-- Minute  -->
