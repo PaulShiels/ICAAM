@@ -128,12 +128,15 @@ namespace CarMedia
                                 {
                                     byte[] b = new byte[50];
                                     ArduinoPort.Read(b, 0, 20);
+                                    lblInsideTemp.Content = System.BitConverter.ToSingle(b, 0);
+                                    HomeScreen.lblOutsideTemp.Content = System.BitConverter.ToSingle(b, 4);
                                     //lblTempInside.Content  = System.BitConverter.ToSingle(b, 0);
                                     //lblOutsideTemp.Content = System.BitConverter.ToSingle(b, 4);
                                     float voltage = System.BitConverter.ToSingle(b, 8);                                    
                                     voltHand.Angle = (voltage - 8) * (60 - -60) / (16 - 8)+ -60; //map the voltage from a value of to within the range of 8 to 16                                    
                                     radioSignalLevel = System.BitConverter.ToInt16(b, 12);
                                     //lblTempInside.Content = voltage; //string.Format("{0} {1}", f, f2);
+                                    
                                 }
                             }
                         }
