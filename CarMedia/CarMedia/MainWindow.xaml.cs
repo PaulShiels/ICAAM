@@ -42,6 +42,8 @@ namespace CarMedia
         public static byte fanSpeed, tempPosFont=50, desiredTemp, tempPosRear=5, blowerPosition = 3, resetArduino=0;
         public static byte radioFreq1, radioFreq2, autoTuneOn=0;
         public static List<string> ArduinoOutputs = new List<string>();
+        public static Visibility temperatureControlsVisibility = Visibility.Visible;
+        public static Visibility volumeControlVisibility = Visibility.Visible;
         private int radioSignalLevel;
 
         [DllImport("user32.dll")]
@@ -149,6 +151,8 @@ namespace CarMedia
                 ConnectSerialPort();
             
             resetArduino = 0;
+            temperatureControls.Visibility = temperatureControlsVisibility;
+            volumeControl.Visibility = volumeControlVisibility;
         }
 
         private void ConnectSerialPort()

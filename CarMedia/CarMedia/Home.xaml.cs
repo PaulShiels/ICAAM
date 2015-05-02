@@ -104,14 +104,10 @@ namespace CarMedia
             MainWindow.musicPlayer.Visibility = Visibility.Hidden;
             MainWindow.camera.Visibility = System.Windows.Visibility.Visible;
             MainWindow.gauges.Visibility = System.Windows.Visibility.Hidden;
+            MainWindow.temperatureControlsVisibility = Visibility.Hidden;
+            MainWindow.volumeControlVisibility = Visibility.Hidden;
             Canvas.SetZIndex(MainWindow.camera, 1);
-
-            if (MainWindow.camera.Arduino.IsOpen)
-            {
-                MainWindow.camera.timer.Start();
-                MainWindow.camera.Arduino.DiscardInBuffer();
-            }
-
+            MainWindow.camera.startCamera();
         }
 
         private void btnPhone_Click(object sender, MouseButtonEventArgs e)
