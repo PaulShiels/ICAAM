@@ -81,6 +81,7 @@ namespace CarMedia
             musicPlayer.Visibility = Visibility.Hidden;
             radio.Visibility = Visibility.Hidden;
             gauges = grdGauges;
+            MainWindow.camera.startCamera();
         }
         
 
@@ -97,6 +98,10 @@ namespace CarMedia
 
         public void timer_Tick(object sender, EventArgs e)
         {
+            //Set the visibility of the temperature controls and volume control
+            temperatureControls.Visibility = temperatureControlsVisibility;
+            volumeControl.Visibility = volumeControlVisibility;
+
             if (ArduinoPort.IsOpen)
             {
                 //if (ArduinoPort.BytesToRead > 0)
@@ -151,8 +156,7 @@ namespace CarMedia
                 ConnectSerialPort();
             
             resetArduino = 0;
-            temperatureControls.Visibility = temperatureControlsVisibility;
-            volumeControl.Visibility = volumeControlVisibility;
+            
         }
 
         private void ConnectSerialPort()

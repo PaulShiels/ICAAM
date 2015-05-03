@@ -51,19 +51,21 @@ namespace CarMedia
         private void timer_Tick(object sender, EventArgs e)
         {
             //ArduinoCam.DiscardInBuffer();
-            Thread.Sleep(400);
+            //Thread.Sleep(400);
+            ArduinoCam.DiscardOutBuffer();   
             if (ArduinoCam.IsOpen)// && MainWindow.camera.Visibility==Visibility.Visible)
             {
                 int bufSize = ArduinoCam.ReadBufferSize;
-                if (bufSize > 0)
+                if (ArduinoCam.BytesToRead >= 8)
                 {
                     old_Dis = new_Dis;
                     //string S = ArduinoCam.ReadExisting();
-                    //byte[] b = new byte[10];
-                    //ArduinoCam.Read(b, 0, 10);
-                    string dis = ArduinoCam.ReadExisting();
-                    if (dis != " " || dis != "")
-                        txtDistance.Content = dis;
+                    byte[] b = new byte[8];
+                    ArduinoCam.Read(b, 0, 8);
+                    int dis = System.BitConverter.ToInt32(b, 0);
+                    int reverseEngaged = System.BitConverter.ToInt32(b, 4);
+                    txtDistance.Content = dis;
+                    ShowHideCamScreen(reverseEngaged);
 
                 }
             }
@@ -76,7 +78,7 @@ namespace CarMedia
             if (!ArduinoCam.IsOpen)
             {
                 ArduinoCam.PortName = "COM8";
-                ArduinoCam.BaudRate = 115200;
+                ArduinoCam.BaudRate = 9600;
                 ArduinoCam.Handshake = System.IO.Ports.Handshake.None;
                 ArduinoCam.Parity = Parity.None;
                 ArduinoCam.DataBits = 8;
@@ -108,6 +110,30 @@ namespace CarMedia
             }
         }
 
+        private void ShowHideCamScreen(int isInReverse)
+        {
+            if (isInReverse == 1)
+            {
+                MainWindow.musicPlayer.Visibility = Visibility.Hidden;
+                MainWindow.camera.Visibility = System.Windows.Visibility.Visible;
+                MainWindow.gauges.Visibility = System.Windows.Visibility.Hidden;
+                MainWindow.temperatureControlsVisibility = Visibility.Hidden;
+                MainWindow.volumeControlVisibility = Visibility.Hidden;
+                Canvas.SetZIndex(MainWindow.camera, 1);
+                MainWindow.camera.startCamera();
+            }
+            else
+            {
+                MainWindow.HomeScreen.Visibility = Visibility.Visible;
+                MainWindow.radio.Visibility = Visibility.Hidden;
+                MainWindow.camera.Visibility = Visibility.Hidden;
+                MainWindow.musicPlayer.Visibility = Visibility.Hidden;
+                MainWindow.gauges.Visibility = System.Windows.Visibility.Visible;
+                MainWindow.temperatureControlsVisibility = Visibility.Visible;
+                MainWindow.volumeControlVisibility = Visibility.Visible;
+                Canvas.SetZIndex(MainWindow.camera, 0);
+            }
+        }
         
 
         private void HomeBtn_Click(object sender, RoutedEventArgs e)
