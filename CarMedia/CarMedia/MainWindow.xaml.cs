@@ -32,6 +32,7 @@ namespace CarMedia
         public static Home HomeScreen = new Home();
         public static Music musicPlayer = new Music();
         public static Camera camera = new Camera();
+        public static DashCam dashCam = new DashCam();
         public static Radio radio = new Radio();
         public static Phone phone = new Phone();
         public static Internet internet = new Internet();
@@ -69,17 +70,19 @@ namespace CarMedia
             MediaFrame.Children.Add(HomeScreen);
             MediaFrame.Children.Add(musicPlayer);
             MediaFrame.Children.Add(camera);
+            MediaFrame.Children.Add(dashCam);
             MediaFrame.Children.Add(radio);
-            //MediaFrame.Children.Add(phone);
             MediaFrame.Children.Add(internet);
             Canvas.SetZIndex(MainWindow.musicPlayer, 0);
             Canvas.SetZIndex(MainWindow.camera, 0);
             Canvas.SetZIndex(MainWindow.radio, 0);
+            Canvas.SetZIndex(MainWindow.dashCam, 0);
             Canvas.SetZIndex(MainWindow.phone, 0);
             Canvas.SetZIndex(MainWindow.internet, 0);
             Canvas.SetZIndex(MainWindow.HomeScreen, 1);
             musicPlayer.Visibility = Visibility.Hidden;
             radio.Visibility = Visibility.Hidden;
+            dashCam.Visibility = Visibility.Hidden;
             gauges = grdGauges;
             MainWindow.camera.startCamera();
         }
@@ -116,8 +119,8 @@ namespace CarMedia
                         ArduinoBuffer[3] = Convert.ToByte(blowerPosition);
                         ArduinoBuffer[4] = Convert.ToByte(radioFreq1);
                         ArduinoBuffer[5] = Convert.ToByte(radioFreq2);
-                        //ArduinoBuffer[6] = Convert.ToByte(autoTuneOn);
-                        ArduinoBuffer[6] = Convert.ToByte(resetArduino);//radio.listenToFrequency);
+                        ArduinoBuffer[6] = Convert.ToByte(autoTuneOn);
+                        //ArduinoBuffer[6] = Convert.ToByte(resetArduino);//radio.listenToFrequency);
 
                         ////ArduinoPort.Write(sb.ToString());
                         //if (ArduinoPort.BytesToWrite>4)
@@ -232,6 +235,12 @@ namespace CarMedia
             {
                 fanSpeed += 1;
                 showFanBars(fanSpeed);
+
+                if (fanSpeed == 4)
+                {
+                    autoTuneOn = 1;
+                }
+                else { autoTuneOn = 0; }
             }            
         }
 

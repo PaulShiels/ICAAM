@@ -243,9 +243,13 @@
         </StackPanel>
         
         
-        <StackPanel Orientation="Vertical" Margin="0,20,0,0" Grid.Row="2" Grid.Column="4">            
-            <Image Source="Images/camera_Icon.png" MaxHeight="55" Grid.Column="4" Grid.Row="2" MouseDown="btnCamera_Click"></Image>
-            <Button x:Name="btnCamera" Content="Camera" Style="{StaticResource buttonStyle}" Click="btnCamera_Click"></Button>
+        <StackPanel Orientation="Vertical" Margin="0,20,0,0" Grid.Row="2" Grid.Column="4"> 
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Ellipse Name="recordingIcon" Fill="Transparent" Height="15" Width="15" VerticalAlignment="Top" Margin="-20,5,5,0"/>
+                <Image Source="Images/camera_Icon.png" MaxHeight="55" Grid.Column="4" Grid.Row="2" MouseDown="btnCamera_Click"></Image>
+            </StackPanel>
+            
+            <Button x:Name="btnCamera" Content="Dash Cam" HorizontalAlignment="Center" Style="{StaticResource buttonStyle}" Click="btnCamera_Click"></Button>
         </StackPanel>
         
         

@@ -133,14 +133,14 @@ namespace CarMedia
                 MainWindow.volumeControlVisibility = Visibility.Visible;
                 Canvas.SetZIndex(MainWindow.camera, 0);
             }
-        }
-        
+        }        
 
         private void HomeBtn_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.HomeScreen.Visibility = Visibility.Visible;
             MainWindow.radio.Visibility = Visibility.Hidden;
             MainWindow.camera.Visibility = Visibility.Hidden;
+            MainWindow.dashCam.Visibility = System.Windows.Visibility.Hidden;
             MainWindow.musicPlayer.Visibility = Visibility.Hidden;
             MainWindow.gauges.Visibility = System.Windows.Visibility.Visible;
             MainWindow.temperatureControlsVisibility = Visibility.Visible;

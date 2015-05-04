@@ -52,3 +52,16 @@ C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\
 C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Internet.g.cs
 C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\WpfAppControl.dll
 C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\WpfAppControl.pdb
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Camera\DashCam.baml
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\obj\Debug\Camera\DashCam.g.cs
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\AForge.dll
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\AForge.Imaging.dll
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\AForge.Math.dll
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\AForge.Video.DirectShow.dll
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\AForge.Video.dll
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\AForge.Video.VFW.dll
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\AForge.xml
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\AForge.Imaging.xml
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\AForge.Math.xml
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\AForge.Video.xml
+C:\Users\Paul\Documents\IT\Year4\Project\ICAAM_Code\CarMedia\CarMedia\bin\Debug\AForge.Video.DirectShow.xml

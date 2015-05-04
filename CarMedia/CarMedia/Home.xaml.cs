@@ -25,7 +25,8 @@ namespace CarMedia
     public partial class Home
     {
         System.Timers.Timer timer = new System.Timers.Timer(1000);
-        
+        public static bool dashCamRecording = false;
+
         //http://stackoverflow.com/questions/12019524/get-active-window-of-net-application
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         static extern bool SetCursorPos(int x, int y);
@@ -101,13 +102,15 @@ namespace CarMedia
 
         private void btnCamera_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow.HomeScreen.Visibility = Visibility.Hidden;
             MainWindow.musicPlayer.Visibility = Visibility.Hidden;
-            MainWindow.camera.Visibility = System.Windows.Visibility.Visible;
-            MainWindow.gauges.Visibility = System.Windows.Visibility.Hidden;
-            MainWindow.temperatureControlsVisibility = Visibility.Hidden;
-            MainWindow.volumeControlVisibility = Visibility.Hidden;
-            Canvas.SetZIndex(MainWindow.camera, 1);
-            MainWindow.camera.startCamera();
+            MainWindow.camera.Visibility = System.Windows.Visibility.Hidden;
+            MainWindow.dashCam.Visibility = System.Windows.Visibility.Visible;
+            //MainWindow.gauges.Visibility = System.Windows.Visibility.Hidden;
+            //MainWindow.temperatureControlsVisibility = Visibility.Hidden;
+            //MainWindow.volumeControlVisibility = Visibility.Hidden;
+            Canvas.SetZIndex(MainWindow.dashCam, 1);
+            //MainWindow.camera.startCamera();
         }
 
         private void btnPhone_Click(object sender, MouseButtonEventArgs e)

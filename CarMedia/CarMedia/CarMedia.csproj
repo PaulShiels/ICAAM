@@ -34,6 +34,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AForge">
+      <HintPath>..\packages\AForge.2.2.5\lib\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Imaging">
+      <HintPath>..\packages\AForge.Imaging.2.2.5\lib\AForge.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Math">
+      <HintPath>..\packages\AForge.Math.2.2.5\lib\AForge.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video">
+      <HintPath>..\..\..\..\..\..\..\Downloads\aforge\Release\AForge.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShow">
+      <HintPath>..\..\..\..\..\..\..\Downloads\aforge\Release\AForge.Video.DirectShow.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.VFW">
+      <HintPath>..\..\..\..\..\..\..\Desktop\videoCap\5\simple-webcam-recorder-master\simple-webcam-recorder-master\AviFromWebcam\bin\Debug\AForge.Video.VFW.dll</HintPath>
+    </Reference>
     <Reference Include="Clock">
       <HintPath>..\..\Clock\Clock\bin\Debug\Clock.dll</HintPath>
     </Reference>
@@ -69,6 +87,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Camera\DashCam.xaml.cs">
+      <DependentUpon>DashCam.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Internet.xaml.cs">
       <DependentUpon>Internet.xaml</DependentUpon>
     </Compile>
@@ -88,6 +109,10 @@
       <DependentUpon>Radio.xaml</DependentUpon>
     </Compile>
     <Page Include="Camera\Camera.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Camera\DashCam.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
