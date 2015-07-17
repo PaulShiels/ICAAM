@@ -697,7 +697,7 @@ namespace CarMedia
 
         private void BuildAndPopulateTracksView(List<Track> tracks)
         {
-            tracks = tracks.OrderBy(x => x.TrackName).ToList();
+            //tracks = tracks.OrderBy(x => x.TrackName).ToList();
             //lstOrderedTracks = lstOrderedTracks.OrderBy(x => x.TrackName);            
             if (lbxAllTracks!=null && lbxAllTracks.Items.Count == 0)
             {

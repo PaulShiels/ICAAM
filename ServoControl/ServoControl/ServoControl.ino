@@ -154,8 +154,8 @@
       //freqString += ".";
       //freqString += String)incomingValues[5]);    
       //resetBoard = incomingValues[5]; 
-      //autoTuneOn = incomingValues[6];
-      resetBoard = incomingValues[6];   
+      autoTuneOn = incomingValues[6];
+      //resetBoard = incomingValues[6];   
       //Serial.flush();
       
       
@@ -290,7 +290,7 @@
       if (StopwatchBlowerDirectionFanSpeed.isRunning())
       {
           if (StopwatchBlowerDirectionFanSpeed.elapsed() < 500)
-        {A
+        {
            //StopwatchTempSetting.stop();      
         }
       }

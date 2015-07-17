@@ -40,7 +40,7 @@ namespace CarMedia
         public static SerialPort ArduinoPort = new SerialPort();
         public static byte[] ArduinoBuffer = new byte[8];
         public static Grid gauges = new Grid();
-        public static byte fanSpeed, tempPosFont=50, desiredTemp, tempPosRear=5, blowerPosition = 3, resetArduino=0;
+        public static byte fanSpeed, tempPos=35, desiredTemp, tempPosRear=5, blowerPosition = 3, resetArduino=0;
         public static byte radioFreq1, radioFreq2, autoTuneOn=0;
         public static List<string> ArduinoOutputs = new List<string>();
         public static Visibility temperatureControlsVisibility = Visibility.Visible;
@@ -114,12 +114,12 @@ namespace CarMedia
                     {
                         //byte[] data = BitConverter.GetBytes(FanSpeed);
                         ArduinoBuffer[0] = Convert.ToByte(fanSpeed);
-                        ArduinoBuffer[1] = Convert.ToByte(tempPosFont);
-                        ArduinoBuffer[2] = Convert.ToByte(tempPosRear);
-                        ArduinoBuffer[3] = Convert.ToByte(blowerPosition);
-                        ArduinoBuffer[4] = Convert.ToByte(radioFreq1);
-                        ArduinoBuffer[5] = Convert.ToByte(radioFreq2);
-                        ArduinoBuffer[6] = Convert.ToByte(autoTuneOn);
+                        ArduinoBuffer[1] = Convert.ToByte(tempPos);
+                        //ArduinoBuffer[2] = Convert.ToByte(tempPosRear);
+                        ArduinoBuffer[2] = Convert.ToByte(blowerPosition);
+                        ArduinoBuffer[3] = Convert.ToByte(radioFreq1);
+                        ArduinoBuffer[4] = Convert.ToByte(radioFreq2);
+                        ArduinoBuffer[5] = Convert.ToByte(autoTuneOn);
                         //ArduinoBuffer[6] = Convert.ToByte(resetArduino);//radio.listenToFrequency);
 
                         ////ArduinoPort.Write(sb.ToString());
@@ -164,7 +164,7 @@ namespace CarMedia
 
         private void ConnectSerialPort()
         {
-            ArduinoPort.PortName = "COM5";               
+            ArduinoPort.PortName = "COM11";               
             ArduinoPort.BaudRate = 9600;
             ArduinoPort.Handshake = System.IO.Ports.Handshake.None;
             ArduinoPort.Parity = Parity.None;
@@ -177,7 +177,7 @@ namespace CarMedia
                 ArduinoPort.Open();
                 Console.WriteLine("Connection Successfull!");
             }
-            catch
+            catch (Exception e)
             {
                 //Console.WriteLine("Unable to connect to Serial Port, Try again?");
                 //if (Console.ReadLine() == "y")
@@ -194,38 +194,48 @@ namespace CarMedia
 
         private void btnDecreaseTemp_Click(object sender, RoutedEventArgs e)
         {
-            if (tempPosFont >= 175 && tempPosRear > 5)
+            int newTempPos = tempPos - 14;
+            if(newTempPos < 7)
             {
-                tempPosFont = 175;
-                tempPosRear -= 10;
+                tempPos = 7;
             }
-            else
-            {
-                tempPosRear = 5;
-                if (tempPosFont > 20)
-                {
-                    if (tempPosFont - 10 < 20)
-                        tempPosFont = 20;
-                    else
-                        tempPosFont -= 10;
-                }
-            }
+            //if (tempPosFont >= 175 && tempPosRear > 5)
+            //{
+            //    tempPosFont = 175;
+            //    tempPosRear -= 10;
+            //}
+            //else
+            //{
+            //    tempPosRear = 5;
+            //    if (tempPosFont > 20)
+            //    {
+            //        if (tempPosFont - 10 < 20)
+            //            tempPosFont = 20;
+            //        else
+            //            tempPosFont -= 10;
+            //    }
+            //}
             //lblTempInside.Content = string.Format("{0} {1}", tempPosFont, tempPosRear);
         }
 
         private void btnIncreaseTemp_Click(object sender, RoutedEventArgs e)
         {
-            if (tempPosFont < 175)
-                tempPosFont += 10;
-            else
+            int newTempPos = tempPos + 14;
+            if (newTempPos > 75)
             {
-                tempPosFont = 175;
-                if (tempPosRear < 115)
-                    if (tempPosRear + 10 > 115)
-                        tempPosRear = 115;
-                    else
-                        tempPosRear += 10;
+                tempPos = 75;
             }
+            //if (tempPosFont < 175)
+            //    tempPosFont += 10;
+            //else
+            //{
+            //    tempPosFont = 175;
+            //    if (tempPosRear < 115)
+            //        if (tempPosRear + 10 > 115)
+            //            tempPosRear = 115;
+            //        else
+            //            tempPosRear += 10;
+            //}
             //lblTempInside.Content = string.Format("{0} {1}", tempPosFont, tempPosRear);            
         }
 
