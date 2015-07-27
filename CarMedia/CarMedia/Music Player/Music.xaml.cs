@@ -169,11 +169,11 @@ namespace CarMedia
             }
 
             Track track = new Track(
-                new Artist(String.IsNullOrEmpty(tagFile.Tag.FirstAlbumArtist) ? fi.Name.Substring(0, 20) : tagFile.Tag.FirstAlbumArtist),
+                new Artist(String.IsNullOrEmpty(tagFile.Tag.FirstAlbumArtist) ? fi.Name.Substring(0, fi.Name.Length-3) : tagFile.Tag.FirstAlbumArtist),
                 tagFile.Tag.JoinedPerformers.ToString(),
-                new Album((String.IsNullOrEmpty(tagFile.Tag.FirstAlbumArtist) ? fi.Name.Substring(0, 20) : tagFile.Tag.FirstAlbumArtist),
-                    ((String.IsNullOrEmpty(tagFile.Tag.Album)?fi.Name.Substring(0,20): tagFile.Tag.Album)), AlbumArt),
-                    String.IsNullOrEmpty(tagFile.Tag.Title) ? fi.Name.Substring(0, 20) : tagFile.Tag.Title, id);
+                new Album((String.IsNullOrEmpty(tagFile.Tag.FirstAlbumArtist) ? fi.Name.Substring(0, fi.Name.Length - 3) : tagFile.Tag.FirstAlbumArtist),
+                    ((String.IsNullOrEmpty(tagFile.Tag.Album) ? fi.Name.Substring(0, fi.Name.Length - 3) : tagFile.Tag.Album)), AlbumArt),
+                    String.IsNullOrEmpty(tagFile.Tag.Title) ? fi.Name.Substring(0, fi.Name.Length - 3) : tagFile.Tag.Title, id);
 
             //id++;            
             lstTracks.Add(track);

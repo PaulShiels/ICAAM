@@ -1,3 +1,4 @@
+
 /*
  Controlling a servo position using a potentiometer (variable resistor)
  by Michal Rinott <http://people.interaction-ivrea.it/m.rinott>
@@ -10,6 +11,7 @@
 #include <Servo.h>
 #include <StopWatch.h>
 #include <Wire.h>
+#include "DHT.h"
 Servo servo1;  //Green = Windscreen - Feet  45 - 80 
 Servo servo2; //Orange = Temperature - 7-75
 Servo servo3; //Yellow = Windscreen - Face 30 - 90
@@ -18,8 +20,8 @@ int servoVal = 40;
 int servoRelayPin = 8;
 bool servoRelayEnabledState = false;
 int previousBlowerDirection;
-byte incomingValues[6];//Incoming string from C# application
-byte arrayToSend[50];
+int previousFanSpeed;
+int previousTemperatureSetting;
 StopWatch relayStopwatch;
 
 void setup()
@@ -43,7 +45,6 @@ void loop()
   {
     for (int i=0;i<5;i++){
       incomingValues[i] = (byte)Serial.read();
-      Serial.println(incomingValues[i]);
     } 
     setFanSpeed(incomingValues[0]);
     setTemperaturePosition(incomingValues[1]);
@@ -55,14 +56,13 @@ void loop()
   }
 
   //Check is the relay has been on for 5 or more seconds
-  Serial.println(relayStopwatch.elapsed());
-  if (relayStopwatch.elapsed() > 5000)
+  if (relayStopwatch.elapsed() > 1500)
   {
     digitalWrite(servoRelayPin, LOW); //Disable the relay
-    Serial.println("Relay disbled");
+    //Serial.println("Relay disbled");
   }
 
-  delay(500);
+  delay(100);
 
   
 //  char c = Serial.read();
@@ -106,77 +106,133 @@ void ToggleServoRelay()
     relayStopwatch.reset();
     relayStopwatch.start();
     digitalWrite(servoRelayPin, HIGH); //Enable the relay  
-    Serial.println("Relay enabled");
+    //Serial.println("Relay enabled");
   }
   else
   {
     relayStopwatch.start();
     digitalWrite(servoRelayPin, HIGH); //Enable the relay  
-    Serial.println("Relay enabled");
+    //Serial.println("Relay enabled");
   }
 }
 
 void setFanSpeed(byte fanspeed)
 {
-  if (servoFanSpeed.read() != fanspeed)
+  if (previousFanSpeed != fanspeed)
   {
     ToggleServoRelay();
     if (fanspeed == 0)
     {
-      servoFanSpeed.write(10);
+      servoFanSpeed.write(5);
     }
     if (fanspeed == 1)
     {
-      servoFanSpeed.write(40);
+      servoFanSpeed.write(35);
     }
     if (fanspeed == 2)
     {
-      servoFanSpeed.write(70);
+      servoFanSpeed.write(65);
     }
     if (fanspeed == 3)
     {
-      servoFanSpeed.write(100);
+      servoFanSpeed.write(95);
     }
     if (fanspeed == 4)
     {
-      servoFanSpeed.write(130);
+      servoFanSpeed.write(125);
     }
   }
+  previousFanSpeed = fanspeed;
 }
 
 void setTemperaturePosition(int pos)
 {
-  if (servo2.read() != pos)
+  if (previousTemperatureSetting != pos)
   {
     ToggleServoRelay();
-    servo2.write(pos);
+    switch(pos)
+    {
+    case 0:
+      servo2.write(5);
+      break;
+    case 1:
+      servo2.write(13);
+      break;
+    case 2:
+      servo2.write(21);
+      break;
+    case 3:
+      servo2.write(39);
+      break;
+     case 4:
+      servo2.write(47);
+      break;
+     case 5:
+      servo2.write(59);
+      break;
+     case 6:
+      servo2.write(67);
+      break;
+     case 7:
+      servo2.write(78);
+      break;
+     case 8:
+      servo2.write(85);
+      break;
+     case 9:
+      servo2.write(100);
+      break;     
+    }
   }
+  previousTemperatureSetting = pos;
+//  int modAns;
+//  if (servo2.read() >= pos)
+//  {
+//    modAns = servo2.read() % pos;
+//  }
+//  else
+//  {
+//    modAns = pos % servo2.read();
+//  }
+//
+//  if (modAns >= 10)
+//  //if (servo2.read() != pos)
+//  {
+//    ToggleServoRelay();
+////    pos += 10;
+////    servo2.write(pos);
+////    delay(200);
+////    pos-=5;
+//    servo2.write(pos);
+//  }
 }
 
 void setBlowerPosition(int blowerPosition)
 {
   if (previousBlowerDirection != blowerPosition)
   {
+    ToggleServoRelay();
     switch(blowerPosition)
     {
     case 0:
-      servo1.write(45);
+      servo1.write(50);
       servo3.write(30);
       break;
     case 1:
-      servo1.write(45);
+      servo1.write(50);
       servo3.write(60);
       break;
     case 2:
-      servo1.write(45);
-      servo3.write(90);
+      servo1.write(50);
+      servo3.write(100);
       break;
     case 3:
-      servo1.write(80);
-      servo3.write(90);
+      servo1.write(120);
+      servo3.write(100);
       break;
     }
   }
   previousBlowerDirection = blowerPosition;
 }
+
 

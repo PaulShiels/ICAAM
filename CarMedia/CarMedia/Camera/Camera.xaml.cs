@@ -24,8 +24,8 @@ namespace CarMedia
     /// </summary>
     public partial class Camera : UserControl
     {
-        public DispatcherTimer timer = new DispatcherTimer();
-        public SerialPort ArduinoCam = new SerialPort();
+        //public DispatcherTimer timer = new DispatcherTimer();
+        //public SerialPort ArduinoCam = new SerialPort();
         private string new_Dis, old_Dis;
         WPFCSharpWebCam.WebCam webcam = new WPFCSharpWebCam.WebCam();
         
@@ -41,76 +41,76 @@ namespace CarMedia
             this.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
             this.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
             imgHomeIcon.Source = new BitmapImage(new Uri(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString() + "\\Images\\Home_Icon.png"));
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            timer.Tick+= new EventHandler(timer_Tick);
+            //timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            //timer.Tick+= new EventHandler(timer_Tick);
             //ArduinoCam = MainWindow.ArduinoPort;
             webcam.InitializeWebCam(ref imgVideo);
             webcam.Start();
         }
 
-        private void timer_Tick(object sender, EventArgs e)
-        {
-            //ArduinoCam.DiscardInBuffer();
-            //Thread.Sleep(400);
-            ArduinoCam.DiscardOutBuffer();   
-            if (ArduinoCam.IsOpen)// && MainWindow.camera.Visibility==Visibility.Visible)
-            {
-                int bufSize = ArduinoCam.ReadBufferSize;
-                if (ArduinoCam.BytesToRead >= 8)
-                {
-                    old_Dis = new_Dis;
-                    //string S = ArduinoCam.ReadExisting();
-                    byte[] b = new byte[8];
-                    ArduinoCam.Read(b, 0, 8);
-                    int dis = System.BitConverter.ToInt32(b, 0);
-                    int reverseEngaged = System.BitConverter.ToInt32(b, 4);
-                    txtDistance.Content = dis;
-                    ShowHideCamScreen(reverseEngaged);
+        //private void timer_Tick(object sender, EventArgs e)
+        //{
+        //    //ArduinoCam.DiscardInBuffer();
+        //    //Thread.Sleep(400);
+        //    ArduinoCam.DiscardOutBuffer();   
+        //    if (ArduinoCam.IsOpen)// && MainWindow.camera.Visibility==Visibility.Visible)
+        //    {
+        //        int bufSize = ArduinoCam.ReadBufferSize;
+        //        if (ArduinoCam.BytesToRead >= 8)
+        //        {
+        //            old_Dis = new_Dis;
+        //            //string S = ArduinoCam.ReadExisting();
+        //            byte[] b = new byte[8];
+        //            ArduinoCam.Read(b, 0, 8);
+        //            int dis = System.BitConverter.ToInt32(b, 0);
+        //            int reverseEngaged = System.BitConverter.ToInt32(b, 4);
+        //            txtDistance.Content = dis;
+        //            ShowHideCamScreen(reverseEngaged);
 
-                }
-            }
-            else
-                ConnectArduinoCamSerialPort();
-        }
+        //        }
+        //    }
+        //    else
+        //        ConnectArduinoCamSerialPort();
+        //}
 
-        private void ConnectArduinoCamSerialPort()
-        {
-            if (!ArduinoCam.IsOpen)
-            {
-                ArduinoCam.PortName = "COM8";
-                ArduinoCam.BaudRate = 9600;
-                ArduinoCam.Handshake = System.IO.Ports.Handshake.None;
-                ArduinoCam.Parity = Parity.None;
-                ArduinoCam.DataBits = 8;
-                ArduinoCam.StopBits = StopBits.One;
-                ArduinoCam.ReadTimeout = 2000;
-                ArduinoCam.WriteTimeout = 50;
-                try
-                {
-                    ArduinoCam.Open();
-                    Console.WriteLine("Connection Successfull!");
-                }
-                catch (Exception e)
-                {
-                    MessageBoxResult mbx = MessageBox.Show("Unable to connect to Serial Port, Try again?");
-                    if (mbx == MessageBoxResult.Yes)
-                        ConnectArduinoCamSerialPort();
-                }
-            }
-        }
+        //private void ConnectArduinoCamSerialPort()
+        //{
+        //    if (!ArduinoCam.IsOpen)
+        //    {
+        //        ArduinoCam.PortName = "COM8";
+        //        ArduinoCam.BaudRate = 9600;
+        //        ArduinoCam.Handshake = System.IO.Ports.Handshake.None;
+        //        ArduinoCam.Parity = Parity.None;
+        //        ArduinoCam.DataBits = 8;
+        //        ArduinoCam.StopBits = StopBits.One;
+        //        ArduinoCam.ReadTimeout = 2000;
+        //        ArduinoCam.WriteTimeout = 50;
+        //        try
+        //        {
+        //            ArduinoCam.Open();
+        //            Console.WriteLine("Connection Successfull!");
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            MessageBoxResult mbx = MessageBox.Show("Unable to connect to Serial Port, Try again?");
+        //            if (mbx == MessageBoxResult.Yes)
+        //                ConnectArduinoCamSerialPort();
+        //        }
+        //    }
+        //}
 
-        public void startCamera()
-        {
-            ConnectArduinoCamSerialPort();
+        //public void startCamera()
+        //{
+        //    //ConnectArduinoCamSerialPort();
 
-            if (MainWindow.camera.ArduinoCam.IsOpen)
-            {
-                MainWindow.camera.timer.Start();
-                MainWindow.camera.ArduinoCam.DiscardInBuffer();
-            }
-        }
+        //    if (MainWindow.camera.ArduinoCam.IsOpen)
+        //    {
+        //        MainWindow.camera.timer.Start();
+        //        MainWindow.camera.ArduinoCam.DiscardInBuffer();
+        //    }
+        //}
 
-        private void ShowHideCamScreen(int isInReverse)
+        public void ShowHideCamScreen(int isInReverse)
         {
             if (isInReverse == 1)
             {
@@ -120,17 +120,17 @@ namespace CarMedia
                 MainWindow.temperatureControlsVisibility = Visibility.Hidden;
                 MainWindow.volumeControlVisibility = Visibility.Hidden;
                 Canvas.SetZIndex(MainWindow.camera, 1);
-                MainWindow.camera.startCamera();
+                //MainWindow.camera.startCamera();
             }
             else
             {
-                MainWindow.HomeScreen.Visibility = Visibility.Visible;
-                MainWindow.radio.Visibility = Visibility.Hidden;
-                MainWindow.camera.Visibility = Visibility.Hidden;
-                MainWindow.musicPlayer.Visibility = Visibility.Hidden;
-                MainWindow.gauges.Visibility = System.Windows.Visibility.Visible;
-                MainWindow.temperatureControlsVisibility = Visibility.Visible;
-                MainWindow.volumeControlVisibility = Visibility.Visible;
+                //MainWindow.HomeScreen.Visibility = Visibility.Visible;
+                //MainWindow.radio.Visibility = Visibility.Hidden;
+                //MainWindow.camera.Visibility = Visibility.Hidden;
+                //MainWindow.musicPlayer.Visibility = Visibility.Hidden;
+                //MainWindow.gauges.Visibility = System.Windows.Visibility.Visible;
+                //MainWindow.temperatureControlsVisibility = Visibility.Visible;
+                //MainWindow.volumeControlVisibility = Visibility.Visible;
                 Canvas.SetZIndex(MainWindow.camera, 0);
             }
         }        

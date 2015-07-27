@@ -38,9 +38,11 @@ namespace CarMedia
         public static Internet internet = new Internet();
         private DispatcherTimer timer = new DispatcherTimer();
         public static SerialPort ArduinoPort = new SerialPort();
+        public static SerialPort ArduinoCam = new SerialPort();
         public static byte[] ArduinoBuffer = new byte[8];
+        public static byte[] ArduinoSensorBuffer = new byte[3];
         public static Grid gauges = new Grid();
-        public static byte fanSpeed, tempPos=35, desiredTemp, tempPosRear=5, blowerPosition = 3, resetArduino=0;
+        public static byte fanSpeed, tempPos=3, desiredTemp, tempPosRear=5, blowerPosition = 3, resetArduino=0;
         public static byte radioFreq1, radioFreq2, autoTuneOn=0;
         public static List<string> ArduinoOutputs = new List<string>();
         public static Visibility temperatureControlsVisibility = Visibility.Visible;
@@ -84,17 +86,18 @@ namespace CarMedia
             radio.Visibility = Visibility.Hidden;
             dashCam.Visibility = Visibility.Hidden;
             gauges = grdGauges;
-            MainWindow.camera.startCamera();
+            //MainWindow.camera.startCamera();
         }
         
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            timer.Interval = new TimeSpan(0, 0, 0, 1);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 250);
             timer.Tick += timer_Tick;
             //MediaFrame.Width = this.Width - (this.Width * 0.2);
             camera.Visibility = System.Windows.Visibility.Hidden;
             ConnectSerialPort();
+            ConnectArduinoCamSerialPort();
             //lblTempInside.Content = (tempPosFont + tempPosRear).ToString();
             timer.Start();
         }
@@ -117,38 +120,40 @@ namespace CarMedia
                         ArduinoBuffer[1] = Convert.ToByte(tempPos);
                         //ArduinoBuffer[2] = Convert.ToByte(tempPosRear);
                         ArduinoBuffer[2] = Convert.ToByte(blowerPosition);
-                        ArduinoBuffer[3] = Convert.ToByte(radioFreq1);
-                        ArduinoBuffer[4] = Convert.ToByte(radioFreq2);
-                        ArduinoBuffer[5] = Convert.ToByte(autoTuneOn);
+                        //ArduinoBuffer[3] = Convert.ToByte(radioFreq1);
+                        //ArduinoBuffer[4] = Convert.ToByte(radioFreq2);
+                        //ArduinoBuffer[5] = Convert.ToByte(autoTuneOn);
                         //ArduinoBuffer[6] = Convert.ToByte(resetArduino);//radio.listenToFrequency);
 
                         ////ArduinoPort.Write(sb.ToString());
                         //if (ArduinoPort.BytesToWrite>4)
                         try
                         {
-                            ArduinoPort.DiscardOutBuffer();                            
+                            ArduinoPort.DiscardOutBuffer();
                             ArduinoPort.Write(ArduinoBuffer, 0, 8);
-                            if (ArduinoPort.BytesToRead >= 12)
-                            {                                
-                                //if (ArduinoPort.BytesToRead > 20)
-                                //{
-                                //    ArduinoPort.DiscardInBuffer();
-                                //}
-                                //else
-                                {
-                                    byte[] b = new byte[50];
-                                    ArduinoPort.Read(b, 0, 20);
-                                    lblInsideTemp.Content = System.BitConverter.ToSingle(b, 0);
-                                    HomeScreen.lblOutsideTemp.Content = System.BitConverter.ToSingle(b, 4);
-                                    //lblTempInside.Content  = System.BitConverter.ToSingle(b, 0);
-                                    //lblOutsideTemp.Content = System.BitConverter.ToSingle(b, 4);
-                                    float voltage = System.BitConverter.ToSingle(b, 8);                                    
-                                    voltHand.Angle = (voltage - 8) * (60 - -60) / (16 - 8)+ -60; //map the voltage from a value of to within the range of 8 to 16                                    
-                                    radioSignalLevel = System.BitConverter.ToInt16(b, 12);
-                                    //lblTempInside.Content = voltage; //string.Format("{0} {1}", f, f2);
-                                    
-                                }
-                            }
+                            #region oldReadBytes
+                            //if (ArduinoPort.BytesToRead >= 12)
+                            //{                                
+                            //    //if (ArduinoPort.BytesToRead > 20)
+                            //    //{
+                            //    //    ArduinoPort.DiscardInBuffer();
+                            //    //}
+                            //    //else
+                            //    {
+                            //        byte[] b = new byte[50];
+                            //        ArduinoPort.Read(b, 0, 20);
+                            //        lblInsideTemp.Content = System.BitConverter.ToSingle(b, 0);
+                            //        HomeScreen.lblOutsideTemp.Content = System.BitConverter.ToSingle(b, 4);
+                            //        //lblTempInside.Content  = System.BitConverter.ToSingle(b, 0);
+                            //        //lblOutsideTemp.Content = System.BitConverter.ToSingle(b, 4);
+                            //        float voltage = System.BitConverter.ToSingle(b, 8);                                    
+                            //        voltHand.Angle = (voltage - 8) * (60 - -60) / (16 - 8)+ -60; //map the voltage from a value of to within the range of 8 to 16                                    
+                            //        radioSignalLevel = System.BitConverter.ToInt16(b, 12);
+                            //        //lblTempInside.Content = voltage; //string.Format("{0} {1}", f, f2);
+
+                            //    }
+                            //}
+                            #endregion
                         }
                         catch (Exception ex)
                         { }
@@ -156,7 +161,41 @@ namespace CarMedia
                 }
             }
             else
+            {
                 ConnectSerialPort();
+            }
+
+            if (ArduinoCam.IsOpen)
+            {
+                if (ArduinoCam.BytesToRead>=19)
+                {
+                    try
+                    {
+                        byte[] b = new byte[20];
+                        ArduinoCam.Read(b, 0, 19);
+                        lblInsideTemp.Content = System.BitConverter.ToSingle(b, 0);
+                        HomeScreen.lblOutsideTemp.Content = System.BitConverter.ToSingle(b, 4);
+                        //lblTempInside.Content  = System.BitConverter.ToSingle(b, 0);
+                        //lblOutsideTemp.Content = System.BitConverter.ToSingle(b, 4);
+                        float voltage = System.BitConverter.ToSingle(b, 8);
+                        voltHand.Angle = (voltage - 8) * (60 - -60) / (16 - 8) + -60; //map the voltage from a value of to within the range of 8 to 16                                    
+                        int reverseEngaged = System.BitConverter.ToInt32(b, 12);
+                        camera.ShowHideCamScreen(reverseEngaged);
+                        radioSignalLevel = System.BitConverter.ToInt16(b, 16);
+                        //lblTempInside.Content = voltage; //string.Format("{0} {1}", f, f2);
+
+                        //ArduinoSensorBuffer[0] = Convert.ToByte('f');
+                        ArduinoSensorBuffer[0] = Convert.ToByte(radioFreq1);
+                        ArduinoSensorBuffer[1] = Convert.ToByte(radioFreq2);
+                        ArduinoSensorBuffer[2] = Convert.ToByte(autoTuneOn);
+                        ArduinoCam.DiscardOutBuffer();
+                        ArduinoCam.Write(ArduinoSensorBuffer, 0, 3);
+                    }
+                    catch{ }
+                }
+                ConnectArduinoCamSerialPort();
+                ArduinoCam.DiscardInBuffer();
+            }
             
             resetArduino = 0;
             
@@ -164,7 +203,7 @@ namespace CarMedia
 
         private void ConnectSerialPort()
         {
-            ArduinoPort.PortName = "COM11";               
+            ArduinoPort.PortName = "COM13";               
             ArduinoPort.BaudRate = 9600;
             ArduinoPort.Handshake = System.IO.Ports.Handshake.None;
             ArduinoPort.Parity = Parity.None;
@@ -185,6 +224,32 @@ namespace CarMedia
             }
         }
 
+        private void ConnectArduinoCamSerialPort()
+        {
+            if (!ArduinoCam.IsOpen)
+            {
+                ArduinoCam.PortName = "COM7";
+                ArduinoCam.BaudRate = 9600;
+                ArduinoCam.Handshake = System.IO.Ports.Handshake.None;
+                ArduinoCam.Parity = Parity.None;
+                ArduinoCam.DataBits = 8;
+                ArduinoCam.StopBits = StopBits.One;
+                ArduinoCam.ReadTimeout = 2000;
+                ArduinoCam.WriteTimeout = 50;
+                try
+                {
+                    ArduinoCam.Open();
+                    //Console.WriteLine("Connection Successfull!");
+                }
+                catch (Exception e)
+                {
+                    MessageBoxResult mbx = System.Windows.MessageBox.Show("Unable to connect to 'SensorDuino' Serial Port, Try again?");
+                    if (mbx == MessageBoxResult.Yes)
+                        ConnectArduinoCamSerialPort();
+                }
+            }
+        }
+
         private void resetArdunoConnection()
         {
             //ArduinoPort.Close();
@@ -194,11 +259,15 @@ namespace CarMedia
 
         private void btnDecreaseTemp_Click(object sender, RoutedEventArgs e)
         {
-            int newTempPos = tempPos - 14;
-            if(newTempPos < 7)
+            if (tempPos > 0)
             {
-                tempPos = 7;
+                tempPos--;
             }
+            //int newTempPos = tempPos - 14;
+            //if(newTempPos < 7)
+            //{
+            //    tempPos = 7;
+            //}
             //if (tempPosFont >= 175 && tempPosRear > 5)
             //{
             //    tempPosFont = 175;
@@ -220,11 +289,15 @@ namespace CarMedia
 
         private void btnIncreaseTemp_Click(object sender, RoutedEventArgs e)
         {
-            int newTempPos = tempPos + 14;
-            if (newTempPos > 75)
+            if (tempPos < 9)
             {
-                tempPos = 75;
+                tempPos++;
             }
+            //int newTempPos = tempPos + 14;
+            //if (newTempPos > 75)
+            //{
+            //    tempPos = 75;
+            //}
             //if (tempPosFont < 175)
             //    tempPosFont += 10;
             //else
