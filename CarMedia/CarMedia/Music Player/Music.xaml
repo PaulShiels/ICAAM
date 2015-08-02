@@ -14,6 +14,19 @@
             <Setter Property="Control.Margin" Value="10,0"/>
             <Setter Property="Control.FontSize" Value="20"/>
         </Style>
+
+        <Style TargetType="Button" x:Key="TabButton">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="#FF376BB6" BorderBrush="#ccc" BorderThickness="0,1,1,0" >
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     
     <UserControl.CommandBindings>
@@ -32,13 +45,18 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="9*"/>
         </Grid.ColumnDefinitions>
-        <DockPanel x:Name="dpButtonsColumn" Grid.RowSpan="3" Background="Gray" Width="100" HorizontalAlignment="Left" Margin="12">
+        <DockPanel x:Name="dpButtonsColumn" Grid.RowSpan="2" Grid.Row="1" Background="Transparent" Width="150" HorizontalAlignment="Left" Margin="12">
             <StackPanel DockPanel.Dock="Top">
-                <TextBlock Name="txtSongs" Text="Songs" MouseDown="txtSongs_MouseDown" Style="{StaticResource MenuTextStyle}"/>
+                <Button Name="txtSongs" Click="txtSongs_Click" Style="{StaticResource TabButton}" Foreground="White" Margin="5,10" Height="40" Content="Songs" FontSize="25"></Button>
+                <Button Name="txtAlbums" Click="txtAlbums_Click" Style="{StaticResource TabButton}" Foreground="White" Margin="5,10" Height="40" Content="Albums" FontSize="25"></Button>
+                <Button Name="txtArtists" Click="txtArtists_Click" Style="{StaticResource TabButton}" Foreground="White" Margin="5,10" Height="40" Content="Artists" FontSize="25"></Button>
+                <Button Name="btnPlaylists" Click="btnPlaylists_Click" Style="{StaticResource TabButton}" Foreground="White" Margin="5,10" Height="40" Content="Playlists" FontSize="25"></Button>
+                <Button Name="btnNowPlaying" Click="btnNowPlaying_Click" Style="{StaticResource TabButton}" Foreground="White" Margin="5,10" Height="40" Content="Now Playing" FontSize="25" ></Button>
+                <!--<TextBlock Name="txtSongs" Text="Songs" MouseDown="txtSongs_MouseDown" Style="{StaticResource MenuTextStyle}"/>
                 <TextBlock Name="txtAlbums" Text="Albums" MouseDown="txtAlbums_MouseDown" Style="{StaticResource MenuTextStyle}"/>
                 <TextBlock Name="txtArtists" Text="Artists" MouseDown="txtArtists_MouseDown" Style="{StaticResource MenuTextStyle}"/>
                 <Button x:Name="btnPlaylists" Content="Playlists" Margin="5,0" Click="btnPlaylists_Click"></Button>
-                <Button x:Name="btnNowPlaying" Content="Now Playing" Margin="5,0" Click="btnNowPlaying_Click"></Button>                
+                <Button x:Name="btnNowPlaying" Content="Now Playing" Margin="5,0" Click="btnNowPlaying_Click"></Button>-->                
             </StackPanel>
             <Image x:Name="imgAlbumArt" VerticalAlignment="Bottom" Margin="5"/>
         </DockPanel>
@@ -95,15 +113,15 @@
                 <Slider x:Name="sldrTrack" Grid.Column="1" Orientation="Horizontal" ValueChanged="sldrTrack_ValueChanged" PreviewMouseUp="sldrTrack_PreviewMouseUp" Opacity="0"/>
                 <TextBlock x:Name="txtsongTimeLeft" Grid.Column="2" Margin="5,0,20,0" FontSize="15" Foreground="Yellow"/>
             </Grid>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                <Button x:Name="btnPlay" Margin="25,10,0,0" Height="40" Width="60" Click="btnPlay_Click">Play</Button>
-                <Button x:Name="btnStop" Margin="25,10,0,0" Height="40" Width="60" Click="btnStop_Click">Stop</Button>
-                <Button x:Name="btnBack" Margin="25,10,0,0" Height="40" Width="60" Click="btnBack_Click_1">Previous</Button>
-                <Button x:Name="btnForward" Margin="25,10,0,0" Height="40" Width="60" Click="btnForward_Click">Next</Button>
-                <Button x:Name="btnEqualizer" Margin="25,10,0,0" Height="40" Width="60">Equalizer</Button>
-                <Button x:Name="btnEject" Margin="25,10,0,0" Height="40" Width="60">Eject</Button>
-                <Button x:Name="btnRip" Margin="25,10,0,0" Height="40" Width="60">Rip</Button>
-                <Button x:Name="btnAddToPlaylist" Margin="25,10,0,0" Height="40" Width="60" Click="btnAddToPlaylist_Click">Add To Playlist</Button>
+            <StackPanel Orientation="Horizontal" Margin="20,0,0,5">
+                <Button x:Name="btnPlay" Margin="25,10,0,0" Height="40" Width="110" Click="btnPlay_Click" FontSize="20" Style="{StaticResource TabButton}" Foreground="White">Play</Button>
+                <Button x:Name="btnStop" Margin="25,10,0,0" Height="40" Width="110" Click="btnStop_Click" FontSize="20" Style="{StaticResource TabButton}" Foreground="White">Stop</Button>
+                <Button x:Name="btnBack" Margin="25,10,0,0" Height="40" Width="110" Click="btnBack_Click_1" FontSize="20" Style="{StaticResource TabButton}" Foreground="White">Previous</Button>
+                <Button x:Name="btnForward" Margin="25,10,0,0" Height="40" Width="110" Click="btnForward_Click" FontSize="20" Style="{StaticResource TabButton}" Foreground="White">Next</Button>
+                <!--<Button x:Name="btnEqualizer" Margin="25,10,0,0" Height="40" Width="60">Equalizer</Button>-->
+                <!--<Button x:Name="btnEject" Margin="25,10,0,0" Height="40" Width="60">Eject</Button>-->
+                <!--<Button x:Name="btnRip" Margin="25,10,0,0" Height="40" Width="60">Rip</Button>-->
+                <Button x:Name="btnAddToPlaylist" Margin="25,10,0,0" Height="40" Width="110" Click="btnAddToPlaylist_Click" FontSize="20" Style="{StaticResource TabButton}" Foreground="White">+Playlist</Button>
             </StackPanel>
         </StackPanel>
         <ListBox x:Name="lbxPlaylists" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Width="700" Height="380" FontSize="28" Visibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Opacity="0.7" Background="#D8000000" Foreground="White" MouseUp="lbxPlaylists_MouseUp"  SelectionChanged="lbxPlaylists_SelectionChanged">

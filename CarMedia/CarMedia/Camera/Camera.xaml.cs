@@ -114,23 +114,23 @@ namespace CarMedia
         {
             if (isInReverse == 1)
             {
-                MainWindow.musicPlayer.Visibility = Visibility.Hidden;
-                MainWindow.camera.Visibility = System.Windows.Visibility.Visible;
+                MainWindow.musicPlayer.Visibility = Visibility.Hidden;                
                 MainWindow.gauges.Visibility = System.Windows.Visibility.Hidden;
                 MainWindow.temperatureControlsVisibility = Visibility.Hidden;
-                MainWindow.volumeControlVisibility = Visibility.Hidden;
+                MainWindow.volumeControlVisibility = Visibility.Hidden;                
                 Canvas.SetZIndex(MainWindow.camera, 1);
+                MainWindow.camera.Visibility = System.Windows.Visibility.Visible;
                 //MainWindow.camera.startCamera();
             }
             else
             {
                 //MainWindow.HomeScreen.Visibility = Visibility.Visible;
-                //MainWindow.radio.Visibility = Visibility.Hidden;
-                //MainWindow.camera.Visibility = Visibility.Hidden;
+                MainWindow.camera.Visibility = Visibility.Hidden;
+                //MainWindow.radio.Visibility = Visibility.Hidden;                
                 //MainWindow.musicPlayer.Visibility = Visibility.Hidden;
-                //MainWindow.gauges.Visibility = System.Windows.Visibility.Visible;
-                //MainWindow.temperatureControlsVisibility = Visibility.Visible;
-                //MainWindow.volumeControlVisibility = Visibility.Visible;
+                MainWindow.gauges.Visibility = System.Windows.Visibility.Visible;
+                MainWindow.temperatureControlsVisibility = Visibility.Visible;
+                MainWindow.volumeControlVisibility = Visibility.Visible;                
                 Canvas.SetZIndex(MainWindow.camera, 0);
             }
         }        

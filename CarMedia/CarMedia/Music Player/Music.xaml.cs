@@ -735,10 +735,10 @@ namespace CarMedia
 
                     //Create the Track name label
                     StackPanel spTrackDetails = new StackPanel();
-                    Label lblTrackName = new Label() { Content = track.TrackName, FontSize = 28, Foreground = new SolidColorBrush(Colors.White) };
+                    Label lblTrackName = new Label() { Content = track.TrackName, FontSize = 20, Foreground = new SolidColorBrush(Colors.White) };
                     spTrackDetails.Children.Add(lblTrackName);
                     //Create the Artist name label
-                    Label lblArtist = new Label() { Content = track.Artist.ArtistName, FontSize = 18, Foreground = new SolidColorBrush(Colors.Gray), Margin = new Thickness(0, -10, 0, 0) };
+                    Label lblArtist = new Label() { Content = track.Artist.ArtistName, FontSize = 12, Foreground = new SolidColorBrush(Colors.Gray), Margin = new Thickness(0, -10, 0, 0) };
                     spTrackDetails.Children.Add(lblArtist);
                     spTrack.Children.Add(spTrackDetails);
 
@@ -971,26 +971,44 @@ namespace CarMedia
             mouseOverPlaylist = true;
         }        
 
-        private void txtSongs_MouseDown(object sender, MouseButtonEventArgs e)
+        //private void txtSongs_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    //lvSongs.Visibility = Visibility.Visible;
+        //    //scvAlbums.Visibility = Visibility.Hidden;
+        //    returnToWindow.Insert(0, MakeVisible.AllSongs);
+        //    SetViewsVisibility(MakeVisible.AllSongs);
+        //    //spPlayControls.Visibility = Visibility.Visible;
+        //}
+
+        //private void txtAlbums_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    //spPlayControls.Visibility = Visibility.Hidden;
+        //    //scvAlbums.Visibility = Visibility.Visible;
+        //    //lvSongs.Visibility = Visibility.Hidden;
+        //    //nowPlaying.Visibility = Visibility.Hidden;            
+        //    returnToWindow.Insert(0, MakeVisible.AlbumsGrid);
+        //    SetViewsVisibility(MakeVisible.AlbumsGrid);
+        //}
+
+        //private void txtArtists_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    returnToWindow.Insert(0, MakeVisible.Artists);
+        //    SetViewsVisibility(MakeVisible.Artists);
+        //}
+
+        private void txtSongs_Click(object sender, RoutedEventArgs e)
         {
-            //lvSongs.Visibility = Visibility.Visible;
-            //scvAlbums.Visibility = Visibility.Hidden;
             returnToWindow.Insert(0, MakeVisible.AllSongs);
             SetViewsVisibility(MakeVisible.AllSongs);
-            //spPlayControls.Visibility = Visibility.Visible;
         }
 
-        private void txtAlbums_MouseDown(object sender, MouseButtonEventArgs e)
+        private void txtAlbums_Click(object sender, RoutedEventArgs e)
         {
-            //spPlayControls.Visibility = Visibility.Hidden;
-            //scvAlbums.Visibility = Visibility.Visible;
-            //lvSongs.Visibility = Visibility.Hidden;
-            //nowPlaying.Visibility = Visibility.Hidden;            
             returnToWindow.Insert(0, MakeVisible.AlbumsGrid);
             SetViewsVisibility(MakeVisible.AlbumsGrid);
         }
 
-        private void txtArtists_MouseDown(object sender, MouseButtonEventArgs e)
+        private void txtArtists_Click(object sender, RoutedEventArgs e)
         {
             returnToWindow.Insert(0, MakeVisible.Artists);
             SetViewsVisibility(MakeVisible.Artists);
@@ -1380,6 +1398,7 @@ namespace CarMedia
             {
                 BuildAndPopulateTracksView(lstTracks);
             }
-        }
+        }        
+
     }    
 }

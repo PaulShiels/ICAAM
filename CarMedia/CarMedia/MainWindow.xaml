@@ -5,6 +5,21 @@
         Loaded="Window_Loaded"
         Title="MainWindow" ResizeMode="NoResize" WindowState="Maximized"
         Width="1280" Height="768">
+    
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="TabButton">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="#FF376BB6" BorderBrush="#ccc" BorderThickness="0,1,1,0" >
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
 
     <Grid>
         <Grid.Background>
@@ -17,15 +32,16 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="8*"/>
             <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
-
+        </Grid.ColumnDefinitions>        
 
         <Canvas x:Name="MediaFrame" Background="Black" HorizontalAlignment="Left" x:FieldModifier="public" ></Canvas>
 
-        
-        
         <StackPanel Name="temperatureControls" Grid.Row="1" Background="Transparent" Orientation="Horizontal">
             <StackPanel VerticalAlignment="Bottom" Margin="0,10">
+
+                <StackPanel Width="100" Margin="-90,0,0,30">
+                    <Image Name="btnPower" MouseDown="btnPower_MouseDown" Source="Images/power-button.png"></Image>
+                </StackPanel>
                 
                 <!--<Label Content="Temperature" Margin="5,0,0,0" Foreground="White" FontSize="36"/>-->
                 <StackPanel Orientation="Horizontal" Margin="5,0,0,25">
@@ -77,18 +93,18 @@
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Width="220" Margin="50,0,0,20">
                 <StackPanel>
-                    <Button x:Name="btnBlowerWindscreen" Height="70" Width="90" Margin="10,10" Background="Black" Opacity="0.8" Click="btnBlowerWindscreen_Click">
+                    <Button x:Name="btnBlowerWindscreen" Height="70" Width="90" Margin="10,10" Background="Black" Opacity="0.8" Style="{StaticResource TabButton}" Click="btnBlowerWindscreen_Click">
                         <Image Source="Images\blowerWindscreen.png"></Image>
                     </Button>
-                <Button x:Name="btnBlowerFace" Background="Black"  Height="70" Width="90" Opacity="0.8" Click="btnBlowerFace_Click">
+                    <Button x:Name="btnBlowerFace" Background="Black"  Height="70" Width="90" Opacity="0.8" Style="{StaticResource TabButton}" Click="btnBlowerFace_Click">
                     <Image Source="Images\blowerFace.png"></Image>
                 </Button>
                 </StackPanel>
                 <StackPanel>
-                <Button x:Name="btnBlowerFaceDown" Background="Black" Height="70" Width="90" Margin="0,10, 0,0" Opacity="0.8" Click="btnBlowerFaceDown_Click">
+                    <Button x:Name="btnBlowerFaceDown" Background="Black" Height="70" Width="90" Margin="0,10, 0,0" Opacity="0.8" Style="{StaticResource TabButton}" Click="btnBlowerFaceDown_Click">
                     <Image Source="Images\blowerFaceDown.png"></Image>
                 </Button>
-                <Button x:Name="btnBlowerDown" Background="Black" Height="70" Width="90" Margin="0,10, 0,0" Opacity="0.8" Click="btnBlowerDown_Click">
+                    <Button x:Name="btnBlowerDown" Background="Black" Height="70" Width="90" Margin="0,10, 0,0" Opacity="0.8" Style="{StaticResource TabButton}" Click="btnBlowerDown_Click">
                     <Image Source="Images\blowerDown.png"></Image>
                 </Button>
                 </StackPanel>
@@ -121,14 +137,16 @@
 
         <TextBlock Grid.Column="1" Background="Transparent"></TextBlock>
 
+        
+
         <Grid Name="grdGauges" Grid.Column="1" Height="750" Grid.RowSpan="2" VerticalAlignment="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="125*"/>
                 <RowDefinition Height="125*"/>
                 <RowDefinition Height="104*"/>
                 <RowDefinition Height="21*"/>
-            </Grid.RowDefinitions>
-
+            </Grid.RowDefinitions>            
+            
             <Image Source="Images/voltmeter.png"></Image>
             <Rectangle Margin="173,68,172,132" Name="rectangleMinute" StrokeThickness="4" Width="4" Height="50" Stroke="Red">
                 <Rectangle.Fill>

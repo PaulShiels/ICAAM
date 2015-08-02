@@ -42,12 +42,13 @@ namespace CarMedia
         public static byte[] ArduinoBuffer = new byte[8];
         public static byte[] ArduinoSensorBuffer = new byte[3];
         public static Grid gauges = new Grid();
-        public static byte fanSpeed, tempPos=3, desiredTemp, tempPosRear=5, blowerPosition = 3, resetArduino=0;
+        public static byte fanSpeed, tempPos=3, desiredTemp, tempPosRear=5, blowerPosition = 3, relayOn=0, resetArduino=0;
         public static byte radioFreq1, radioFreq2, autoTuneOn=0;
         public static List<string> ArduinoOutputs = new List<string>();
         public static Visibility temperatureControlsVisibility = Visibility.Visible;
         public static Visibility volumeControlVisibility = Visibility.Visible;
         private int radioSignalLevel;
+        private int resetRelayCounter = 0;
 
         [DllImport("user32.dll")]
         public static extern IntPtr SendMessageW(IntPtr hWnd, int Msg,
@@ -57,10 +58,12 @@ namespace CarMedia
         private const int APPCOMMAND_VOLUME_DOWN = 0x90000;
         private const int WM_APPCOMMAND = 0x319;
 
-        
+        //[DllImport("PowrProf.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        //public static extern bool SetSuspendState(bool hiberate, bool forceCritical, bool disableWakeEvent);
+        //SetSuspendState(true, true, true);
 
         public MainWindow()
-        {
+        {            
             try
             {
                 InitializeComponent();
@@ -120,6 +123,7 @@ namespace CarMedia
                         ArduinoBuffer[1] = Convert.ToByte(tempPos);
                         //ArduinoBuffer[2] = Convert.ToByte(tempPosRear);
                         ArduinoBuffer[2] = Convert.ToByte(blowerPosition);
+                        ArduinoBuffer[3] = Convert.ToByte(relayOn);
                         //ArduinoBuffer[3] = Convert.ToByte(radioFreq1);
                         //ArduinoBuffer[4] = Convert.ToByte(radioFreq2);
                         //ArduinoBuffer[5] = Convert.ToByte(autoTuneOn);
@@ -131,6 +135,17 @@ namespace CarMedia
                         {
                             ArduinoPort.DiscardOutBuffer();
                             ArduinoPort.Write(ArduinoBuffer, 0, 8);
+
+                            if (ArduinoPort.BytesToRead>0)
+                            {
+                                byte[] b = new byte[2];
+                                ArduinoPort.Read(b, 0, 1);
+                                if (System.BitConverter.ToInt16(b, 0) == 1)
+                                {
+                                    relayOn = 0;
+                                    ArduinoPort.DiscardInBuffer();
+                                }
+                            }                          
                             #region oldReadBytes
                             //if (ArduinoPort.BytesToRead >= 12)
                             //{                                
@@ -167,7 +182,7 @@ namespace CarMedia
 
             if (ArduinoCam.IsOpen)
             {
-                if (ArduinoCam.BytesToRead>=19)
+                if (ArduinoCam.BytesToRead >= 19)
                 {
                     try
                     {
@@ -191,10 +206,13 @@ namespace CarMedia
                         ArduinoCam.DiscardOutBuffer();
                         ArduinoCam.Write(ArduinoSensorBuffer, 0, 3);
                     }
-                    catch{ }
+                    catch { }
                 }
-                ConnectArduinoCamSerialPort();
                 ArduinoCam.DiscardInBuffer();
+            }
+            else
+            {
+                ConnectArduinoCamSerialPort();
             }
             
             resetArduino = 0;
@@ -203,7 +221,7 @@ namespace CarMedia
 
         private void ConnectSerialPort()
         {
-            ArduinoPort.PortName = "COM13";               
+            ArduinoPort.PortName = "COM11";               
             ArduinoPort.BaudRate = 9600;
             ArduinoPort.Handshake = System.IO.Ports.Handshake.None;
             ArduinoPort.Parity = Parity.None;
@@ -214,7 +232,7 @@ namespace CarMedia
             try
             {
                 ArduinoPort.Open();
-                Console.WriteLine("Connection Successfull!");
+                //Console.WriteLine("Connection Successfull!");
             }
             catch (Exception e)
             {
@@ -228,7 +246,7 @@ namespace CarMedia
         {
             if (!ArduinoCam.IsOpen)
             {
-                ArduinoCam.PortName = "COM7";
+                ArduinoCam.PortName = "COM16";
                 ArduinoCam.BaudRate = 9600;
                 ArduinoCam.Handshake = System.IO.Ports.Handshake.None;
                 ArduinoCam.Parity = Parity.None;
@@ -243,9 +261,9 @@ namespace CarMedia
                 }
                 catch (Exception e)
                 {
-                    MessageBoxResult mbx = System.Windows.MessageBox.Show("Unable to connect to 'SensorDuino' Serial Port, Try again?");
-                    if (mbx == MessageBoxResult.Yes)
-                        ConnectArduinoCamSerialPort();
+                    //MessageBoxResult mbx = System.Windows.MessageBox.Show("Unable to connect to 'SensorDuino' Serial Port, Try again?");
+                    //if (mbx == MessageBoxResult.Yes)
+                        //ConnectArduinoCamSerialPort();
                 }
             }
         }
@@ -262,6 +280,7 @@ namespace CarMedia
             if (tempPos > 0)
             {
                 tempPos--;
+                relayOn = 1;
             }
             //int newTempPos = tempPos - 14;
             //if(newTempPos < 7)
@@ -292,6 +311,7 @@ namespace CarMedia
             if (tempPos < 9)
             {
                 tempPos++;
+                relayOn = 1;
             }
             //int newTempPos = tempPos + 14;
             //if (newTempPos > 75)
@@ -318,6 +338,7 @@ namespace CarMedia
             {
                 fanSpeed += 1;
                 showFanBars(fanSpeed);
+                relayOn = 1;
 
                 if (fanSpeed == 4)
                 {
@@ -333,6 +354,7 @@ namespace CarMedia
             {
                 fanSpeed -= 1;
                 showFanBars(fanSpeed);
+                relayOn = 1;
             }
         }
 
@@ -376,21 +398,25 @@ namespace CarMedia
         private void btnBlowerWindscreen_Click(object sender, RoutedEventArgs e)
         {
             blowerPosition = 3;
+            relayOn = 1;
         }
 
         private void btnBlowerFace_Click(object sender, RoutedEventArgs e)
         {
             blowerPosition = 0;
+            relayOn = 1;
         }
 
         private void btnBlowerFaceDown_Click(object sender, RoutedEventArgs e)
         {
             blowerPosition = 1;
+            relayOn = 1;
         }
 
         private void btnBlowerDown_Click(object sender, RoutedEventArgs e)
         {
             blowerPosition = 2;
+            relayOn = 1;
         }
 
         private void btnIncreaseVolume_Click(object sender, RoutedEventArgs e)
@@ -416,6 +442,11 @@ namespace CarMedia
         {
             resetArdunoConnection();
             resetArduino = 1;
+        }
+
+        private void btnPower_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            System.Windows.Forms.Application.SetSuspendState(PowerState.Hibernate, true, true);
         }
     }
 

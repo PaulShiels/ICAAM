@@ -89,8 +89,12 @@ namespace CarMedia
             }
             else
             {
-                double freqFromButton = Convert.ToDouble(((Label)(((StackPanel)((StackPanel)sender).Children[0]).Children[1])).Content.ToString());
-                sldrRadioFrequency.Value = freqFromButton;
+                try
+                {
+                    double freqFromButton = Convert.ToDouble(((Label)(((StackPanel)((StackPanel)sender).Children[0]).Children[1])).Content.ToString());
+                    sldrRadioFrequency.Value = freqFromButton;
+                }
+                catch { }
             }
             stopwatch.Reset();
             

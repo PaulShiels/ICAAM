@@ -4,12 +4,12 @@
 #include <Wire.h>
 
 byte arrayToSend[21];
-#define DHTPINInside 6   // what pin we're connected to
-#define DHTPINOutside 7
+#define DHTPINInside 2   // what pin we're connected to
+#define DHTPINOutside 3
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
 SimpleTimer timer;
 SimpleTimer transmitTimer;
-#define detectGearPin 3
+#define detectGearPin 4
 byte incomingValues[3];
 
 // Initialize DHT sensor for normal 16mhz Arduino
@@ -31,7 +31,8 @@ union {
 } reverse;
 
 //Read Battery Voltage variables
-int analogInput = 0;
+//Short resistor = Positive
+int analogInput = A3;
 int value = 0;
 float vout = 0.0;
 float vin = 0.0;
